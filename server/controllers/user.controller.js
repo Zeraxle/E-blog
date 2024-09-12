@@ -33,7 +33,7 @@ export const updateUser = async (req, res, next) => {
         foundUser.firstName = updatedUser.firstName,
         foundUser.lastName = updatedUser.lastName,
         foundUser.username = updatedUser.username,
-        foundUser.email = updatedUser.email,
+        foundUser.email = updatedUser.email
         
         await foundUser.save()
         res.status(200).json(foundUser)

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 export const sequelize = new Sequelize (
     'E-blog',
-    'root',
+    'root1',
     'Samosho10',
 
     {

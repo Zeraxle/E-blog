@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize.config.js";
+import pkg, { compare } from 'bcrypt-node';
 
+
+import useBcrypt from 'sequelize-bcrypt'
 
 const User = sequelize.define('user', {
 
@@ -49,6 +52,7 @@ const User = sequelize.define('user', {
             len : [8, 50],
             isEmail : true
         },
+    },
 
     password : {
         type : DataTypes.STRING,
@@ -56,13 +60,51 @@ const User = sequelize.define('user', {
         allowNull : false,
         validate : {
             len : [8, 50]
-        }
-    }
-    }
+        },
+    },
 },
-{ timestamps : true}
+{ timestamps : true},
+
 
 )
+
+const options = {
+    feild : "password",
+    rounds : 12,
+    compare : "authenticate"
+}
+useBcrypt(User,options)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const options ={
+//     field: 'password', // secret field to hash, default: 'password'
+//     rounds: 12, // used to generate bcrypt salt, default: 12
+//     compare: 'authenticate', // method used to compare secrets, default: 'authenticate'
+
+// }
+// // User.hasMany(Post, {
+// //     foreignKey : "userId"
+// // })
+// // Post.belongsTo(User);
+
+
+// useBcrypt(User, options)
+
+
+
 
 User.sync({alter : true})
     .then(console.log('User table created'))

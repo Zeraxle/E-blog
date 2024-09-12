@@ -69,3 +69,22 @@ export const destroyUser = (req, res, next) => {
 //         }
 //     }
 // }
+
+
+export const logUserIn = async (req, res, next) => {
+    try {
+        const {email, password} = req.body
+        const isCorrectemail= await User.findOne({
+            where : {email : email}
+        })
+        if(!isCorrectemail){
+            return res.status(404).json({message : 'User not found'})
+        }
+        const isCorrectPassword = isCorrectemail.authenticate(password)
+        if(!isCorrectPassword){
+            return res.status(404).json({message : 'User not found'})
+        }
+        res.status(200).json(isCorrectemail)
+    } 
+    catch(error){res.status(400).json(error)}
+}

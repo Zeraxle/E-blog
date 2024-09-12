@@ -2,8 +2,8 @@ import {Sequelize} from 'sequelize'
 import dotenv from 'dotenv'
 
 export const sequelize = new Sequelize (
-    'E-blog',
-    'root1',
+    'eblogdb', 
+    'root',
     'Samosho10',
 
     {

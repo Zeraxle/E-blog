@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize.config.js";
 
 
-const User = sequelize.define('user', {
+const User = sequelize.define('users', {
 
     id : {
         type : DataTypes.INTEGER,
@@ -49,7 +49,7 @@ const User = sequelize.define('user', {
             len : [8, 50],
             isEmail : true
         },
-
+    },
     password : {
         type : DataTypes.STRING,
         required : [true, 'User needs a password'],
@@ -58,8 +58,8 @@ const User = sequelize.define('user', {
             len : [8, 50]
         }
     }
-    }
-},
+    },
+
 { timestamps : true}
 
 )

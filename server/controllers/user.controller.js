@@ -1,4 +1,5 @@
 import User from '../models/user.model.js'
+import { Post } from '../models/post.model.js'
 
 export const findUserById = async (req, res, next) => {
     try {
@@ -70,4 +71,20 @@ export const logUserIn = async (req, res, next) => {
         res.status(200).json(isCorrectEmail)
     } catch (error){res.status(400).json(error)}
 }
+
+export const findAllPostsByUser = async(req,res,next) =>{
+    try{
+        const {id} = req.params
+        const findAllUsersPosts = await User.findAll({
+            where: {id : id},
+            include :[
+                {
+                    model : Post
+                }
+            ]
+        })
+        res.status(200).json(findAllUsersPosts)
+    }catch (error){res.status(400).json(error)}
+}
+
 

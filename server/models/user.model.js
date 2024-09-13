@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize.config.js";
+import Post from "./post.model.js";
 import pkg, { compare } from 'bcrypt-node';
 
 
@@ -104,8 +105,6 @@ useBcrypt(User,options)
 
 
 // useBcrypt(User, options)
-
-
 
 
 User.sync({alter : true})

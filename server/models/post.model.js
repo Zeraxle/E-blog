@@ -1,7 +1,18 @@
 import {DataTypes} from 'sequelize'
 import { sequelize } from '../config/sequelize.config.js'
+import User from './user.model.js'
 
 export const Post = sequelize.define('posts', {
+
+    userid : {
+        type : DataTypes.BIGINT,
+        allowNull : false, 
+
+        references: {
+            model : "user",
+            key : "id"
+        }
+    },
 
     id : {
         type : DataTypes.INTEGER,
@@ -34,7 +45,21 @@ export const Post = sequelize.define('posts', {
     {timestamps : true}
 )
 
+
+User.hasMany(Post)
+
+Post.belongsTo(User,{
+    foreignKey : "userid",
+    onDelete : "SET NULL",
+    onUpdate : "CASCADE;",
+})
+
+
+
+
 Post.sync({alter : true})
     .then(console.log('Post table created'))
     .catch(error => console.log(`Post table failed : ${error}`))
 
+
+    export default Post

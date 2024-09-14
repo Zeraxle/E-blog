@@ -1,0 +1,8 @@
+
+
+export const FavoritesPage = () => {
+
+    return(<>
+    
+    </>)
+}

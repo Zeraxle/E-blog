@@ -1,5 +1,5 @@
 import User from '../models/user.model.js'
-import { Post } from '../models/post.model.js'
+import Post from '../models/post.model.js'
 
 export const findUserById = async (req, res, next) => {
     try {

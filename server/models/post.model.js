@@ -1,18 +1,13 @@
 import {DataTypes} from 'sequelize'
 import { sequelize } from '../config/sequelize.config.js'
-// import User from './user.model.js'
+import User from './user.model.js'
 
 const Post = sequelize.define('posts', {
 
-    // userid : {
-    //     type : DataTypes.BIGINT,
-    //     allowNull : false, 
-
-    //     references: {
-    //         model : "User",
-    //         key : "id"
-    //     }
-    // },
+    userid : {
+        type : DataTypes.BIGINT,
+        allowNull : false, 
+    },
 
     id : {
         type : DataTypes.INTEGER,
@@ -22,6 +17,14 @@ const Post = sequelize.define('posts', {
     },
 
 
+    name : {
+        type : DataTypes.STRING,
+        required : [true, 'Post needs a name'],
+        allowNull : false,
+        validate : {
+            len : [3,35]
+        }
+    },
     
     category : {
         type : DataTypes.STRING,
@@ -49,16 +52,21 @@ const Post = sequelize.define('posts', {
 )
 
 
+export const setupAssociations = () => {
 
+    User.hasMany(Post, {
+        foreignKey: 'userid',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+    });
 
+    Post.belongsTo(User, {
+        foreignKey: 'userid',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+    });
 
-    // User.hasMany(Post)
-    // Post.belongsTo(User,{
-    //     foreignKey : "userid",
-    //     onDelete : "SET NULL",
-    //     onUpdate : "CASCADE;",
-    // })
-
+}
 
 
 Post.sync({alter : true})

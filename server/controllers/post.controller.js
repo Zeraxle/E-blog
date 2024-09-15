@@ -1,4 +1,4 @@
-// import Post, {setupAssociations} from "../models/post.model.js"
+import Post, {setupAssociations} from "../models/post.model.js"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -50,4 +50,4 @@ export const destroyPost = async (req, res, next) => {
     } catch(error) {res.status(400).json(error)}
 }
 
-// setupAssociations(); 
+setupAssociations(); 

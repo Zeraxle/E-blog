@@ -90,7 +90,7 @@ useBcrypt(User,options)
 
 
 
-// export const setupAssociations = () => {
+
 
     User.hasMany(Post, {
         foreignKey : "userId"

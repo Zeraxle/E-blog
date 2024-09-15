@@ -75,9 +75,9 @@ export const logUserIn = async (req, res, next) => {
 
 export const findAllPostsByUser = async(req,res,next) =>{
     try{
-        const {id} = req.params
+        const {userid} = req.params
         const findAllUsersPosts = await User.findAll({
-            where: {id : id},
+            where: {id : userid},
             include :[
                 {
                     model : Post

@@ -50,4 +50,4 @@ export const destroyPost = async (req, res, next) => {
     } catch(error) {res.status(400).json(error)}
 }
 
-setupAssociations(); 
+// setupAssociations(); 

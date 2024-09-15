@@ -7,11 +7,6 @@ export const Post = sequelize.define('posts', {
     userid : {
         type : DataTypes.BIGINT,
         allowNull : false, 
-
-        references: {
-            model : "User",
-            key : "id"
-        }
     },
 
     id : {
@@ -21,6 +16,15 @@ export const Post = sequelize.define('posts', {
         autoIncrement : true
     },
 
+
+    name : {
+        type : DataTypes.STRING,
+        required : [true, 'Post needs a name'],
+        allowNull : false,
+        validate : {
+            len : [3,35]
+        }
+    },
     
     category : {
         type : DataTypes.STRING,
@@ -51,12 +55,17 @@ export const Post = sequelize.define('posts', {
 
 export const setupAssociations =() =>{
 
-    User.hasMany(Post)
-    Post.belongsTo(User,{
-        foreignKey : "userid",
-        onDelete : "SET NULL",
-        onUpdate : "CASCADE;",
-    })
+    User.hasMany(Post, {
+        foreignKey: 'userid',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+    });
+
+    Post.belongsTo(User, {
+        foreignKey: 'userid',
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+    });
 }
 
 

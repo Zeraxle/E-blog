@@ -15,5 +15,5 @@ userRouter.route('/:id')
 userRouter.route('/login')
     .post(logUserIn)
 
-userRouter.route('/UserPost/:id')
+userRouter.route('/UserPost/:userid')
     .get(findAllPostsByUser)

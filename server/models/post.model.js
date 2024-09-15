@@ -1,18 +1,18 @@
 import {DataTypes} from 'sequelize'
 import { sequelize } from '../config/sequelize.config.js'
-import User from './user.model.js'
+// import User from './user.model.js'
 
-export const Post = sequelize.define('posts', {
+const Post = sequelize.define('posts', {
 
-    userid : {
-        type : DataTypes.BIGINT,
-        allowNull : false, 
+    // userid : {
+    //     type : DataTypes.BIGINT,
+    //     allowNull : false, 
 
-        references: {
-            model : "User",
-            key : "id"
-        }
-    },
+    //     references: {
+    //         model : "User",
+    //         key : "id"
+    //     }
+    // },
 
     id : {
         type : DataTypes.INTEGER,
@@ -20,6 +20,7 @@ export const Post = sequelize.define('posts', {
         allowNull : false,
         autoIncrement : true
     },
+
 
     
     category : {
@@ -49,15 +50,14 @@ export const Post = sequelize.define('posts', {
 
 
 
-export const setupAssociations =() =>{
 
-    User.hasMany(Post)
-    Post.belongsTo(User,{
-        foreignKey : "userid",
-        onDelete : "SET NULL",
-        onUpdate : "CASCADE;",
-    })
-}
+
+    // User.hasMany(Post)
+    // Post.belongsTo(User,{
+    //     foreignKey : "userid",
+    //     onDelete : "SET NULL",
+    //     onUpdate : "CASCADE;",
+    // })
 
 
 

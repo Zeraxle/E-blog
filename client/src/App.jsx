@@ -1,33 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {Routes, Route} from 'react-router-dom'
 import './App.css'
+import { NavBar } from './components/NavBar'
+import { WelcomePage } from './views/WelcomePage'
+import { RegistrationPage } from './views/RegistrationPage'
+import { LoginPage } from './views/LoginPage'
+import { HomePage } from './views/HomePage'
+import { SearchPage } from './views/SearchPage'
+import { ProfilePage } from './views/ProfilePage'
+import { CreatePost } from './views/CreatePost'
+import { FavoritesPage } from './views/FavoritesPage'
+import { NotificationPage } from './views/NotificationPage'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+    const [loggedInUser, setLoggedInUser] = useState({})
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar/>
+      <Routes>
+        <Route path={'/'} element={<WelcomePage/>}/>
+        <Route path={'/register'} element={<RegistrationPage/>}/>
+        <Route path={'/login'} element={<LoginPage/>}/>
+        <Route path={'/home'} element={<HomePage/>}/>
+        <Route path={'/search'} element={<SearchPage/>}/>
+        <Route path={'/user/profile'} element={<ProfilePage/>}/>
+        <Route path={'/post/create'} element={<CreatePost/>}/>
+        <Route path={'/user/favorites'} element={<FavoritesPage/>}/>
+        <Route path={'/user/notifications'} element={<NotificationPage/>}/>
+      </Routes>
+        
     </>
   )
 }

@@ -72,7 +72,7 @@ const User = sequelize.define('user', {
 )
 
 const options = {
-    feild : "password",
+    field : "password",
     rounds : 12,
     compare : "authenticate"
 }
@@ -90,21 +90,24 @@ useBcrypt(User,options)
 
 
 
+// export const setupAssociations = () => {
 
-
-// const options ={
-//     field: 'password', // secret field to hash, default: 'password'
-//     rounds: 12, // used to generate bcrypt salt, default: 12
-//     compare: 'authenticate', // method used to compare secrets, default: 'authenticate'
+    User.hasMany(Post, {
+        foreignKey : "userId"
+    })
+    Post.belongsTo(User,{
+        foreignKey : "userid",
+        onDelete : "SET NULL",
+        onUpdate : "CASCADE;",
+    })
+    // Post.belongsTo(User);
 
 // }
-// // User.hasMany(Post, {
-// //     foreignKey : "userId"
-// // })
-// // Post.belongsTo(User);
 
 
-// useBcrypt(User, options)
+
+
+useBcrypt(User, options)
 
 
 User.sync({alter : true})

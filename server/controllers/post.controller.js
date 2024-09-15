@@ -1,4 +1,7 @@
-import Post, {setupAssociations} from "../models/post.model.js"
+import Post, {setupUserPostRealationship} from "../models/post.model.js"
+import User from "../models/user.model.js"
+import Comments, {setupPostToCommentRelationship}from "../models/comment.model.js"
+import { model } from "mongoose"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -53,7 +56,7 @@ export const destroyPost = async (req, res, next) => {
 export const findPostUser = async(req,res,next) =>{
     try{
         const {postId} = req.params
-        const findUserofPost = await User.findAll({
+        const findUserofPost = await Post.findAll({
             where: {id : postId},
             include :[
                 {
@@ -65,4 +68,26 @@ export const findPostUser = async(req,res,next) =>{
     }catch (error){res.status(400).json(error)}
 }
 
-setupAssociations(); 
+export const findAllCommmentsForPost = async(req,res,next) =>{
+    try{
+        const {postId} = req.params
+        const allPostCommments =  await Post.findAll({
+            where:{
+                id : postId
+            },
+            include:[
+                {
+                    model:Comments,
+                    include:[{model: User}]
+                }
+            ],
+        })
+        res.status(200).json(allPostCommments)
+
+    }
+    catch(error){res.status(400).json(error)}
+}
+
+
+setupPostToCommentRelationship()
+setupUserPostRealationship(); 

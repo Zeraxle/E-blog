@@ -50,4 +50,19 @@ export const destroyPost = async (req, res, next) => {
     } catch(error) {res.status(400).json(error)}
 }
 
+export const findPostUser = async(req,res,next) =>{
+    try{
+        const {postId} = req.params
+        const findUserofPost = await User.findAll({
+            where: {id : postId},
+            include :[
+                {
+                    model : User
+                }
+            ]
+        })
+        res.status(200).json(findUserofPost)
+    }catch (error){res.status(400).json(error)}
+}
+
 setupAssociations(); 

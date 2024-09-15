@@ -88,4 +88,27 @@ export const findAllPostsByUser = async(req,res,next) =>{
     }catch (error){res.status(400).json(error)}
 }
 
+// export const getALLUsersPizzas = async (req, res, next) =>{
+//     try{
+//         const {userId} = req.params
+//         // console.log("yooooo")
+//         const getAllPizzasByUser = await User.findAll({
+//             // console.log("yooooooooooo")
+//             where : {id : userId},
 
+//             include :[
+//                 {
+//                 model :  Pizza
+//                 }
+
+//             ] 
+//         })
+//         res.status(200).json(getAllPizzasByUser)
+
+
+//     }catch (error){
+//         res.status(400).json(error)
+//     }
+
+
+// }

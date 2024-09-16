@@ -4,18 +4,17 @@ import User from './user.model.js'
 
 const Post = sequelize.define('posts', {
 
-    userid : {
-        type : DataTypes.BIGINT,
-        
-    },
-
     id : {
-        type : DataTypes.INTEGER,
+        type : DataTypes.BIGINT,
         primaryKey : true,
         allowNull : false,
         autoIncrement : true
     },
 
+    userid : {
+        type : DataTypes.BIGINT,
+        allowNull : false, 
+    },
 
     name : {
         type : DataTypes.STRING,
@@ -52,26 +51,27 @@ const Post = sequelize.define('posts', {
 )
 
 
-export const setupAssociations = () => {
+
+export const setupUserPostRealationship =() =>{
 
     User.hasMany(Post, {
         foreignKey: 'userid',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
 
     Post.belongsTo(User, {
         foreignKey: 'userid',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
 
 }
 
 
-Post.sync({alter : true})
-    .then(console.log('Post table created'))
-    .catch(error => console.log(`Post table failed : ${error}`))
+// Post.sync({alter : true})
+//     .then(console.log('Post table created'))
+//     .catch(error => console.log(`Post table failed : ${error}`))
 
 
     export default Post

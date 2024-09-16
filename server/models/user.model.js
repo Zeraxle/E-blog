@@ -79,34 +79,6 @@ const options = {
 useBcrypt(User,options)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    User.hasMany(Post, {
-        foreignKey : "userId"
-    })
-    Post.belongsTo(User,{
-        foreignKey : "userid",
-        onDelete : "SET NULL",
-        onUpdate : "CASCADE;",
-    })
-    // Post.belongsTo(User);
-
-// }
-
-
-
-
 useBcrypt(User, options)
 
 

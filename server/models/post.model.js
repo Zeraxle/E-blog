@@ -6,7 +6,7 @@ const Post = sequelize.define('posts', {
 
     userid : {
         type : DataTypes.BIGINT,
-        allowNull : false, 
+        
     },
 
     id : {

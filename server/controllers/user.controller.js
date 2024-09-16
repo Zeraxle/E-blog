@@ -1,5 +1,5 @@
 import User from '../models/user.model.js'
-import Post from '../models/post.model.js'
+import Post, {setupAssociations} from '../models/post.model.js'
 
 export const findUserById = async (req, res, next) => {
     try {
@@ -88,27 +88,4 @@ export const findAllPostsByUser = async(req,res,next) =>{
     }catch (error){res.status(400).json(error)}
 }
 
-// export const getALLUsersPizzas = async (req, res, next) =>{
-//     try{
-//         const {userId} = req.params
-//         // console.log("yooooo")
-//         const getAllPizzasByUser = await User.findAll({
-//             // console.log("yooooooooooo")
-//             where : {id : userId},
-
-//             include :[
-//                 {
-//                 model :  Pizza
-//                 }
-
-//             ] 
-//         })
-//         res.status(200).json(getAllPizzasByUser)
-
-
-//     }catch (error){
-//         res.status(400).json(error)
-//     }
-
-
-// }
+setupAssociations();

@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {findUserById, findAllUsers, createUser, updateUser, destroyUser, logUserIn, findAllPostsByUser} from '../controllers/user.controller.js'
+import {findUserById, findAllUsers, createUser, updateUser, destroyUser, logUserIn, findAllPostsByUser, findAllLikedPostByUser} from '../controllers/user.controller.js'
 
 export const userRouter = Router()
 
@@ -17,3 +17,6 @@ userRouter.route('/login')
 
 userRouter.route('/UserPost/:userid')
     .get(findAllPostsByUser)
+
+userRouter.route('/UserLikedPosts/:userId')
+.get(findAllLikedPostByUser)

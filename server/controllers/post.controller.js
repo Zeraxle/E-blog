@@ -1,7 +1,8 @@
 import Post, {setupUserPostRealationship} from "../models/post.model.js"
 import User from "../models/user.model.js"
+import Like,{LikestoUserandPostRelationship} from "../models/like.model.js"
 import Comments, {setupPostToCommentRelationship}from "../models/comment.model.js"
-import { model } from "mongoose"
+import { Model, model } from "mongoose"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -88,6 +89,52 @@ export const findAllCommmentsForPost = async(req,res,next) =>{
     catch(error){res.status(400).json(error)}
 }
 
+export const findAllUserWholikedPost = async (req,res,next) =>{
+    try{
+        const {postId} = req.params
+        const findPostInfo = await Like.findAll({
+    
+
+            where :{
+                postid : postId
+            }
+        }
+        )   
+        const userIds = findPostInfo.map(Like => Like.userid)
+        const UserWhoLikedPost = await User.findAll({
+            where: {
+                id : userIds
+            }
+        })
+
+        console.log(userIds)
+        res.status(200).json(UserWhoLikedPost)
+    }
+    catch(error){ res.status(400).json(error)
+    }
+}
+
+// export const findAllUserWholikedPost = async (req,res,next) =>{
+//     try{
+//         const {postId} = req.params
+//         const findLikersOfPost = await Post.findAll({
+//             where:{id : postId},
+//                 include :[{
+
+//                     Model : User
+//                 }
+//                 ]
+
+//         }
+//         )   
+//         res.status(200).json(findLikersOfPost)
+//     }
+//     catch(error){ res.status(400).json(error)
+//     }
+// }
+
+
 
 setupPostToCommentRelationship()
 setupUserPostRealationship(); 
+LikestoUserandPostRelationship()

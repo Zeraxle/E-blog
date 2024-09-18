@@ -1,5 +1,6 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
+import Like from '../models/like.model.js'
 
 export const findUserById = async (req, res, next) => {
     try {
@@ -88,4 +89,24 @@ export const findAllPostsByUser = async(req,res,next) =>{
     }catch (error){res.status(400).json(error)}
 }
 
+export const findAllLikedPostByUser = async (req,res,next) =>{
+    try{
+        const {userId} = req.params
 
+        const findUser = await Like.findAll({
+            where :{
+                userid : userId
+            }
+        })
+        const postInfo = findUser.map(Like => Like.postid)
+        
+        const AllUsersLikePost = await Post.findAll({
+            where:{
+                id : postInfo
+            }
+        })
+        console.log(postInfo)
+        res.status(200).json(AllUsersLikePost)
+    }catch(error) {res.status(400).json(error)}
+
+}

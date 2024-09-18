@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost} from '../controllers/post.controller.js'
+import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost, findAllUserWholikedPost} from '../controllers/post.controller.js'
 
 export const postRouter = Router()
 
@@ -17,3 +17,6 @@ postRouter.route('/postuser/:postId')
 
 postRouter.route('/postcomments/:postId')
     .get(findAllCommmentsForPost)
+
+postRouter.route('/postLikers/:postId')
+    .get(findAllUserWholikedPost)

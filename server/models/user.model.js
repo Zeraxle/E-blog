@@ -3,7 +3,7 @@ import { sequelize } from "../config/sequelize.config.js";
 import Post from "./post.model.js";
 import Comments from "./comment.model.js";
 import Like from "./like.model.js"
-import pkg, { compare } from 'bcrypt-node';
+// import pkg, { compare } from 'bcrypt-node';
 
 
 import useBcrypt from 'sequelize-bcrypt'

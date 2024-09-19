@@ -87,26 +87,11 @@ const User = sequelize.define('user', {
 )
 
 const options = {
-<<<<<<< HEAD
     field : "password",
     rounds : 12,
     compare : "authenticate"
-=======
-    feild: "password",
-    rounds: 12,
-    compare: "authenticate"
->>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 }
 
-<<<<<<< HEAD
-
-useBcrypt(User, options)
-
-// Sync the models in the correct order // Assuming you have a user model
-
-// Sync user and post tables first
-=======
->>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 User.sync({ alter: true })
     .then(() => Post.sync({ alter: true }))
     .then(() => Comments.sync({ alter: true }))

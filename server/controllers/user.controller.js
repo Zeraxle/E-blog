@@ -1,7 +1,7 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
 import Like from '../models/like.model.js'
-
+import  Follow, { userAndFollowerRelationship } from '../models/follow.model.js'
 export const findUserById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -110,3 +110,47 @@ export const findAllLikedPostByUser = async (req,res,next) =>{
     }catch(error) {res.status(400).json(error)}
 
 }
+
+export const findWhoFollowsUser = async (req,res,next) =>{
+    try{
+        const {userid} = req.params
+        const usersFollowersId = await Follow.findAll({
+            where:{
+                followedUserId : userid
+            }
+        })
+        const userFollowersInfo = usersFollowersId.map(followers => followers.followerId)
+
+        const AllUsersFollowers = await User.findAll({
+            where:{
+                id : userFollowersInfo
+            }
+        })
+        // console.log(userFollowersId)
+        res.status(200).json(AllUsersFollowers)
+
+    }
+    catch(error){res.status(400).json(error)}
+}
+
+export const findWhoUserFollows =  async (req, res, next) =>{
+    try{
+        const {userid} = req.params
+        const foundUser = await  Follow.findAll({
+            where: {
+                followerId : userid
+            }
+        })
+        const userFollowersId = foundUser.map (following => following.followedUserId)
+        const userFollowersInfo = await User.findAll({
+            where:{
+                id : userFollowersId
+            }
+        })
+        res.status(200).json(userFollowersInfo)
+
+    }
+    catch(error) {res.status(400).json(error)}
+}
+
+userAndFollowerRelationship()

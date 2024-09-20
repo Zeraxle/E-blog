@@ -3,6 +3,7 @@ import { sequelize } from "../config/sequelize.config.js";
 import Post from "./post.model.js";
 import Comments from "./comment.model.js";
 import Like from "./like.model.js"
+import Follow from "./follow.model.js";
 import pkg, { compare } from 'bcrypt-node';
 
 
@@ -70,49 +71,25 @@ const User = sequelize.define('user', {
 },
 {
     timestamps: true ,
-    indexes: [
-        {
-            unique: true,
-            fields: ['username']
-            // EXPLICITLY ADDS UNIQUE INDEX ON USERNAME
-        },
-        {
-            unique: true,
-            fields: ['email']
-            // EXPLICITLY ADDS UNIQUE INDEX ON EMAIL 
-        }
-    ],
+
 }
 
 )
 
 const options = {
-<<<<<<< HEAD
-    field : "password",
-    rounds : 12,
-    compare : "authenticate"
-=======
     feild: "password",
     rounds: 12,
     compare: "authenticate"
->>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 }
 
-<<<<<<< HEAD
-
-useBcrypt(User, options)
-
-// Sync the models in the correct order // Assuming you have a user model
-
-// Sync user and post tables first
-=======
->>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
-User.sync({ alter: true })
-    .then(() => Post.sync({ alter: true }))
-    .then(() => Comments.sync({ alter: true }))
-    .then(() => Like.sync({ alter: true }))
-    .then(() => console.log("All tables created"))
-    .catch(error => console.log(`Table creation failed: ${error}`));
+    User.sync({ force: false, alter : false  })
+        .then(() => Post.sync({ force: false }))
+        .then(() => Comments.sync({ force: false }))
+        .then(() => Like.sync({ force: false }))
+        .then(() => Follow.sync({force: false}))
+        .then(() => console.log("All tables created"))
+        .catch(error => console.log(`Table creation failed: ${error}`));
+// Check if data is gettings saved 
 
 export default User
 

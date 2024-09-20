@@ -6,5 +6,5 @@ export const followRouter = Router()
 followRouter.route('/')
     .post(createFollow)
 
-followRouter.route('/:id')
+followRouter.route('/:id/:followedId')
     .delete(destroyFollow)

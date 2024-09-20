@@ -1,4 +1,4 @@
-import { Follow } from "../models/follow.model.js";
+import Follow   from "../models/follow.model.js";
 
 export const createFollow = async (req, res, next) => {
     try {
@@ -9,12 +9,14 @@ export const createFollow = async (req, res, next) => {
 
 export const destroyFollow = async (req, res, next) => {
     try {
-        const {id} = req.params
+        const {id, followedId} = req.params
         const destroyedFollow = await Follow.destroy({
             where : {
-                id : id
+                followerId : id,
+                followedUserId : followedId
             }
         })
         res.status(200).json(destroyedFollow)
     } catch(error) {res.status(400).json(error)}
 }
+

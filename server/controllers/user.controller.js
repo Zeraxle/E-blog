@@ -1,7 +1,7 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
 import Like from '../models/like.model.js'
-import  Follow, { userAndFollowerRelationship } from '../models/follow.model.js'
+
 export const findUserById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -71,6 +71,9 @@ export const logUserIn = async (req, res, next) => {
             return res.status(404).json({message : 'User not found'})
         }
         res.status(200).json(isCorrectEmail)
+        // const token = jwt.sign({id : req.body.id}, process.env.JWT_SECRET, {expiresIn: '1h'})
+        // console.log(res.json({token}))
+        // res.json({token})
     } catch (error){res.status(400).json(error)}
 }
 

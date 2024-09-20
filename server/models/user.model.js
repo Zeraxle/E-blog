@@ -3,7 +3,7 @@ import { sequelize } from "../config/sequelize.config.js";
 import Post from "./post.model.js";
 import Comments from "./comment.model.js";
 import Like from "./like.model.js"
-import pkg, { compare } from 'bcrypt-node';
+// import pkg, { compare } from 'bcrypt-node';
 
 
 import useBcrypt from 'sequelize-bcrypt'
@@ -78,18 +78,23 @@ const User = sequelize.define('user', {
 const options = {
     field : "password",
     rounds : 12,
-    compare : "authenticate",
+    compare : "authenticate"
+=======
     feild: "password",
     rounds: 12,
     compare: "authenticate"
+>>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 }
 
+<<<<<<< HEAD
 
 useBcrypt(User, options)
 
 // Sync the models in the correct order // Assuming you have a user model
 
 // Sync user and post tables first
+=======
+>>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 User.sync({ alter: true })
     .then(() => Post.sync({ alter: true }))
     .then(() => Comments.sync({ alter: true }))

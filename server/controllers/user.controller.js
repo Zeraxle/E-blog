@@ -1,6 +1,7 @@
 import User from '../models/user.model.js'
 import Post from '../models/post.model.js'
 import Like from '../models/like.model.js'
+// import jwt from 'jsonwebtoken'
 
 export const findUserById = async (req, res, next) => {
     try {

@@ -3,6 +3,7 @@ import { sequelize } from "../config/sequelize.config.js";
 import Post from "./post.model.js";
 import Comments from "./comment.model.js";
 import Like from "./like.model.js"
+import Follow from "./follow.model.js";
 // import pkg, { compare } from 'bcrypt-node';
 
 
@@ -79,25 +80,22 @@ const options = {
     field : "password",
     rounds : 12,
     compare : "authenticate"
-=======
-    feild: "password",
-    rounds: 12,
-    compare: "authenticate"
->>>>>>> 362d05c7130a9e5fa3f18416a39e9b1e8815d28c
 }
 
 
-useBcrypt(User, options)
 
 // Sync the models in the correct order // Assuming you have a user model
 
 // Sync user and post tables first
-User.sync({ alter: true })
-    .then(() => Post.sync({ alter: true }))
-    .then(() => Comments.sync({ alter: true }))
-    .then(() => Like.sync({ alter: true }))
-    .then(() => console.log("All tables created"))
-    .catch(error => console.log(`Table creation failed: ${error}`));
+// Sync in an order that respects foreign key constraints
+ // Safe sync without dropping tables
+User.sync()
+.then(() => Post.sync())
+.then(() => Comments.sync())
+.then(() => Like.sync())
+.then(() => Follow.sync())
+.then(() => console.log("All tables synced"))
+.catch(error => console.log(`Table sync failed: ${error}`));
 
 export default User
 

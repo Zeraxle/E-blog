@@ -10,6 +10,8 @@ postRouter.route('/')
 postRouter.route('/:id')
     .get(findPostById)
     .put(updatePost)
+
+postRouter.route('/:userid/:postid')
     .delete(destroyPost)
 
 postRouter.route('/postuser/:postId')

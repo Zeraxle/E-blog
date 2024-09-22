@@ -1,6 +1,7 @@
 import User from '../models/user.model.js'
-import Post from '../models/post.model.js'
+import Post, {setupUserPostRealationship} from '../models/post.model.js'
 import Like from '../models/like.model.js'
+import Follow, {userAndFollowerRelationship} from '../models/follow.model.js'
 // import jwt from 'jsonwebtoken'
 
 export const findUserById = async (req, res, next) => {
@@ -81,13 +82,13 @@ export const logUserIn = async (req, res, next) => {
 export const findAllPostsByUser = async(req,res,next) =>{
     try{
         const {userid} = req.params
-        const findAllUsersPosts = await User.findAll({
-            where: {id : userid},
-            include :[
-                {
-                    model : Post
-                }
-            ]
+        const findAllUsersPosts = await Post.findAll({
+            where: {userid : userid},
+            // include :[
+            //     {
+            //         model : Post
+            //     }
+            // ]
         })
         res.status(200).json(findAllUsersPosts)
     }catch (error){res.status(400).json(error)}
@@ -158,3 +159,4 @@ export const findWhoUserFollows =  async (req, res, next) =>{
 }
 
 userAndFollowerRelationship()
+setupUserPostRealationship(); 

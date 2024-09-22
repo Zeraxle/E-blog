@@ -6,6 +6,6 @@ export const likeRouter = Router()
 likeRouter.route('/')
     .post(createLike)
 
-likeRouter.route('/:id')
+likeRouter.route('/:userid/:postid')
     .delete(destroyLike)
 

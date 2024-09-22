@@ -74,4 +74,4 @@ export const setupUserPostRealationship =() =>{
 //     .catch(error => console.log(`Post table failed : ${error}`))
 
 
-    export default Post
+export default Post

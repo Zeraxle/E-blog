@@ -44,10 +44,11 @@ export const updatePost = async (req, res, next) => {
 
 export const destroyPost = async (req, res, next) => {
     try {
-        const {id} = req.params
+        const {userid, postid} = req.params
         const destroyedPost = await Post.destroy({
             where : {
-                id : id
+                userid : userid,
+                id : postid
             }
         })
         res.status(200).json(destroyedPost)
@@ -136,5 +137,5 @@ export const findAllUserWholikedPost = async (req,res,next) =>{
 
 
 setupPostToCommentRelationship()
-setupUserPostRealationship(); 
+
 LikestoUserandPostRelationship()

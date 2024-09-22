@@ -7,7 +7,9 @@ export const commentRouter = Router()
 commentRouter.route('/')
     .post(CreateComment)
 commentRouter.route('/:id')
-    .delete(DeleteComment)
     .put(UpdateComment)
     .get(findOneComment)
 
+
+commentRouter.route('/:userid/:postid')
+    .delete(DeleteComment)

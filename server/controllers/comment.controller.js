@@ -14,10 +14,11 @@ export const CreateComment = async(req,res,next) =>{
 
 export const DeleteComment = async(req,res,next) =>{
     try{
-        const {id} = req.params 
+        const {userid, postid} = req.params 
         const destroyComment =  await Comments.destroy({
             where :{
-                id : id
+                userid : userid,
+                postid : postid
             }
         }
         )

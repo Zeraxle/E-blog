@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logUserIn } from '../../../server/controllers/user.controller.js'
+import { logUserIn } from '../services/user.service.js' 
 
 
 export const LoginPage = () => {

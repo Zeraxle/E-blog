@@ -39,3 +39,9 @@ export const destroyUser = async (id) => {
     } catch(error){throw error}
 }
 
+export const logUserIn = async (user) => {
+    try {
+        const res = await USER_INSTANCE.post('/login', user)
+        return res.data
+    } catch(error){throw error}
+}

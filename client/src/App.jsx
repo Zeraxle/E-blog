@@ -21,14 +21,14 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path={'/'} element={<WelcomePage/>}/>
-        <Route path={'/register'} element={<RegistrationPage/>}/>
-        <Route path={'/login'} element={<LoginPage/>}/>
-        <Route path={'/home'} element={<HomePage/>}/>
-        <Route path={'/search'} element={<SearchPage/>}/>
-        <Route path={'/user/profile'} element={<ProfilePage/>}/>
-        <Route path={'/post/create'} element={<CreatePost/>}/>
-        <Route path={'/user/favorites'} element={<FavoritesPage/>}/>
-        <Route path={'/user/notifications'} element={<NotificationPage/>}/>
+        <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
+        <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
+        <Route path={'/home'} element={<HomePage loggedInUser={loggedInUser}/>}/>
+        <Route path={'/search'} element={<SearchPage loggedInUser={loggedInUser}/>}/>
+        <Route path={'/user/profile'} element={<ProfilePage loggedInUser={loggedInUser}/>}/>
+        <Route path={'/post/create'} element={<CreatePost loggedInUser={loggedInUser}/>}/>
+        <Route path={'/user/favorites'} element={<FavoritesPage loggedInUser={loggedInUser}/>}/>
+        <Route path={'/user/notifications'} element={<NotificationPage loggedInUser={loggedInUser}/>}/>
       </Routes>
         
     </>

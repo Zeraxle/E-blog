@@ -1,19 +1,23 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logUserIn } from '../services/user.service.js' 
+import { logUserIn } from '../services/UserService.js' 
 
 
-export const LoginPage = () => {
+export const LoginPage = (props) => {
+
+    const {setLoggedInUser} = props
     
     const [user, setUser] = useState({
-        username : '',
+        email : '',
         password : ''
     })
 
     const [errors, setErrors] = useState({
-        username : '',
+        email : '',
         password : ''
     })
+
+    const navigate = useNavigate()
 
     const changeHandler = (e) => {
         const {name, value} = e.target
@@ -22,18 +26,21 @@ export const LoginPage = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        logUserIn(user)
+        logUserIn(user.email)
+            .then(setLoggedInUser(user.email))
+            .then(navigate('/home'))
+            .catch(error => console.log(error))
     }
 
     return(<>
         <h1>E-Blog</h1>
         <form onSubmit={submitHandler}>
             <label >
-                Username: 
+                Email: 
                 <input 
-                    type="text" 
-                    name="username" 
-                    value={user.username}
+                    type="email" 
+                    name="email" 
+                    value={user.email}
                     onChange={changeHandler} 
                 />
             </label>

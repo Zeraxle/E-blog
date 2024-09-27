@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {createUser} from '../services/user.service.js'
+import {createUser} from '../services/UserService.js'
 
 export const RegistrationPage = () => {
 

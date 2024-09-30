@@ -90,6 +90,46 @@ export const findAllCommmentsForPost = async(req,res,next) =>{
     catch(error){res.status(400).json(error)}
 }
 
+export const findAllTvshowPosts = async (req,res,next) =>{
+    try{
+        console.log("gotttittt")
+        const allTvShowPosts = await Post.findAll({
+            where : 
+            {category : 'Tv-show'}
+        })
+        res.status(200).json(allTvShowPosts)
+
+    }
+    catch(error){res.status(400).json(error)}
+}
+
+
+export const findAllMoviePosts = async (req,res,next) =>{
+    try{
+        console.log("gotttittt")
+        const allTvMoviePosts = await Post.findAll({
+            where : 
+            {category : 'Movie'}
+        })
+        res.status(200).json(allTvMoviePosts)
+
+    }
+    catch(error){res.status(400).json(error)}
+}
+
+export const findAllAnimePosts = async (req,res,next) =>{
+    try{
+        console.log("gotttittt")
+        const allAnimePosts = await Post.findAll({
+            where : 
+            {category : 'Anime'}
+        })
+        res.status(200).json(allAnimePosts)
+
+    }
+    catch(error){res.status(400).json(error)}
+}
+
 export const findAllUserWholikedPost = async (req,res,next) =>{
     try{
         const {postId} = req.params
@@ -114,6 +154,7 @@ export const findAllUserWholikedPost = async (req,res,next) =>{
     catch(error){ res.status(400).json(error)
     }
 }
+
 
 // export const findAllUserWholikedPost = async (req,res,next) =>{
 //     try{

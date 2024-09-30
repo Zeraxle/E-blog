@@ -20,6 +20,7 @@
     "mongoose": "^8.6.2",
     "mysql2": "^3.11.2",
     "nodeman": "^1.1.2",
+    "pg-hstore": "^2.3.4",
     "save-dev": "^0.0.1-security",
     "sequelize": "^6.37.3",
     "sequelize-bcrypt": "^1.2.0"

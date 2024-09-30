@@ -1,11 +1,23 @@
 import {Router} from 'express'
-import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost, findAllUserWholikedPost} from '../controllers/post.controller.js'
+import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost, findAllUserWholikedPost, findAllTvshowPosts, findAllMoviePosts, findAllAnimePosts} from '../controllers/post.controller.js'
 
 export const postRouter = Router()
 
 postRouter.route('/')
     .get(findAllPosts)
     .post(createPost)
+
+postRouter.route('/allTvShowPosts')
+    .get(findAllTvshowPosts)
+
+postRouter.route('/allMoviePosts')
+    .get(findAllMoviePosts)
+
+postRouter.route('/allMoviePosts')
+    .get(findAllMoviePosts)
+
+postRouter.route('/allAnimePosts')
+    .get(findAllAnimePosts)
 
 postRouter.route('/:id')
     .get(findPostById)

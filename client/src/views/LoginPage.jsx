@@ -1,19 +1,22 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logUserIn } from '../services/UserService.js' 
+import { useAuth } from '../config/AuthContext.jsx'
+import { loginUser } from '../services/AuthService.js'
+// import { logUserIn } from '../services/UserService.js' 
 
 
 export const LoginPage = (props) => {
 
     const {setLoggedInUser} = props
+    const { setAuthState } = useAuth()
     
-    const [user, setUser] = useState({
-        email : '',
+    const [formData, setFormData] = useState({
+        username : '',
         password : ''
     })
 
     const [errors, setErrors] = useState({
-        email : '',
+        username : '',
         password : ''
     })
 
@@ -21,26 +24,27 @@ export const LoginPage = (props) => {
 
     const changeHandler = (e) => {
         const {name, value} = e.target
-        setUser({...user, [name] : value})
+        setFormData({...formData, [name] : value})
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
-        logUserIn(user.email)
-            .then(setLoggedInUser(user.email))
-            .then(navigate('/home'))
-            .catch(error => console.log(error))
+        try {
+            const res = await loginUser(formData)
+            setAuthState({user: res.user, token: res.token})
+            navigate('/home')
+        } catch (error) { console.error('Error during login', error)}
     }
 
     return(<>
         <h1>E-Blog</h1>
         <form onSubmit={submitHandler}>
             <label >
-                Email: 
+                Username: 
                 <input 
-                    type="email" 
-                    name="email" 
-                    value={user.email}
+                    type="text" 
+                    name="username" 
+                    value={formData.username}
                     onChange={changeHandler} 
                 />
             </label>
@@ -49,7 +53,7 @@ export const LoginPage = (props) => {
                 <input 
                     type="text"
                     name="password"
-                    value={user.password} 
+                    value={formData.password} 
                     onChange={changeHandler}
                 />
             </label>

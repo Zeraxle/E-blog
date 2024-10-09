@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {createUser} from '../services/UserService.js'
+import {registerUser} from '../services/AuthService.js'
 
 export const RegistrationPage = () => {
 
-    const [user, setUser] = useState({
+    const [formData, setFormData] = useState({
         firstName : '',
         lastName : '',
         username : '',
@@ -22,6 +23,8 @@ export const RegistrationPage = () => {
         confirmPassword : ''
     })
 
+    const navigate = useNavigate()
+
     const validateUser = (name, value) => {
         const validations = {
             firstName : value => value.length >= 2 && value.length <= 30? true : 'First Name must be 2-30 characters',
@@ -30,8 +33,8 @@ export const RegistrationPage = () => {
             email : value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)? true : 'Email must be valid',
             password : value => value.length >= 8 && value.length <= 30? true : 'Password must be 8-30 characters',
             confirmPassword : (value) => {
-                if(name == "confirmPassword"){return user.password === value? true : 'Passwords must match'}
-                if(name == "password"){return user.confirmPassword === value? true : 'Passwords must match'}
+                if(name == "confirmPassword"){return formData.password === value? true : 'Passwords must match'}
+                if(name == "password"){return formData.confirmPassword === value? true : 'Passwords must match'}
             }
         } 
         if (name == "password") {setErrors(prev => ( {...prev, confirmPassword : validations["confirmPassword"](value)} ) )}
@@ -49,19 +52,21 @@ export const RegistrationPage = () => {
 
     const changeHandler = (e) => {
         const {name, value} = e.target
-        setUser({...user, [name] : value})
+        setFormData({...formData, [name] : value})
         validateUser(name, value)
     }
 
-    const submitHandler = e => {
+    const submitHandler = async e => {
         e.preventDefault()
         if(!readyToSubmit){
             alert('Please fill out the form correctly')
             return
         }
-        createUser(user)
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
+        try {
+            const res = await registerUser(formData)
+            console.log('User registered:', res)
+            navigate('/user/profile')
+        } catch (error) {console.log('Error during registration', error)}
     }
 
     return(<>
@@ -72,7 +77,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="text"
                     name="firstName"
-                    value={user.firstName}
+                    value={formData.firstName}
                     onChange={changeHandler} 
                 />
                 {errors?.firstName && <p>{errors.firstName}</p>}
@@ -82,7 +87,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="text"
                     name="lastName"
-                    value={user.lastName}
+                    value={formData.lastName}
                     onChange={changeHandler} 
                 />
                 {errors?.lastName && <p>{errors.lastName}</p>}
@@ -92,7 +97,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="text"
                     name="username"
-                    value={user.username}
+                    value={formData.username}
                     onChange={changeHandler} 
                 />
                 {errors?.username && <p>{errors.username}</p>}
@@ -102,7 +107,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="email"
                     name="email"
-                    value={user.email}
+                    value={formData.email}
                     onChange={changeHandler} 
                 />
                 {errors?.email && <p>{errors.email}</p>}
@@ -112,7 +117,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="text"
                     name="password"
-                    value={user.password}
+                    value={formData.password}
                     onChange={changeHandler} 
                 />
                 {errors?.password && <p>{errors.password}</p>}
@@ -122,7 +127,7 @@ export const RegistrationPage = () => {
                 <input 
                     type="text"
                     name="confirmPassword"
-                    value={user.confirmPassword}
+                    value={formData.confirmPassword}
                     onChange={changeHandler} 
                 />
                 {errors?.confirmPassword && <p>{errors.confirmPassword}</p>}

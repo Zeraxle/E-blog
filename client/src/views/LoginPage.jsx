@@ -1,14 +1,14 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../config/AuthContext.jsx'
-import { loginUser } from '../services/AuthService.js'
-// import { logUserIn } from '../services/UserService.js' 
+import { loginUser, getProfile } from '../services/AuthService.js'
+
 
 
 export const LoginPage = (props) => {
 
     const {setLoggedInUser} = props
-    const { setAuthState } = useAuth()
+    const { authState, setAuthState } = useAuth()
     
     const [formData, setFormData] = useState({
         username : '',
@@ -31,7 +31,7 @@ export const LoginPage = (props) => {
         e.preventDefault()
         try {
             const res = await loginUser(formData)
-            setAuthState({user: res.user, token: res.token})
+            setAuthState({user: res.response.data.user.id, token: res.response.data.sessionId})
             navigate('/home')
         } catch (error) { console.error('Error during login', error)}
     }
@@ -47,6 +47,7 @@ export const LoginPage = (props) => {
                     value={formData.username}
                     onChange={changeHandler} 
                 />
+                {authState.user? <p>{authState.user}</p> : null}
             </label>
             <label>
                 Password:
@@ -56,6 +57,7 @@ export const LoginPage = (props) => {
                     value={formData.password} 
                     onChange={changeHandler}
                 />
+                {authState.token? <p>{authState.token}</p> : null}
             </label>
             <input type="submit" value="Login" />
         </form>

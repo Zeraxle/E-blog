@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import { generateToken } from "../utils/jwt.js";
 import { storeToken, getToken } from "./token.service.js";
 
+
 export const registerUser = async ({firstName, lastName, username, email, password}) => {
     let existingUser = await User.findOne({where : {email}})
     if (existingUser) throw new Error('User already exists')
@@ -20,6 +21,8 @@ export const loginUser = async (username, password) => {
     if (!isMatch) throw new Error('Invalid credentials')
     
     const token = generateToken(user)
+    if (!token) throw new Error('No token was created')
     const sessionId = await storeToken(token)
+
     return {user, sessionId}
 }

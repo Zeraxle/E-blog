@@ -2,7 +2,7 @@ import User from '../models/user.model.js'
 import Post, {setupUserPostRealationship} from '../models/post.model.js'
 import Like from '../models/like.model.js'
 import Follow, {userAndFollowerRelationship} from '../models/follow.model.js'
-// import jwt from 'jsonwebtoken'
+
 
 export const findUserById = async (req, res, next) => {
     try {
@@ -19,12 +19,6 @@ export const findAllUsers = async (req, res, next) => {
     } catch(error) {res.status(400).json(error)}
 }
 
-export const createUser = async (req, res, next) => {
-    try {
-        const createdUser = await User.create(req.body)
-        res.status(200).json(createdUser)
-    } catch(error){res.status(400).json(error)}
-}
 
 export const updateUser = async (req, res, next) => {
     try {
@@ -59,25 +53,30 @@ export const destroyUser = (req, res, next) => {
     } catch(error){res.status(400).json(error)}
 } 
 
-export const logUserIn = async (req, res, next) => {
-    try {
-        const {email, password} = req.body
-        const isCorrectEmail = await User.findOne({
-            where : {email : email}
-        })
-        if(!isCorrectEmail){
-            return res.status(404).json({message : 'User not found'})
-        }
-        const isCorrectPassword = isCorrectEmail.authenticate(password)
-        if(!isCorrectPassword){
-            return res.status(404).json({message : 'User not found'})
-        }
-        res.status(200).json(isCorrectEmail)
-        // const token = jwt.sign({id : req.body.id}, process.env.JWT_SECRET, {expiresIn: '1h'})
-        // console.log(res.json({token}))
-        // res.json({token})
-    } catch (error){res.status(400).json(error)}
-}
+// export const logUserIn = async (req, res, next) => {
+    //     try {
+        //         const {email, password} = req.body
+        //         const isCorrectEmail = await User.findOne({
+            //             where : {email : email}
+            //         })
+            //         if(!isCorrectEmail){
+                //             return res.status(404).json({message : 'User not found'})
+                //         }
+                //         const isCorrectPassword = isCorrectEmail.authenticate(password)
+                //         if(!isCorrectPassword){
+                    //             return res.status(404).json({message : 'User not found'})
+                    //         }
+                    //         res.status(200).json(isCorrectEmail)
+                    //     } catch (error){res.status(400).json(error)}
+                    // }
+                    
+                    
+
+// export const logoutUser = (req, res, next) => {
+//     try{
+//         const 
+//     }
+// }
 
 export const findAllPostsByUser = async(req,res,next) =>{
     try{

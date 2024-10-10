@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const COMMENT_INSTANCE = axios.create({
-    baseURL : 'http://localhost8000/comment'
+    baseURL : 'http://localhost:8000/comment'
 })
 
 export const findComment = async (id) => {

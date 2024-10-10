@@ -1,8 +1,10 @@
 import Post, {setupUserPostRealationship} from "../models/post.model.js"
 import User from "../models/user.model.js"
+import Follow from "../models/follow.model.js"
 import Like,{LikestoUserandPostRelationship} from "../models/like.model.js"
 import Comments, {setupPostToCommentRelationship}from "../models/comment.model.js"
 import { Model, model } from "mongoose"
+import { where } from "sequelize"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -156,24 +158,36 @@ export const findAllUserWholikedPost = async (req,res,next) =>{
 }
 
 
-// export const findAllUserWholikedPost = async (req,res,next) =>{
-//     try{
-//         const {postId} = req.params
-//         const findLikersOfPost = await Post.findAll({
-//             where:{id : postId},
-//                 include :[{
 
-//                     Model : User
-//                 }
-//                 ]
 
-//         }
-//         )   
-//         res.status(200).json(findLikersOfPost)
-//     }
-//     catch(error){ res.status(400).json(error)
-//     }
-// }
+
+
+
+
+
+
+export const findAllFollowersPosts = async (req, res, next ) =>{
+    try{
+        const {userId} = req.params
+        const foundUser = await Follow.findAll({
+            where :{
+                followerId : userId
+            }
+        })
+        const usersFollowersId = foundUser.map(following => following.followedUserId)
+
+        const postsByFollowers = await Post.findAll({
+            where:{
+                userid : usersFollowersId
+            }
+        })
+        res.status(200).json(postsByFollowers)
+        console.log(postsByFollowers)
+    }
+    catch (error){
+    res.status(400).json(error)
+    }
+}
 
 
 

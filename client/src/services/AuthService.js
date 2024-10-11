@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
+
 const AUTH_INSTANCE = axios.create(
     {baseURL : 'http://localhost:8000/auth', withCredentials: true})
 
@@ -39,3 +40,15 @@ export const getProfile = async () => {
         throw error;
     }
 };
+
+export const logout = async () => {
+    
+    try {
+        const response = await AUTH_INSTANCE.post('/logout')
+        Cookies.remove('sessionId')
+
+        return response.data
+    } catch (error) { 
+        console.log('Logout Error', error) 
+        throw error}
+}

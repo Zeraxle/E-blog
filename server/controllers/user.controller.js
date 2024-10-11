@@ -53,31 +53,6 @@ export const destroyUser = (req, res, next) => {
     } catch(error){res.status(400).json(error)}
 } 
 
-// export const logUserIn = async (req, res, next) => {
-    //     try {
-        //         const {email, password} = req.body
-        //         const isCorrectEmail = await User.findOne({
-            //             where : {email : email}
-            //         })
-            //         if(!isCorrectEmail){
-                //             return res.status(404).json({message : 'User not found'})
-                //         }
-                //         const isCorrectPassword = isCorrectEmail.authenticate(password)
-                //         if(!isCorrectPassword){
-                    //             return res.status(404).json({message : 'User not found'})
-                    //         }
-                    //         res.status(200).json(isCorrectEmail)
-                    //     } catch (error){res.status(400).json(error)}
-                    // }
-                    
-                    
-
-// export const logoutUser = (req, res, next) => {
-//     try{
-//         const 
-//     }
-// }
-
 export const findAllPostsByUser = async(req,res,next) =>{
     try{
         const {userid} = req.params

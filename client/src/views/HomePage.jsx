@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
-import { getProfile } from "../services/AuthService.js"
+import { logout } from "../services/AuthService.js"
 import Cookies from 'js-cookie'
 import axios from "axios"
 
 export const HomePage = (props) => {
 
     const {loggedInUser} = props
-    const {logout, authState, setAuthState } = useAuth()
+    const {authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
 
     const navigate = useNavigate()
@@ -25,13 +25,19 @@ export const HomePage = (props) => {
         })
         .catch(error => console.log(error))
         }, []);
+        
+        const logoutUser = (e) => {
+            logout()
+                .then(navigate('/'))
+                .catch(error => console.log(error))
+        } 
 
     return(<>
         
 
                 <h1>Homepage</h1>
                 {user? <p>{user.username}</p> : null}
-                <button onClick={logout}>Logout</button>
+                <button onClick={logoutUser}>Logout</button>
                 <Link to={'/user/profile'}>User Profile</Link>
 
     </>)

@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost, findAllUserWholikedPost, findAllTvshowPosts, findAllMoviePosts, findAllAnimePosts} from '../controllers/post.controller.js'
+import { findPostById, findAllPosts, createPost, updatePost, destroyPost, findPostUser, findAllCommmentsForPost, findAllUserWholikedPost, findAllTvshowPosts, findAllMoviePosts, findAllAnimePosts, findAllFollowersPosts} from '../controllers/post.controller.js'
 
 export const postRouter = Router()
 
@@ -19,9 +19,14 @@ postRouter.route('/allMoviePosts')
 postRouter.route('/allAnimePosts')
     .get(findAllAnimePosts)
 
+postRouter.route('/:userId/followersPosts')
+        .get(findAllFollowersPosts)
+        
 postRouter.route('/:id')
     .get(findPostById)
     .put(updatePost)
+    
+
 
 postRouter.route('/:userid/:postid')
     .delete(destroyPost)

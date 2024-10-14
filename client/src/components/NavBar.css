@@ -1,0 +1,55 @@
+img{
+    height: 45px;
+    
+}
+
+input{
+    width: 400px;
+    height: 30px;
+    border: 4px;
+    border-radius: 6px;
+    background-color: white;
+}
+
+.TopNavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.TopNavBar h1{
+    color: #FF4500;
+}
+
+.TopNavBar :hover{
+    color: #FF4500;
+}
+
+h1{
+    margin-right: 20px;
+}
+
+.SideNavBar{
+    text-align: left; /* Aligns text to the left */
+    padding: 10px;
+
+}
+
+.SideNavBar p {
+    background-color: white;
+    color: black;
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    display: flex; /* Enable Flexbox */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    text-align: center; /* Center text alignment */
+}
+
+
+.SideNavBar p:hover{
+    background-color: #FF4500;
+}

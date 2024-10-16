@@ -3,12 +3,14 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import Cookies from 'js-cookie'
-import axios from "axios"
+
 
 export const SearchPage = () => {
 
-    const {logout, authState, setAuthState } = useAuth()
+    const {authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
@@ -19,7 +21,13 @@ export const SearchPage = () => {
             .catch(error => console.log(error))
         }, []);
 
+        const logoutUser = () => {
+            logout()
+                .then(navigate('/'))
+                .catch(error => console.log(error))
+        }
+
     return(<>
-    
+        <button onClick={logoutUser}>Logout</button>
     </>)
 }

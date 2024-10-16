@@ -3,13 +3,15 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import Cookies from 'js-cookie'
-import axios from "axios"
+
 
 export const NotificationPage = (props) => {
 
     const {loggedInUser} = props
     const {logout, authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
@@ -20,7 +22,14 @@ export const NotificationPage = (props) => {
             .catch(error => console.log(error))
         }, []);
 
+        const logoutUser = () => {
+            logout()
+                .then(navigate('/'))
+                .catch(error => console.log(error))
+        }
+
     return(<>
         <h1>Notifications</h1>
+        <button onClick={logoutUser}>Logout</button>
     </>)
 }

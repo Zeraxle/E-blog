@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import Cookies from 'js-cookie'
-import axios from "axios"
+
 
 export const FavoritesPage = () => {
 

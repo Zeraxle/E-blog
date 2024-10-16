@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {createUser} from '../services/UserService.js'
 import {registerUser} from '../services/AuthService.js'
 
 export const RegistrationPage = () => {
@@ -66,7 +65,7 @@ export const RegistrationPage = () => {
         }
         try {
             const res = await registerUser(formData)
-            // setAuthState({user: res.id, token: } )
+            setAuthState({user: res.user.id, token: res.sessionId } )
             navigate('/user/profile')
         } catch (error) {console.log('Error during registration', error)}
     }

@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
+import {logout, getProfile} from '../services/AuthService.js'
 import Cookies from 'js-cookie'
 import axios from "axios"
 
 export const CreatePost = () => {
 
 
-    const {logout, authState, setAuthState } = useAuth()
+    const {authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
     const [postData, setPostData] = useState({
         name : '',
@@ -41,6 +42,6 @@ export const CreatePost = () => {
         }
 
     return(<>
-    
+        
     </>)
 }

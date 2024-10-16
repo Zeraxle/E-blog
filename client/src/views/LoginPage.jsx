@@ -31,7 +31,7 @@ export const LoginPage = (props) => {
         e.preventDefault()
         try {
             const res = await loginUser(formData)
-            setAuthState({user: res.response.data.user.id, token: res.response.data.sessionId})
+            setAuthState({user: res.user.id, token: res.sessionId})
             navigate('/home')
         } catch (error) { console.error('Error during login', error)}
     }

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../config/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom'
 import {logout, getProfile} from '../services/AuthService.js'
-import axios from 'axios';
 import Cookies from 'js-cookie'
 
 export const ProfilePage = () => {

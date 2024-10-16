@@ -8,12 +8,6 @@ const AUTH_INSTANCE = axios.create(
 export const registerUser = async (userData) => {
     try {
         const response = await AUTH_INSTANCE.post('/register', userData)
-        const profileResponse = await AUTH_INSTANCE.get('/profile', {
-            headers : {
-                Authorization: `Bearer ${token}`,
-            }
-        })
-        console.log(response.data)
         return response.data
     } catch (error) {console.log('Error:', error)}
 }
@@ -21,11 +15,7 @@ export const registerUser = async (userData) => {
 export const loginUser = async (userData) => {
     try {
         const response = await AUTH_INSTANCE.post('/login', userData)
-        
-        const profileResponse = await AUTH_INSTANCE.get('/profile', {
-            headers : {Authorization: `Bearer ${Cookies.get('sessionId')}`,}
-        })
-        return {response, profileResponse}
+        return response.data
     } catch (error) {console.log('Error:', error)}
 }
 

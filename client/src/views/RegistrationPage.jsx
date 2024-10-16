@@ -5,6 +5,8 @@ import {registerUser} from '../services/AuthService.js'
 
 export const RegistrationPage = () => {
 
+    const [authState, setAuthState] = useState({})
+
     const [formData, setFormData] = useState({
         firstName : '',
         lastName : '',
@@ -64,7 +66,7 @@ export const RegistrationPage = () => {
         }
         try {
             const res = await registerUser(formData)
-            console.log('User registered:', res)
+            // setAuthState({user: res.id, token: } )
             navigate('/user/profile')
         } catch (error) {console.log('Error during registration', error)}
     }
@@ -132,7 +134,7 @@ export const RegistrationPage = () => {
                 />
                 {errors?.confirmPassword && <p>{errors.confirmPassword}</p>}
             </label>
-            <input type="submit" value="Register" />
+            <button onClick={submitHandler}>Register</button>
         </form>
 
     </>)

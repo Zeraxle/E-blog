@@ -13,6 +13,7 @@ export const registerUser = async (userData) => {
                 Authorization: `Bearer ${token}`,
             }
         })
+        console.log(response.data)
         return response.data
     } catch (error) {console.log('Error:', error)}
 }

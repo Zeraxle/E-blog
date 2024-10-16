@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useAuth } from "../config/AuthContext.jsx"
-import { logout } from "../services/AuthService.js"
+import { logout, getProfile } from "../services/AuthService.js"
 import Cookies from 'js-cookie'
 import axios from "axios"
 
@@ -15,18 +15,14 @@ export const HomePage = (props) => {
 
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
-        axios.get('http://localhost:8000/auth/profile', {
-            headers : {Authorization : `Bearer ${sessionId}`}
-        })
-        .then(response => {
-            const user = response.data
-            setUser(user)
-            setAuthState({user: user.id, token: sessionId})
-        })
-        .catch(error => console.log(error))
+        getProfile()
+            .then(res => {
+                setUser(res)
+                setAuthState({user: res.id, token: sessionId })})
+            .catch(error => console.log(error))
         }, []);
         
-        const logoutUser = (e) => {
+        const logoutUser = () => {
             logout()
                 .then(navigate('/'))
                 .catch(error => console.log(error))

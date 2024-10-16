@@ -5,13 +5,13 @@ export const register = async (req, res) => {
     try {
         const {user, sessionId} = await registerUser(req.body)
         res.cookie('sessionId', sessionId)
-        res.status(201).json(user)
+        res.status(201).json({user, sessionId})
     } catch(error){res.status(400).json({message : error.message})}
 }
 
 export const login = async (req, res) => {
     try {
-        const { user, sessionId} = await loginUser(req.body.username, req.body.password)
+        const { user, sessionId} = await loginUser(req.body.email, req.body.password)
         res.cookie('sessionId', sessionId)
         res.status(200).json({user, sessionId})
     } catch (error) {res.status(400).json({message : error.message})}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useLocation} from 'react-router-dom'
 import './App.css'
 import { NavBar } from './components/NavBar'
 import { WelcomePage } from './views/WelcomePage'
@@ -22,19 +22,21 @@ import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 function App() {
 
     const [loggedInUser, setLoggedInUser] = useState({})
-    // const showNavBar = location.pathname !== '/' '/register' '/'
-  return (
+    const location = useLocation()
+    const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
+    
+  
+    return (
     <>
-      <Routes>
-          <Route path={'/'} element={<WelcomePage/>}/>
-          <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
-          <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
-      </Routes>
 
       <AuthProvider>
 
-      <NavBar/>
+        {showNavBar && <NavBar/>}
         <Routes>
+      
+          <Route path={'/'} element={<WelcomePage/>}/>
+          <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
+          <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
           <Route path={'/home'} element={<ProtectedRoute> <HomePage/> </ProtectedRoute> }/>
           <Route path={'/search'} element={<ProtectedRoute><SearchPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/profile'} element={<ProtectedRoute><ProfilePage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
@@ -46,7 +48,7 @@ function App() {
           <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>
           <Route path={'/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
-          </Routes>
+        </Routes>
       </AuthProvider>  
     </>
   )

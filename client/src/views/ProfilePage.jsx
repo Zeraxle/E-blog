@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../config/AuthContext.jsx';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import {logout, getProfile} from '../services/AuthService.js'
 import axios from 'axios';
 import Cookies from 'js-cookie'
 
@@ -8,23 +9,28 @@ export const ProfilePage = () => {
     const { authState, setAuthState } = useAuth();
     const [user, setUser] = useState({});
 
+    const navigate = useNavigate()
+
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
-        axios.get('http://localhost:8000/auth/profile', {
-            headers : {Authorization : `Bearer ${sessionId}`}
-        })
-        .then(response => {
-            const user = response.data
-            setUser(user)
-            setAuthState({user: user.id, token: sessionId})
-        })
-        .catch(error => console.log(error))
+        getProfile()
+            .then(res => {
+                setUser(res)
+                setAuthState({user: res.id, token: sessionId })})
+            .catch(error => console.log(error))
         }, []);
+
+        const logoutUser = () => {
+            logout()
+                .then(navigate('/'))
+                .catch(error => console.log(error))
+        }
 
     return (
     <div>
         {user.username? <p>{user.username}</p> : null}
         <Link to={'/home'}>Home Page</Link>
+        <button onClick={logoutUser}>Logout</button>
     </div>
     )    
 };

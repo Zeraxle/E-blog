@@ -4,7 +4,7 @@ import { storeToken, getToken } from "./token.service.js";
 
 
 export const registerUser = async ({firstName, lastName, username, email, password}) => {
-    let existingUser = await User.findOne({where : {email}})
+    const existingUser = await User.findOne({where : {email}})
     if (existingUser) throw new Error('User already exists')
     
     const user = await User.create({firstName, lastName, username, email, password})
@@ -13,8 +13,8 @@ export const registerUser = async ({firstName, lastName, username, email, passwo
     return {user, sessionId}
 }
 
-export const loginUser = async (username, password) => {
-    const user = await User.findOne({where : {username}})
+export const loginUser = async (email, password) => {
+    const user = await User.findOne({where : {email}})
     if (!user) throw new Error('Invalid credentials')
     
     const isMatch = await user.authenticate(password)

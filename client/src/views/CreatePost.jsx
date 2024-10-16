@@ -9,19 +9,36 @@ export const CreatePost = () => {
 
     const {logout, authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
-    
+    const [postData, setPostData] = useState({
+        name : '',
+        category : '',
+        rating : '',
+        description : ''
+    })
+
+    const [errors, setErrors] = useState({
+        name : '',
+        category : '', 
+        rating : '',
+        description : ''
+    })
+
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
-        axios.get('http://localhost:8000/auth/profile', {
-            headers : {Authorization : `Bearer ${sessionId}`}
-        })
-        .then(response => {
-            const user = response.data
-            setUser(user)
-            setAuthState({user: user.id, token: sessionId})
-        })
-        .catch(error => console.log(error))
+        getProfile()
+            .then(res => {
+                setUser(res)
+                setAuthState({user: res.id, token: sessionId })})
+            .catch(error => console.log(error))
         }, []);
+
+        const validatePost = (name, value) => {
+            const validations = {
+                name : value => value.length >=3 && value.length <=35? true : 'Name must be between 3-35 characters',
+                description : value => value.length >=10 && value.length <=100? true : 'Description must be between 10-100 characters'
+            }
+            setErrors(prev => ({...prev, [name] : validations[name](value)}))
+        }
 
     return(<>
     

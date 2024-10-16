@@ -7,16 +7,16 @@ import { loginUser, getProfile } from '../services/AuthService.js'
 
 export const LoginPage = (props) => {
 
-    const {setLoggedInUser} = props
+    
     const { authState, setAuthState } = useAuth()
     
     const [formData, setFormData] = useState({
-        username : '',
+        email : '',
         password : ''
     })
 
     const [errors, setErrors] = useState({
-        username : '',
+        email : '',
         password : ''
     })
 
@@ -40,14 +40,13 @@ export const LoginPage = (props) => {
         <h1>E-Blog</h1>
         <form onSubmit={submitHandler}>
             <label >
-                Username: 
+                Email: 
                 <input 
                     type="text" 
-                    name="username" 
-                    value={formData.username}
+                    name="email" 
+                    value={formData.email}
                     onChange={changeHandler} 
                 />
-                {authState.user? <p>{authState.user}</p> : null}
             </label>
             <label>
                 Password:
@@ -57,9 +56,8 @@ export const LoginPage = (props) => {
                     value={formData.password} 
                     onChange={changeHandler}
                 />
-                {authState.token? <p>{authState.token}</p> : null}
             </label>
-            <input type="submit" value="Login" />
+            <button onClick={submitHandler}>Login</button>
         </form>
     </>)
 }

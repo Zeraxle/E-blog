@@ -44,7 +44,10 @@ const Post = sequelize.define('posts', {
     description : {
         type : DataTypes.STRING,
         required : [true, 'Post needs a description'],
-        allowNull : false
+        allowNull : false,
+        validate : {
+            len : [10, 100]
+        }
     }
 },
     {timestamps : true}
@@ -52,7 +55,7 @@ const Post = sequelize.define('posts', {
 
 
 
-export const setupUserPostRealationship =() =>{
+export const setupUserPostRealationship = () => {
 
     User.hasMany(Post, {
         foreignKey: 'userid',

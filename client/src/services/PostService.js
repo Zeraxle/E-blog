@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const POST_INSTANCE = axios.create({
     baseURL : 'http://localhost:8000/post'
@@ -20,9 +21,14 @@ export const findAllPosts = async () => {
 
 export const createPost = async (data) => {
     try {
-        const res = await POST_INSTANCE.post('/', data)
+        const token = Cookies.get('sessionId')
+        const res = await POST_INSTANCE.post('/', data, {
+            headers : {Authorization : `Bearer, ${token}`}
+        })
         return res.data
-    } catch(error){throw error}
+    } catch(error){
+        console.error(error)
+        throw error}
 }
 
 export const updatePost = async (data) => {

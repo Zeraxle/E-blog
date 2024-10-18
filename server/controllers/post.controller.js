@@ -3,8 +3,10 @@ import User from "../models/user.model.js"
 import Follow from "../models/follow.model.js"
 import Like,{LikestoUserandPostRelationship} from "../models/like.model.js"
 import Comments, {setupPostToCommentRelationship}from "../models/comment.model.js"
+import jwt from 'jsonwebtoken'
 import { Model, model } from "mongoose"
 import { where } from "sequelize"
+import { getToken } from "../services/token.service.js"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -21,10 +23,18 @@ export const findAllPosts = async (req, res, next) => {
 }
 
 export const createPost = async (req, res, next) => {
+    
+    const authHeader = req.headers.authorization
+    const sessionId = authHeader.split(' ')[1]
+    const token = await getToken(sessionId)
+    
     try {
-        const newPost = await Post.create(req.body)
+        const {name, category, rating, description} = req.body
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const userid = decoded.userId
+        const newPost = await Post.create({name, category, rating, description, userid})
         res.status(200).json(newPost)
-    } catch(error) {res.status(400).json(error)}
+    } catch(error) {res.status(400).json('Controller failed', error)}
 }
 
 export const updatePost = async (req, res, next) => {

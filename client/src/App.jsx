@@ -16,7 +16,6 @@ import { TvShowPosts } from './views/TvShowPosts.jsx'
 import { AnimePosts } from './views/AnimePosts.jsx'
 import { FollowersPosts } from './views/FollowersPosts.jsx'
 import { NotificationPage } from './views/NotificationPage'
-import { AuthProvider } from './config/AuthContext.jsx'
 import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 
 function App() {
@@ -27,13 +26,9 @@ function App() {
     
   
     return (
-    <>
-
-      <AuthProvider>
-
+      <>
         {showNavBar && <NavBar/>}
         <Routes>
-      
           <Route path={'/'} element={<WelcomePage/>}/>
           <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
           <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
@@ -48,8 +43,7 @@ function App() {
           <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>
           <Route path={'/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
-        </Routes>
-      </AuthProvider>  
+        </Routes> 
     </>
   )
 }

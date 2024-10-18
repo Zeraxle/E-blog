@@ -13,7 +13,11 @@ const Post = sequelize.define('posts', {
 
     userid : {
         type : DataTypes.BIGINT,
-        allowNull : false, 
+        allowNull : false,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
     },
 
     name : {
@@ -21,14 +25,23 @@ const Post = sequelize.define('posts', {
         required : [true, 'Post needs a name'],
         allowNull : false,
         validate : {
-            len : [3,35]
+            len : {
+                args: [3,35],
+                msg: "Name must be between 3-35 characters"
+            }
         }
     },
     
     category : {
-        type : DataTypes.STRING,
+        type : DataTypes.ENUM('Movie', 'TV Show', 'Anime'),
         required : [true, 'Post needs a category'],
         allowNull : false,
+        validate: {
+            isIn: {
+                args: [['Movie', 'TV Show', 'Anime']],
+                msg: "Not an acceptable input for category"
+            }
+        } 
     },
 
 
@@ -37,7 +50,14 @@ const Post = sequelize.define('posts', {
         required : [true, 'Post needs a rating'],
         allowNull : false,
         validate : {
-            len : [1,5]
+            min : {
+                args: 1, 
+                msg: "Rating must be at least 1"
+            },
+            max : {
+                args: 5, 
+                msg: "Rating must not exceed 5"
+            }
         }
     },
 
@@ -46,10 +66,12 @@ const Post = sequelize.define('posts', {
         required : [true, 'Post needs a description'],
         allowNull : false,
         validate : {
-            len : [10, 100]
+            len : {
+                args: [10, 100],
+                msg: "Description must be between 10-100 characters"
         }
     }
-},
+}},
     {timestamps : true}
 )
 

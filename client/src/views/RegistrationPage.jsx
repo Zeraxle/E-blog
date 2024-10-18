@@ -72,7 +72,7 @@ export const RegistrationPage = () => {
 
     return(<>
         <h1>E-Blog</h1>
-        <form onSubmit={submitHandler}>
+        <form>
             <label>
                 First Name:
                 <input 

@@ -4,14 +4,53 @@ import './NavBar.css';
 import CreateBtn from '../assets/CreateBtn.png'
 import NotificationBtn from '../assets/NotificationsBtn.png'
 import ProfilePicBtn from "../assets/ProfilePicBtn.png"
-import { Link } from 'react-router-dom';
+
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { findAllPosts } from '../services/PostService';
+
 export const NavBar = (props) => {
+    const navigate = useNavigate()
     const {loggedInUser} = props
+    const [searchInfo,setSearchInfo] = useState('')
+    const [filteredPosts, setFilteredPosts] = useState({})
+    // const findPosts = (e) =>{
+    // }
+
+    const handleSearchChange = (e) =>{
+        setSearchInfo(e.target.value)
+    }
+
+    const handleSearchSubmit = (e) =>{
+        e.preventDefault()
+        console.log("hiii theree!!!")
+        findAllPosts()
+            .then((posts )=>{
+                const filtered = posts.filter((post) => post.name.toLowerCase().includes(searchInfo.toLowerCase()))
+                setFilteredPosts(filtered)
+                console.log(filtered)
+                navigate('/search')
+            })
+            .catch((error) =>{
+                console.log('fetching error', error)
+            })
+        // navigate('/search')
+
+    }
+
+
 
     return(<>
     <div className='TopNavBar'>
             <h1>E-Blog</h1>
-            <input type="text" placeholder='Search'/>
+            <form onSubmit={handleSearchSubmit}>
+            <input type="text" 
+            placeholder='Search'
+            value={searchInfo}
+            onChange={handleSearchChange}/>
+            <button type='submit'>Search</button>
+            </form>
 
             <Link to={'/home'}>
                 <img src={home} alt='home.png'/>

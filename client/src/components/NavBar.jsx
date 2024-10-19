@@ -10,11 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { findAllPosts } from '../services/PostService';
 
-export const NavBar = (props) => {
+export const NavBar = ({setFilteredPosts}) => {
     const navigate = useNavigate()
-    const {loggedInUser} = props
+    // const {loggedInUser} = props
+
     const [searchInfo,setSearchInfo] = useState('')
-    const [filteredPosts, setFilteredPosts] = useState({})
     // const findPosts = (e) =>{
     // }
 
@@ -24,12 +24,11 @@ export const NavBar = (props) => {
 
     const handleSearchSubmit = (e) =>{
         e.preventDefault()
-        console.log("hiii theree!!!")
         findAllPosts()
             .then((posts )=>{
                 const filtered = posts.filter((post) => post.name.toLowerCase().includes(searchInfo.toLowerCase()))
-                setFilteredPosts(filtered)
                 console.log(filtered)
+                setFilteredPosts(filtered)
                 navigate('/search')
             })
             .catch((error) =>{

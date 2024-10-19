@@ -20,20 +20,21 @@ import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 
 function App() {
 
-    const [loggedInUser, setLoggedInUser] = useState({})
+    const [loggedInUser, setLoggedInUser] = useState([])
     const location = useLocation()
+    const [filteredPosts, setFilteredPosts] = useState([]); 
     const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
     
   
     return (
       <>
-        {showNavBar && <NavBar/>}
+        {showNavBar && <NavBar  setFilteredPosts={setFilteredPosts}/>}
         <Routes>
           <Route path={'/'} element={<WelcomePage/>}/>
           <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
           <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
           <Route path={'/home'} element={<ProtectedRoute> <HomePage/> </ProtectedRoute> }/>
-          <Route path={'/search'} element={<ProtectedRoute><SearchPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
+          <Route path={'/search'} element={<ProtectedRoute><SearchPage loggedInUser={loggedInUser} filteredPosts={filteredPosts} /></ProtectedRoute>}/>
           <Route path={'/user/profile'} element={<ProtectedRoute><ProfilePage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/post/create'} element={<ProtectedRoute><CreatePost loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/favorites'} element={<ProtectedRoute><FavoritesPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>

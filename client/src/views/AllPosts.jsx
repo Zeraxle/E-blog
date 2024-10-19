@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 export const AllPosts = (props) =>{
     const {loggedInUser} = props
     const {authState, setAuthState} = useAuth()
-    const {user, setUser} = useState({})
+    const [user, setUser] = useState({})
 
     const navigate = useNavigate()
 

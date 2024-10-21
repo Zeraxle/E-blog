@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../config/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom'
 import {logout, getProfile} from '../services/AuthService.js'
+import { findAllAnimePosts } from '../services/PostService.js';
 import Cookies from 'js-cookie'
 
 export const AnimePosts =  (props) =>{
+    const [allAnimePosts,setAllAnimePosts] = useState([])
     const {loggedInUser} = props
     const {authState, setAuthState} = useAuth()
     const [user, setUser] = useState({})
@@ -26,10 +28,42 @@ export const AnimePosts =  (props) =>{
                 .catch(error => console.log(error))
         }
 
+        useEffect(() =>{
+            findAllAnimePosts()
+                .then(res =>{
+                    setAllAnimePosts(res)
+                })
+                .catch(error => console.log(error))
+            }, [])
+
 
     return(
         <>
             <h1>Anime Posts </h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Category</td>
+                        <td>Rating</td>
+                        <td>Posted By</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {allAnimePosts.map((post =>{
+                        return(
+                            <tr key={post.id}>
+                                <td>{post.name}</td>
+                                <td>{post.description}</td>
+                                <td>{post.category}</td>
+                                <td>{post.rating}</td>
+                                <td>{post.user.username}</td>
+                            </tr>
+                        )
+                    }))}
+                </tbody>
+            </table>
             <button onClick={logoutUser}>Logout</button>
         </>
     )

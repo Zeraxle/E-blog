@@ -25,6 +25,53 @@ export const findAllPosts = async () => {
     }
 }
 
+export const findAllMoviePosts = async () =>{
+    try{
+        const res =  await POST_INSTANCE.get('/allMoviePosts')
+        return res.data
+    }
+    catch(error){
+        console.log('Error fetching All Movie Posts :', error)
+        throw error
+    }
+}
+
+export const findAllTvshowPosts = async () =>{
+    try{
+        const res =  await POST_INSTANCE.get('/allTvShowPosts')
+        return res.data
+    }
+    catch (error){
+        console.log('Error fetching all Tv-Show Posts', error)
+        throw error
+    }
+}
+
+export const findAllAnimePosts = async () =>{
+    try{
+        const res = await POST_INSTANCE.get('/allAnimePosts')
+        return res.data
+    }
+    catch(error) {
+        console.log('Error Fetching All Anime Posts', error)
+        throw error
+    }
+}
+
+
+
+export const findAllFollowersPosts = async (userid) =>{
+    try{
+        const res = await POST_INSTANCE.get(`/${userid}/followersPosts`)
+        return res.data
+    }
+    catch(error){
+        console.log('Error Fetching Posts By Followers', error)
+        throw error
+    }
+}
+
+
 export const createPost = async (data) => {
     try {
         const token = Cookies.get('sessionId')

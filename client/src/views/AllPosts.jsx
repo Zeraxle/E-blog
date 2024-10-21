@@ -43,6 +43,7 @@ export const AllPosts = (props) =>{
             <thead>
                 <tr>
                     <td>Name</td>
+                    <td>Comments</td>
                     <td>Category</td>
                     <td>Rating</td>
                     <td>Posted By</td>
@@ -53,6 +54,7 @@ export const AllPosts = (props) =>{
                     return(
                     <tr key={post.id}>
                         <td>{post.name}</td>
+                        <td>{post.comments}</td>
                         <td>{post.category}</td>
                         <td>{post.rating}</td>
                         <td><Link>{post.user.username}</Link></td>

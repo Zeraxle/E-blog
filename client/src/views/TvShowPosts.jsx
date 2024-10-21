@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../config/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom'
 import {logout, getProfile} from '../services/AuthService.js'
+import { findAllTvshowPosts } from '../services/PostService.js';
 import Cookies from 'js-cookie'
 
 export const TvShowPosts = (props) =>{
+    const [allTvShows, setAllTvShows] = useState([])
     const {loggedInUser} = props
     const {authState, setAuthState} = useAuth()
     const [user, setUser] = useState({})
@@ -25,11 +27,45 @@ export const TvShowPosts = (props) =>{
                 .then(navigate('/'))
                 .catch(error => console.log(error))
         }
+    
+        useEffect(()=>{
+            findAllTvshowPosts()
+                .then(res=>{
+                    setAllTvShows(res)
+                })
+                .catch(error => console.log(error))
+
+            }, [])
 
 
     return(
         <>
         <h1>Tv Show Posts</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Category</td>
+                        <td>Rating</td>
+                        <td>Posted By</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {allTvShows.map((show =>{
+                        return(
+                            <tr key={show.id}>
+                                <td>{show.name}</td>
+                                <td>{show.description}</td>
+                                <td>{show.category}</td>
+                                <td>{show.rating}</td>
+                                <td><Link>{show.user.username}</Link></td>
+                            </tr>
+                        )
+                    }))}
+                </tbody>
+            </table>
         <button onClick={logoutUser}>Logout</button>
         </>
     )

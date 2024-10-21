@@ -28,12 +28,14 @@ export const SearchPage = ({filteredPosts}) => {
         }
 
         // NEED TO ADD LOGIC FOR WHEN UNKNOWN POST IS SEARCHED FOR 
+        // NEED TO LINK COMMENTS BACK TO POSTS 
     return(<>
         <button onClick={logoutUser}>Logout</button>
         <table>
             <thead>
                 <tr>
                     <td>Name</td>
+                    <td>Description</td>
                     <td>Category</td>
                     <td>Rating</td>
                     <td>Posted By</td>
@@ -43,6 +45,7 @@ export const SearchPage = ({filteredPosts}) => {
             {filteredPosts && filteredPosts.map((post) =>(
                 <tr key={post.id}>
                 <td>{post.name}</td>
+                <td>{post.description}</td>
                 <td>{post.category}</td>
                 <td>{post.rating}</td>
                 <td> <Link>{post.user.username}</Link></td>

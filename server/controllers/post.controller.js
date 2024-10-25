@@ -1,4 +1,5 @@
-import Post, {setupUserPostRealationship} from "../models/post.model.js"
+import Post from "../models/post.model.js"
+// import setupRelationships from "./setupRealationships.js"
 import User from "../models/user.model.js"
 import Follow from "../models/follow.model.js"
 import Like,{LikestoUserandPostRelationship} from "../models/like.model.js"
@@ -7,6 +8,8 @@ import jwt from 'jsonwebtoken'
 import { Model, model } from "mongoose"
 import { where } from "sequelize"
 import { getToken } from "../services/token.service.js"
+
+
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
@@ -17,15 +20,24 @@ export const findPostById = async (req, res, next) => {
 
 export const findAllPosts = async (req, res, next) => {
     try{
-        const allPosts = await Post.findAll()
-        res.status(200).json(allPosts)
+        const allPosts = await Post.findAll({
+            include :[{
+                model:User,
+                as : 'user'
+            }]
+        });
+
+        res.status(200).json(allPosts);
     } catch(error) {res.status(400).json(error)}
 }
+
+
 
 export const createPost = async (req, res, next) => {
     
     const authHeader = req.headers.authorization
     const sessionId = authHeader.split(' ')[1]
+    console.log("----------------hi---------------")
     const token = await getToken(sessionId)
     
     try {
@@ -107,7 +119,13 @@ export const findAllTvshowPosts = async (req,res,next) =>{
         console.log("gotttittt")
         const allTvShowPosts = await Post.findAll({
             where : 
-            {category : 'Tv-show'}
+            {category : 'Tv-show'},
+            include :[
+                {
+                    model : User,
+                    as: 'user'
+                }
+            ]
         })
         res.status(200).json(allTvShowPosts)
 
@@ -121,7 +139,13 @@ export const findAllMoviePosts = async (req,res,next) =>{
         console.log("gotttittt")
         const allTvMoviePosts = await Post.findAll({
             where : 
-            {category : 'Movie'}
+            {category : 'Movie'},
+            include:[
+                {
+                    model: User,
+                    as: 'user'
+                }
+            ]
         })
         res.status(200).json(allTvMoviePosts)
 
@@ -134,7 +158,13 @@ export const findAllAnimePosts = async (req,res,next) =>{
         console.log("gotttittt")
         const allAnimePosts = await Post.findAll({
             where : 
-            {category : 'Anime'}
+            {category : 'Anime'},
+            include :[
+                {
+                    model : User,
+                    as: 'user'
+                }
+            ]
         })
         res.status(200).json(allAnimePosts)
 
@@ -167,21 +197,12 @@ export const findAllUserWholikedPost = async (req,res,next) =>{
     }
 }
 
-
-
-
-
-
-
-
-
-
 export const findAllFollowersPosts = async (req, res, next ) =>{
     try{
-        const {userId} = req.params
+        const {id} = req.params
         const foundUser = await Follow.findAll({
             where :{
-                followerId : userId
+                followerId : id
             }
         })
         const usersFollowersId = foundUser.map(following => following.followedUserId)
@@ -189,7 +210,13 @@ export const findAllFollowersPosts = async (req, res, next ) =>{
         const postsByFollowers = await Post.findAll({
             where:{
                 userid : usersFollowersId
-            }
+            },
+            include :[
+                {
+                    model : User,
+                    as : 'user'
+                }
+            ]
         })
         res.status(200).json(postsByFollowers)
         console.log(postsByFollowers)
@@ -198,9 +225,5 @@ export const findAllFollowersPosts = async (req, res, next ) =>{
     res.status(400).json(error)
     }
 }
-
-
-
-setupPostToCommentRelationship()
 
 LikestoUserandPostRelationship()

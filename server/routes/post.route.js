@@ -13,20 +13,15 @@ postRouter.route('/allTvShowPosts')
 postRouter.route('/allMoviePosts')
     .get(findAllMoviePosts)
 
-postRouter.route('/allMoviePosts')
-    .get(findAllMoviePosts)
-
 postRouter.route('/allAnimePosts')
     .get(findAllAnimePosts)
 
-postRouter.route('/:userId/followersPosts')
+postRouter.route('/:id/followersPosts')
         .get(findAllFollowersPosts)
         
 postRouter.route('/:id')
     .get(findPostById)
     .put(updatePost)
-    
-
 
 postRouter.route('/:userid/:postid')
     .delete(destroyPost)

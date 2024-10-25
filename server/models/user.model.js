@@ -58,8 +58,6 @@ const User = sequelize.define('user', {
         }
     },
 
-
-
     password: {
         type: DataTypes.STRING,
         required: [true, 'User needs a password'],
@@ -82,13 +80,6 @@ const options = {
     compare : "authenticate"
 }
 
-
-
-// Sync the models in the correct order // Assuming you have a user model
-
-// Sync user and post tables first
-// Sync in an order that respects foreign key constraints
- // Safe sync without dropping tables
 User.sync()
 .then(() => Post.sync())
 .then(() => Comments.sync())
@@ -96,7 +87,6 @@ User.sync()
 .then(() => Follow.sync())
 .then(() => console.log("All tables synced"))
 .catch(error => console.log(`Table sync failed: ${error}`));
+useBcrypt(User,options)
 
 export default User
-
-useBcrypt(User,options)

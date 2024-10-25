@@ -1,16 +1,42 @@
 import User from '../models/user.model.js'
-import Post, {setupUserPostRealationship} from '../models/post.model.js'
+import Post from '../models/post.model.js'
 import Like from '../models/like.model.js'
 import Follow, {userAndFollowerRelationship} from '../models/follow.model.js'
+import { setupUserPostRealationship } from '../models/post.model.js'
 
 
 export const findUserById = async (req, res, next) => {
     try {
-        const {id} = req.params
-        const foundUser = await User.findByPk(id)
-        res.status(200).json(foundUser)
-    } catch(error) {res.status(400).json(error)}
-}
+        const { id } = req.params; // Get the user ID from the request parameters
+
+        const foundUser = await User.findByPk(id, {
+            include: [{
+                model: Post,
+                as: 'posts'
+            },
+            {
+                model:Post,
+                as: 'likedPosts'
+
+            }],
+            logging: console.log // Enable logging to see the SQL query in the console
+        });
+        
+
+        // Check if the user was found
+        if (!foundUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Return the found user along with their posts
+        res.status(200).json(foundUser);
+    } catch (error) {
+        // Handle any errors and return a 400 status with the error message
+        console.error(error); // Log the error for debugging
+        res.status(400).json({ error: 'An error occurred while fetching the user.' });
+    }
+};
+
 
 export const findAllUsers = async (req, res, next) => {
     try {
@@ -78,7 +104,6 @@ export const findAllLikedPostByUser = async (req,res,next) =>{
             }
         })
         const postInfo = findUser.map(Like => Like.postid)
-        
         const AllUsersLikePost = await Post.findAll({
             where:{
                 id : postInfo
@@ -132,5 +157,5 @@ export const findWhoUserFollows =  async (req, res, next) =>{
     catch(error) {res.status(400).json(error)}
 }
 
-userAndFollowerRelationship()
 setupUserPostRealationship(); 
+userAndFollowerRelationship()

@@ -30,12 +30,14 @@ export const userAndFollowerRelationship = () =>{
     // SEE WHO FOLLOWS USER 
     User.hasMany(Follow,{
         foreignKey : "followedUserId",
+        as: "followers",
         onUpdate : "CASCADE",
         onDelete : "CASCADE",
     })
 
     Follow.belongsTo(User,{
         foreignKey: "followedUserId",
+        as: "followedUser",
         onUpdate : "CASCADE",
         onDelete : "CASCADE"
     })
@@ -44,12 +46,14 @@ export const userAndFollowerRelationship = () =>{
     // SEE WHO USER IS FOLLOWING 
     User.hasMany(Follow,{
         foreignKey : "followerId",
+        as: 'following',
         onUpdate : "CASCADE",
         onDelete : "CASCADE"
     })
 
     Follow.belongsTo(User,{
         foreignKey: "followerId",
+        as: 'followerUser',
         onUpdate : "CASCADE",
         onDelete : "CASCADE"
     })

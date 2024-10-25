@@ -33,6 +33,7 @@ export const UpdateComment = async(req,res,next) =>{
         const {id} = req.params
         const updatedComment = req.body
         const foundComment = await Comments.findByPk(id)
+        
 
         if(!foundComment){
             return(res.status(404).json({message : "Comment not found"}))

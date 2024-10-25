@@ -21,9 +21,24 @@ export const Like = sequelize.define('likes', {
 
 export const LikestoUserandPostRelationship = () =>{
 
+    User.belongsToMany(Post, {
+        through: Like,      // Use Like as the join table
+        foreignKey: 'userid',
+        otherKey: 'postid',
+        as: 'likedPosts'    // Alias for posts a user has liked
+    });
 
-    User.belongsToMany(Post, { through: Like, foreignKey: 'userid' });
-    Post.belongsToMany(User, { through: Like, foreignKey: 'postid'});
+    Post.belongsToMany(User, {
+        through: Like,      // Use Like as the join table
+        foreignKey: 'postid',
+        otherKey: 'userid',
+        as: 'likers'        // Alias for users who have liked the post
+    });
+    
+    
+
+    // User.belongsToMany(Post, { through: Like, foreignKey: 'userid' });
+    // Post.belongsToMany(User, { through: Like, foreignKey: 'postid'});
 
 }
 

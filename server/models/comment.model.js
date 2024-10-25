@@ -33,29 +33,32 @@ export const Comments = sequelize.define("comments", {
 export const setupPostToCommentRelationship =() =>{
     Post.hasMany(Comments,{
         foreignKey : "postid",
+        as: 'comments',
         onDelete : "CASCADE",
         onUpdate : "CASCADE"
     })
 
     Comments.belongsTo(Post,{
         foreignKey: "postid",
+        as : 'post',
         onDelete: "CASCADE",
         onUpdate : "CASCADE"
     })
 
     User.hasMany(Comments,{
         foreignKey : "userid",
+        as: 'userComments',
         onDelete : "CASCADE",
         onUpdate : "CASCADE"
     })
 
     Comments.belongsTo(User,{
         foreignKey: "userid",
+        as: 'user',
         onDelete: "CASCADE",
         onUpdate : "CASCADE"
     })
 
-    
 }
 
 

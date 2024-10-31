@@ -56,11 +56,11 @@ export const TvShowPosts = (props) =>{
                     {allTvShows.map((show =>{
                         return(
                             <tr key={show.id}>
-                                <td>{show.name}</td>
+                                <td><Link to={`/display/post/${show.id}`}>{show.name}</Link></td>
                                 <td>{show.description}</td>
                                 <td>{show.category}</td>
                                 <td>{show.rating}</td>
-                                <td><Link>{show.user.username}</Link></td>
+                                <td><Link to = {`/display/user/${show.user.id}`}>{show.user.username}</Link></td>
                             </tr>
                         )
                     }))}

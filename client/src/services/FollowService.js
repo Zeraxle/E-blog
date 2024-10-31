@@ -18,7 +18,8 @@ export const findAllFollows = async () => {
     } catch(error) {throw error}
 }
 
-export const createFollow = async (data) => {
+export const createFollow = async (followerId, followedId) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await FOLLOW_INSTANCE.post('/', data)
         return res.data

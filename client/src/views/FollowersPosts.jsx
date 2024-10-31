@@ -7,9 +7,9 @@ import Cookies from 'js-cookie'
 
 export const FollowersPosts = (props) =>{
     const [followerPosts, setFollowersPosts] = useState([])
-    const {loggedInUser} = props
-    const {authState, setAuthState} = useAuth()
-    const [user, setUser] = useState({})
+    const {loggedInUser, user,setUser, setAuthState, authState} = props
+    // const {authState, setAuthState} = useAuth()
+    // const [user, setUser] = useState({})
 
     const navigate = useNavigate()
 
@@ -23,10 +23,11 @@ export const FollowersPosts = (props) =>{
         }, []);
 
     useEffect(() =>{
-        findAllFollowersPosts(res =>{
-            
-        })
-
+        findAllFollowersPosts(user.id)
+            .then(res =>{
+                setFollowersPosts(res)
+            })
+            .catch(error => console.log(error))
         }, [])
 
         const logoutUser = () => {
@@ -34,12 +35,40 @@ export const FollowersPosts = (props) =>{
                 .then(navigate('/'))
                 .catch(error => console.log(error))
         }
+        
+        useEffect(()=>{
 
+            console.log(followerPosts)
+            }, [])
 
     return(
         <>
             <h1>Followers Posts</h1>
             <button onClick={logoutUser}>Logout</button>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Category</td>
+                        <td>Rating</td>
+                        <td>Posted By</td>
+                    </tr>
+                </thead>
+                <tbody>
+                        {followerPosts.map((post =>{
+                            return(
+                                <tr key={post.id}>
+                                    <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
+                                    <td>{post.description}</td>
+                                    <td>{post.category}</td>
+                                    <td>{post.rating}</td>
+                                    <td><Link to = {`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
+                                </tr>
+                            )
+                        }))}
+                </tbody>
+            </table>
         </>
     )
 }

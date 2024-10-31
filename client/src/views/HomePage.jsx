@@ -7,9 +7,9 @@ import axios from "axios"
 
 export const HomePage = (props) => {
 
-    const {loggedInUser} = props
+    const {loggedInUser, setUser,user } = props
     const {authState, setAuthState } = useAuth()
-    const [user, setUser] = useState({})
+    // const [user, setUser] = useState({})
 
     const navigate = useNavigate()
 

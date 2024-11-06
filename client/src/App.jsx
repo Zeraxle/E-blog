@@ -27,6 +27,7 @@ function App() {
     const [filteredPosts, setFilteredPosts] = useState([]); 
     const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
     const {authState, setAuthState} = useAuth()
+    const [followRelationship, setFollowRelationship] = useState(false)
     
   
     return (
@@ -47,7 +48,7 @@ function App() {
           <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>
           <Route path={'/:id/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser} user = {user} setUser = {setUser} authState = {authState} setAuthState = {setAuthState}/></ProtectedRoute>}/>
-          <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser loggedInUser = {loggedInUser} user = {user} setUser = {setUser}/></ProtectedRoute>}/>
+          <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser  followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser}/></ProtectedRoute>}/>
           <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost/></ProtectedRoute>}/>
         </Routes> 
     </>

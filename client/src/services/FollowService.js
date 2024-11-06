@@ -18,10 +18,10 @@ export const findAllFollows = async () => {
     } catch(error) {throw error}
 }
 
-export const createFollow = async (followerId, followedId) => {
+export const createFollow = async (followData) => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const res = await FOLLOW_INSTANCE.post('/', data)
+        const res = await FOLLOW_INSTANCE.post('/', followData )
         return res.data
     } catch(error){throw error}
 }
@@ -33,9 +33,10 @@ export const updateFollow = async (data) => {
     } catch(error){throw error}
 }
 
-export const destroyFollow = async (id) => {
+export const destroyFollow = async (id, followedId) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await FOLLOW_INSTANCE.delete(`/${id}`)
+        const res = await FOLLOW_INSTANCE.delete(`/${id}/${followedId}`)
         return res.data
     } catch(error){throw error}
 }

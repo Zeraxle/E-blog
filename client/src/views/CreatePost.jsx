@@ -75,8 +75,7 @@ export const CreatePost = () => {
                 return false
             }
             try {
-                const res = await createPost(formData)
-                console.log(res)
+                await createPost(formData)
                 navigate('/user/profile')
             } catch (error) {
                 console.error(error)

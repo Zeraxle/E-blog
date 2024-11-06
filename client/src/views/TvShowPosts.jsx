@@ -37,6 +37,10 @@ export const TvShowPosts = (props) =>{
 
             }, [])
 
+        useEffect(() => {
+            console.log(allTvShows)
+        }, [])
+
 
     return(
         <>

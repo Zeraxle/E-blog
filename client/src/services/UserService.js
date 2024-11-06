@@ -12,6 +12,15 @@ export const findUser = async (id) => {
     } catch(error){throw error}
 } 
 
+export const findWhoUserFollows = async (userid) =>{
+    // eslint-disable-next-line no-useless-catch
+    try{
+        const res = await USER_INSTANCE.get(`/UserFollows/${userid}`)
+        return res.data
+    }
+    catch(error) {throw error}
+}
+
 export const findAllUsers = async () => {
     try {
         const res = await USER_INSTANCE.get('/')

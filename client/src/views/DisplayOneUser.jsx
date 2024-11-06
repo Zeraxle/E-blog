@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { findUser } from "../services/UserService"
+import { findUser, findWhoUserFollows } from "../services/UserService"
 import { Navigate } from "react-router-dom"
 import { getProfile } from "../services/AuthService"
 import Cookies from 'js-cookie'
-import { createFollow } from "../../../server/controllers/follow.controller"
+import { createFollow } from "../services/FollowService"
+import { destroyFollow } from "../services/FollowService"
 
 export const DisplayOneUser = (props) =>{
     const {loggedInUser, user, setAuthState, setUser} = props
     const {id} = useParams ()
     const [displayedUserId, setDisplayedUserID] = useState({})
     const [usersPosts, setUsersPosts] = useState ([])
+    const [userFollowing, setUserFollowing] = useState([])
+    const [userFollowers, setUserFollowers] = useState([])
+    const [followRelationship, setFollowRelationship] = useState(false)
     const navigate = useNavigate()
 
     // console.log(loggedInUser)
@@ -43,18 +47,42 @@ export const DisplayOneUser = (props) =>{
             })
         .catch(error => console.log(error))
 
-            },[id])
+        },[id])
+        
+            useEffect(() => {
+                    findWhoUserFollows(user?.id)
+                        .then(following => {
+                            setUserFollowing(following)
+                            const ifFollowing = following.some(following => following.id === parseInt(id));
+                            setFollowRelationship(ifFollowing)
+                        })
+                        .catch(error => console.log(error));
+            }, [id, displayedUserId.id]);
+            
         
         const followUser = () =>{
-            // const followerId = user.id
-            // const followedId = id
-            // createFollow({followerId,followedId })
-            //     .then (res =>{
-            //         console.log("sucessful follower creation ", res)
-            //     })
-            //     .catch(error => console.log(error))
+            const followerId = user.id
+            const followedUserId = id
+            createFollow({followerId,followedUserId })
+            .then (res =>{
+                    setFollowRelationship(true)
+                    console.log("sucessful follower creation ", res)
+                })
+                .catch(error => console.log(error))
         }
 
+        const unfollowUser = () =>{
+            const followerId = user.id
+            const followedUserId = id
+
+            destroyFollow(followerId, followedUserId)
+                .then(res =>{
+                    console.log("successful unfollow", res)
+                    setFollowRelationship(false)
+                })
+                .catch(error => console.log(error))
+        }
+    
     return(
         <>
         <table>
@@ -96,9 +124,29 @@ export const DisplayOneUser = (props) =>{
                 }))}
             </tbody>
         </table>
-        <button onClick={followUser}>
-            Follow
-        </button>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>User is following </td>
+                </tr>
+            </thead>
+            <tbody>
+        
+                { userFollowing.length > 0 ? (
+                    userFollowing.map(following => (
+                        <tr key={following.id}>
+                            <td> <Link to={`/display/user/${following.id}`}>{following.username}</Link></td>
+                        </tr>
+                    ))) :(
+                        <tr>
+                            <td>No Followers found</td>
+                        </tr>
+                    )}
+            </tbody>
+        </table>
+        
+        {followRelationship? (<button onClick={unfollowUser}>Unfollow</button>):(<button onClick={followUser}>Follow</button>)}
         </>
     )
 }

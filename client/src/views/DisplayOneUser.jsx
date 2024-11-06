@@ -4,7 +4,7 @@ import { findUser } from "../services/UserService"
 import { Navigate } from "react-router-dom"
 import { getProfile } from "../services/AuthService"
 import Cookies from 'js-cookie'
-import { createFollow } from "../../../server/controllers/follow.controller"
+import { createFollow } from "../services/FollowService"
 
 export const DisplayOneUser = (props) =>{
     const {loggedInUser, user, setAuthState, setUser} = props

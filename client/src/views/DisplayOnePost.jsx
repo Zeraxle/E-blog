@@ -11,7 +11,7 @@ export const DisplayOnePost = () =>{
         findPostById(id)
             .then(post =>{
                 setDisplayedPost(post)
-                // setPosttUser(post.user)
+                // setPostUser(post.user)
             })
             .catch(error => console.log(error))
 
@@ -38,7 +38,6 @@ export const DisplayOnePost = () =>{
                         <td>{displayedPost.rating}</td>
                         <td>{displayedPost.category}</td>
                         <td><Link to={`/display/user/${displayedPost.user?.id}`}>{displayedPost.user?.username}</Link></td>
-                        {/* <td>{dislayedPost.user.username}</td> */}
                     </tr>
                 </tbody>
         </table>

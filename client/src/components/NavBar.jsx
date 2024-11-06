@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { findAllPosts } from '../services/PostService';
 
-export const NavBar = ({setFilteredPosts}) => {
+export const NavBar = ({setFilteredPosts, user}) => {
     const navigate = useNavigate()
     // const {loggedInUser} = props
 
@@ -21,6 +21,8 @@ export const NavBar = ({setFilteredPosts}) => {
     const handleSearchChange = (e) =>{
         setSearchInfo(e.target.value)
     }
+
+    console.log(user.id)
 
     const handleSearchSubmit = (e) =>{
         e.preventDefault()
@@ -73,7 +75,7 @@ export const NavBar = ({setFilteredPosts}) => {
         <Link to={'/Movies'}><p>Movies</p> </Link>
         <Link to={'/TvShows'}><p>Tv Shows</p></Link>
         <Link to={'/Anime'}><p>Anime</p></Link>
-        <Link to={'FollowersPosts'}><p>Followers</p></Link>
+        <Link to={`/${user.id}/FollowersPosts`}><p>Followers</p></Link>
     </div>
 
     </>)

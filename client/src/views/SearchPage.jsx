@@ -44,19 +44,17 @@ export const SearchPage = ({filteredPosts}) => {
             <tbody>
             {filteredPosts && filteredPosts.map((post) =>(
                 <tr key={post.id}>
-                <td>{post.name}</td>
+                <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
                 <td>{post.description}</td>
                 <td>{post.category}</td>
                 <td>{post.rating}</td>
-                <td> <Link>{post.user.username}</Link></td>
+                <td> <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
                 </tr>
                 
             ))}
 
         </tbody>
-   
         </table>
-        
-      
+
     </>)
 }

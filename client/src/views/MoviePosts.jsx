@@ -64,11 +64,11 @@ export const MoviePosts = (props) =>{
                 {allMovies.map((movie =>{
                     return(
                     <tr key={movie.id}>
-                        <td>{movie.name}</td>
+                        <td><Link to={`/display/post/${movie.id}`}>{movie.name}</Link></td>
                         <td>{movie.description}</td>
                         <td>{movie.category}</td>
                         <td>{movie.rating}</td>
-                        <td><Link>{movie.user.username}</Link></td>
+                        <td><Link to = {`/display/user/${movie.user.id}`}>{movie.user.username}</Link></td>
                     </tr>
                     )
                 }))}

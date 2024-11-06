@@ -5,6 +5,7 @@ const USER_INSTANCE = axios.create({
 })
 
 export const findUser = async (id) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await USER_INSTANCE.get(`/${id}`)
         return res.data

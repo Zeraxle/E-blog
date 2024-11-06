@@ -25,7 +25,7 @@ export const CreatePost = () => {
         description : ''
     })
 
-    const categories = ['Movies', 'TV Show', 'Anime']
+    const categories = ['Movie', 'TVShow', 'Anime']
     const ratings = [1, 2, 3, 4, 5]
 
     useEffect(() => {

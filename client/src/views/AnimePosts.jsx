@@ -54,11 +54,11 @@ export const AnimePosts =  (props) =>{
                     {allAnimePosts.map((post =>{
                         return(
                             <tr key={post.id}>
-                                <td>{post.name}</td>
+                                <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
                                 <td>{post.description}</td>
                                 <td>{post.category}</td>
                                 <td>{post.rating}</td>
-                                <td>{post.user.username}</td>
+                                <td><Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
                             </tr>
                         )
                     }))}

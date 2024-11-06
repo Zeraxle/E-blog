@@ -5,7 +5,7 @@ const POST_INSTANCE = axios.create({
     baseURL : 'http://localhost:8000/post'
 })
 
-export const findPost = async (id) => {
+export const findPostById = async (id) => {
     try {
         const res = await POST_INSTANCE.get(`/${id}`)
         return res.data
@@ -60,9 +60,9 @@ export const findAllAnimePosts = async () =>{
 
 
 
-export const findAllFollowersPosts = async (userid) =>{
+export const findAllFollowersPosts = async (id) =>{
     try{
-        const res = await POST_INSTANCE.get(`/${userid}/followersPosts`)
+        const res = await POST_INSTANCE.get(`/${id}/followersPosts`)
         return res.data
     }
     catch(error){

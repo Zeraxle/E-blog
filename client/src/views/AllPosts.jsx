@@ -10,7 +10,7 @@ export const AllPosts = (props) =>{
     const {authState, setAuthState} = useAuth()
     const [user, setUser] = useState({})
     const [allPosts, setAllPosts] = useState([])
-
+    const [userHere, setUserHere] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,6 +36,7 @@ export const AllPosts = (props) =>{
                 })
                 .catch(error => console.log(error))
         }, [])
+        console.log(userHere)
     return(<>
         <h1>All Posts</h1>
         <button onClick={logoutUser}>Logout</button>
@@ -53,11 +54,12 @@ export const AllPosts = (props) =>{
                 {allPosts.map((post) =>{
                     return(
                     <tr key={post.id}>
-                        <td>{post.name}</td>
-                        <td>{post.comments}</td>
+                        <td><Link to ={`/display/post/${post.id}`}>{post.name}</Link></td>
+                        {/* <td>{post.name}</td> */}
+                        <td>{post.description}</td>
                         <td>{post.category}</td>
                         <td>{post.rating}</td>
-                        <td><Link>{post.user.username}</Link></td>
+                        <td><Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
                         
                     </tr>
                     )

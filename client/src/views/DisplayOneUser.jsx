@@ -6,14 +6,16 @@ import { getProfile } from "../services/AuthService"
 import Cookies from 'js-cookie'
 import { createFollow } from "../services/FollowService"
 import { destroyFollow } from "../services/FollowService"
+import { updateUser } from "../services/UserService"
 
 export const DisplayOneUser = (props) =>{
-    const {loggedInUser, user, setAuthState, setUser} = props
+    const { user, setAuthState, setUser, setUpdateUserInfo} = props
     const {id} = useParams ()
     const [displayedUserId, setDisplayedUserID] = useState({})
     const [usersPosts, setUsersPosts] = useState ([])
     const [userFollowing, setUserFollowing] = useState([])
     const [userFollowers, setUserFollowers] = useState([])
+    const [loggedInUserPage, setLoggedInUserPage] = useState(false)
     const [followRelationship, setFollowRelationship] = useState(false)
     const navigate = useNavigate()
 
@@ -24,20 +26,30 @@ export const DisplayOneUser = (props) =>{
         getProfile()
             .then(res => {
                 setUser(res)
-                setAuthState({user: res.id, token: sessionId })})
+                const loggedUser = res.id === parseInt(id)
+                setLoggedInUserPage(loggedUser)
+                setAuthState({user: res.id, token: sessionId })
+            
+            })
             .catch(error => console.log(error))
-        }, []);
+        }, [id]);
 
     useEffect(() =>{
 
         findUser(id)
             .then(user =>{
                 setDisplayedUserID(user)
+                
             })
         .catch(error => console.log(error))
 
         },[id])
 
+    
+    const goToProfilepage = () =>{
+
+                navigate(`/user/profile`)
+    }
 
         useEffect(() =>{
 
@@ -52,13 +64,22 @@ export const DisplayOneUser = (props) =>{
             useEffect(() => {
                     findWhoUserFollows(user?.id)
                         .then(following => {
-                            setUserFollowing(following)
                             const ifFollowing = following.some(following => following.id === parseInt(id));
+                            
                             setFollowRelationship(ifFollowing)
                         })
                         .catch(error => console.log(error));
             }, [id, displayedUserId.id]);
             
+
+            useEffect(() => {
+                findWhoUserFollows(id)
+                    .then(following => {
+                        setUserFollowing(following)
+                    })
+                    .catch(error => console.log(error));
+        }, [id, displayedUserId.id]);
+        
         
         const followUser = () =>{
             const followerId = user.id
@@ -66,7 +87,7 @@ export const DisplayOneUser = (props) =>{
             createFollow({followerId,followedUserId })
             .then (res =>{
                     setFollowRelationship(true)
-                    console.log("sucessful follower creation ", res)
+                    console.log("Successful follower creation ", res)
                 })
                 .catch(error => console.log(error))
         }
@@ -124,7 +145,6 @@ export const DisplayOneUser = (props) =>{
                 }))}
             </tbody>
         </table>
-
         <table>
             <thead>
                 <tr>
@@ -132,7 +152,6 @@ export const DisplayOneUser = (props) =>{
                 </tr>
             </thead>
             <tbody>
-        
                 { userFollowing.length > 0 ? (
                     userFollowing.map(following => (
                         <tr key={following.id}>
@@ -145,8 +164,16 @@ export const DisplayOneUser = (props) =>{
                     )}
             </tbody>
         </table>
-        
-        {followRelationship? (<button onClick={unfollowUser}>Unfollow</button>):(<button onClick={followUser}>Follow</button>)}
+        {loggedInUserPage ? (
+        <button onClick={goToProfilepage}>Profile Page</button>
+        ) : (
+        <>
+        <button onClick={followRelationship ? unfollowUser : followUser}>
+            {followRelationship ? 'Unfollow' : 'Follow'}
+        </button>
+    </>
+    )}
+
         </>
     )
 }

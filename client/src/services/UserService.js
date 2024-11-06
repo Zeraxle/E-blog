@@ -36,6 +36,7 @@ export const createUser = async (data) => {
 }
 
 export const updateUser = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await USER_INSTANCE.put(`/${data.id}`, data)
         return res.data

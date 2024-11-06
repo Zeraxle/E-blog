@@ -20,6 +20,7 @@ import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 import { DisplayOneUser } from './views/DisplayOneUser.jsx'
 import { DisplayOnePost } from './views/DisplayOnePost.jsx'
 import { useAuth } from './config/AuthContext.jsx'
+import { EditUserPage } from './views/EditUserPage.jsx'
 function App() {
     const [user, setUser] = useState({})
     const [loggedInUser, setLoggedInUser] = useState([])
@@ -27,6 +28,7 @@ function App() {
     const [filteredPosts, setFilteredPosts] = useState([]); 
     const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
     const {authState, setAuthState} = useAuth()
+    const [updateUserInfo, setUpdateUserInfo] = useState({})
     const [followRelationship, setFollowRelationship] = useState(false)
     
   
@@ -39,7 +41,7 @@ function App() {
           <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
           <Route path={'/home'} element={<ProtectedRoute> <HomePage user = {user} setUser = {setUser}/> </ProtectedRoute> }/>
           <Route path={'/search'} element={<ProtectedRoute><SearchPage loggedInUser={loggedInUser} filteredPosts={filteredPosts} /></ProtectedRoute>}/>
-          <Route path={'/user/profile'} element={<ProtectedRoute><ProfilePage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
+          <Route path={'/user/profile'} element={<ProtectedRoute><ProfilePage loggedInUser={loggedInUser} updateUserInfo = {updateUserInfo} setUpdateUserInfo = {setUpdateUserInfo} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
           <Route path={'/post/create'} element={<ProtectedRoute><CreatePost loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/favorites'} element={<ProtectedRoute><FavoritesPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/notifications'} element={<ProtectedRoute><NotificationPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
@@ -48,8 +50,9 @@ function App() {
           <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>
           <Route path={'/:id/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser} user = {user} setUser = {setUser} authState = {authState} setAuthState = {setAuthState}/></ProtectedRoute>}/>
-          <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser  followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser}/></ProtectedRoute>}/>
+          <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser  followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
           <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost/></ProtectedRoute>}/>
+          <Route path= {'/edit/user/:id'} element = {<ProtectedRoute> <EditUserPage user = {user} setUser = {setUser}/> </ProtectedRoute>}/>
         </Routes> 
     </>
   )

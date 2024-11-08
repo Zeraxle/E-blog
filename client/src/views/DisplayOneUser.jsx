@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { findUser, findWhoUserFollows } from "../services/UserService"
+import { findUser, findWhoFollowsUser, findWhoUserFollows } from "../services/UserService"
 import { Navigate } from "react-router-dom"
 import { getProfile } from "../services/AuthService"
 import Cookies from 'js-cookie'
@@ -80,6 +80,13 @@ export const DisplayOneUser = (props) =>{
                     .catch(error => console.log(error));
         }, [id, displayedUserId.id]);
         
+        useEffect(()=>{
+            findWhoFollowsUser(id)
+                .then(following =>{
+                    setUserFollowers(following)
+                })
+                .catch(error => console.log(error))
+        }, [id])
         
         const followUser = () =>{
             const followerId = user.id
@@ -162,6 +169,26 @@ export const DisplayOneUser = (props) =>{
                             <td>No Followers found</td>
                         </tr>
                     )}
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <td>Follows User</td>
+                </tr>
+            </thead>
+            <tbody>
+                {userFollowers.length > 0 ? (
+                    userFollowers.map(follower => (
+                        <tr key={follower.id}>
+                            <td><Link to={`/display/user/${follower.id}`}>{follower.username}</Link></td>
+                        </tr>
+                    ))
+                ):(
+                    <tr>
+                        <td>No Followers found</td>
+                    </tr>
+                )}
             </tbody>
         </table>
         {loggedInUserPage ? (

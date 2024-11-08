@@ -13,7 +13,12 @@ import { getToken } from "../services/token.service.js"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
-        const foundPost = await Post.findByPk(id)
+        const foundPost = await Post.findByPk(id,{
+            include:[{
+                model:User,
+                as: 'user'
+            }]
+        })
         res.status(200).json(foundPost)
     } catch(error) {res.status(400).json(error)}
 }
@@ -37,13 +42,14 @@ export const createPost = async (req, res, next) => {
     
     const authHeader = req.headers.authorization
     const sessionId = authHeader.split(' ')[1]
-    console.log("----------------hi---------------")
     const token = await getToken(sessionId)
     
     try {
         const {name, category, rating, description} = req.body
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const userid = decoded.userId
+        console.log("----------------hi---------------")
+        console.log(userid)
         const newPost = await Post.create({name, category, rating, description, userid})
         res.status(200).json(newPost)
     } catch(error) {res.status(400).json('Controller failed', error)}
@@ -119,7 +125,7 @@ export const findAllTvshowPosts = async (req,res,next) =>{
         console.log("gotttittt")
         const allTvShowPosts = await Post.findAll({
             where : 
-            {category : 'Tv-show'},
+            {category : 'Tvshow'},
             include :[
                 {
                     model : User,

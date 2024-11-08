@@ -37,6 +37,10 @@ export const ProfilePage = (props) => {
         <Link to={'/home'}>Home Page</Link>
         <button onClick={logoutUser}>Logout</button>
         <button onClick={editProfilePage}>Edit Profile</button>
+        <p>First Name: {user.firstName}</p>
+        <p>Last Name: {user.lastName}</p>
+        <p>Username: {user.username}</p>
+        <p>Email: {user.email}</p>
     </div>
     )    
 };

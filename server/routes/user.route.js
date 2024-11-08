@@ -9,8 +9,10 @@ userRouter.route('/')
 
 userRouter.route('/:id')
     .get(findUserById)
-    .put(updateUser)
     .delete(destroyUser)
+
+userRouter.route('/edit/user/:id')
+    .put(updateUser)
 
 // userRouter.route('/logout')
 //     .delete(logoutUser)

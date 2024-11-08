@@ -29,12 +29,12 @@ const Post = sequelize.define('posts', {
     },
     
     category : {
-        type : DataTypes.ENUM('Movie', 'TV Show', 'Anime'),
+        type : DataTypes.ENUM('Movie', 'TVShow', 'Anime'),
         required : [true, 'Post needs a category'],
         allowNull : false,
         validate: {
             isIn: {
-                args: [['Movie', 'TV Show', 'Anime']],
+                args: [['Movie', 'TVShow', 'Anime']],
                 msg: "Not an acceptable input for category"
             }
         } 

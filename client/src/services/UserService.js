@@ -21,6 +21,15 @@ export const findWhoUserFollows = async (userid) =>{
     catch(error) {throw error}
 }
 
+export const findWhoFollowsUser = async (userid) =>{
+    // eslint-disable-next-line no-useless-catch
+    try{
+        const res = await USER_INSTANCE.get(`/followsUser/${userid}`)
+        return res.data
+    }
+    catch(error) {throw error}
+}
+
 export const findAllUsers = async () => {
     try {
         const res = await USER_INSTANCE.get('/')
@@ -37,8 +46,9 @@ export const createUser = async (data) => {
 
 export const updateUser = async (data) => {
     // eslint-disable-next-line no-useless-catch
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await USER_INSTANCE.put(`/${data.id}`, data)
+        const res = await USER_INSTANCE.put(`/edit/user/${data.id}`, data)
         return res.data
     } catch(error){throw error}
 }

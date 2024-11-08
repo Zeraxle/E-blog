@@ -18,7 +18,17 @@ export const findUserById = async (req, res, next) => {
                 model:Post,
                 as: 'likedPosts'
 
-            }],
+            },
+            {
+                model:Follow,
+                as: 'followers'
+            },
+            {
+                model:Follow,
+                as: 'following'
+
+            }
+        ],
             logging: console.log // Enable logging to see the SQL query in the console
         });
         

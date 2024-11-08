@@ -19,15 +19,17 @@ export const findAllLikes = async () => {
 }
 
 export const createLike = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await LIKE_INSTANCE.post('/', data)
         return res.data
     } catch(error){throw error}
 }
 
-export const destroyLike = async (id) => {
+export const destroyLike = async (userid, postid) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await LIKE_INSTANCE.delete(`/${id}`)
+        const res = await LIKE_INSTANCE.delete(`/${userid}/${postid}`)
         return res.data
     } catch(error) {throw error}
 }

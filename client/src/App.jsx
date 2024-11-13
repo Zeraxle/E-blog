@@ -21,16 +21,17 @@ import { DisplayOneUser } from './views/DisplayOneUser.jsx'
 import { DisplayOnePost } from './views/DisplayOnePost.jsx'
 import { useAuth } from './config/AuthContext.jsx'
 import { EditUserPage } from './views/EditUserPage.jsx'
+import { LikeProvider } from './views/LikeContext.jsx'
 function App() {
-    const [user, setUser] = useState({})
-    const [loggedInUser, setLoggedInUser] = useState([])
-    const location = useLocation()
-    const [filteredPosts, setFilteredPosts] = useState([]); 
-    const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
-    const {authState, setAuthState} = useAuth()
-    const [updateUserInfo, setUpdateUserInfo] = useState({})
-    const [followRelationship, setFollowRelationship] = useState(false)
-    
+  const [user, setUser] = useState({})
+  const [loggedInUser, setLoggedInUser] = useState([])
+  const location = useLocation()
+  const [filteredPosts, setFilteredPosts] = useState([]); 
+  const showNavBar = !['/', '/register', '/login'].includes(location.pathname)
+  const {authState, setAuthState} = useAuth()
+  const [updateUserInfo, setUpdateUserInfo] = useState({})
+  const [followRelationship, setFollowRelationship] = useState(false)
+  
   
     return (
       <>
@@ -45,7 +46,7 @@ function App() {
           <Route path={'/post/create'} element={<ProtectedRoute><CreatePost loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/favorites'} element={<ProtectedRoute><FavoritesPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/user/notifications'} element={<ProtectedRoute><NotificationPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
-          <Route path={'/AllPosts'} element = {<ProtectedRoute> <AllPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
+          <Route path={'/AllPosts'} element = {<ProtectedRoute><LikeProvider><AllPosts loggedInUser = {loggedInUser} /></LikeProvider></ProtectedRoute>}/>
           <Route  path={'/Movies'} element = {<ProtectedRoute> <MoviePosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
           <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>

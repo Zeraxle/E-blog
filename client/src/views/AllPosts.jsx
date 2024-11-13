@@ -5,17 +5,16 @@ import { logout, getProfile } from '../services/AuthService.js';
 import { findAllPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie';
+import { useLikes } from './LikeContext.jsx';
 import './AllPosts.css'; // Import the CSS file
 
 export const AllPosts = (props) => {
-    const { loggedInUser } = props;
+    const { loggedInUser} = props;
     const { authState, setAuthState } = useAuth();
     const [user, setUser] = useState({});
+    const { postLiked, setPostLiked } = useLikes();
     const [allPosts, setAllPosts] = useState([]);
-    const [postLiked, setPostLiked] = useState({
-        postid : '',
-        isPostLiked: false
-    })
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,7 +25,7 @@ export const AllPosts = (props) => {
                 setAuthState({ user: res.id, token: sessionId });
             })
             .catch(error => console.log(error));
-    }, []);
+    }, [postLiked]);
 
     const logoutUser = () => {
         logout()
@@ -40,7 +39,7 @@ export const AllPosts = (props) => {
                 setAllPosts(posts);
             })
             .catch(error => console.log(error));
-    }, []);
+    }, [postLiked]);
 
     const createPostLike = async(e, postid) =>{
         e.preventDefault()
@@ -51,11 +50,11 @@ export const AllPosts = (props) => {
         try{
             createLike({userid, postid})
             // console.log(postLiked)
-            .then(
-                setPostLiked(...prev => ({ prev, postid : postid, isPostLiked : true}))
+            
+                setPostLiked((prev) => ({ ...prev,[postid]: true}))
                 
-            )
-            console.log(postLiked)
+            
+            // console.log(postLiked)
         }catch (error){
             console.log(error)
         }
@@ -67,10 +66,10 @@ export const AllPosts = (props) => {
         const userid = user.id
         try{
             destroyLike(userid,postid)
-            .then(
-                setPostLiked(false)
-            )
-            console.log(postLiked)
+            
+                setPostLiked((prev) => ({ ...prev, [postid] : false}))
+            
+            // console.log(postLiked)
         }catch(error){
             console.log(error)
         }
@@ -97,12 +96,12 @@ export const AllPosts = (props) => {
 
 
                                 
-                                {postLiked.isPostLiked? (
+                                {postLiked [post.id]? (
                                     <button onClick={(e) => createPostDislike(e, post.id)} className="icon">💔</button>
                                     
                                 ): (
-                                    
                                     <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button>
+                                    
                                         
                                 )}
                             </div>

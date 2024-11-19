@@ -73,10 +73,11 @@ export const AllPosts = (props) => {
         }catch(error){
             console.log(error)
         }
-
-
     }
-    
+
+    const goToComments = async(e,postid) =>{
+        navigate(`post/${postid}/comments`)
+    }
     return (
         <div id="root">
 
@@ -91,7 +92,7 @@ export const AllPosts = (props) => {
                             <p className="post-rating">Rating: {post.rating}/5</p>
                             <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
                             <div className="post-actions">
-                                <button className="icon">💬</button>
+                                <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
                                     {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
 
 

@@ -84,6 +84,17 @@ export const createPost = async (data) => {
         throw error}
 }
 
+export const findAllCommmentsForPost = async (postid) =>{
+    try{
+        const res = await POST_INSTANCE.get(`/postcomments/${postid}`)
+        return res.data
+    }
+    catch(error){
+        console.log('Error fetching Post Comments ', error)
+        throw error
+    }
+}
+
 // export const updatePost = async (data) => {
 //     try {
 //         const res = await POST_INSTANCE.put(`/${data.id}`, data)

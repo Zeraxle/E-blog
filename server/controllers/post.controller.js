@@ -1,4 +1,4 @@
-import Post from "../models/post.model.js"
+import Post, { setupUserPostRealationship } from "../models/post.model.js"
 // import setupRelationships from "./setupRealationships.js"
 import User from "../models/user.model.js"
 import Follow from "../models/follow.model.js"
@@ -102,22 +102,23 @@ export const findPostUser = async(req,res,next) =>{
 
 export const findAllCommmentsForPost = async(req,res,next) =>{
     try{
-        const {postId} = req.params
+        const {postid} = req.params
         const allPostCommments =  await Post.findAll({
             where:{
-                id : postId
+                id : postid
             },
             include:[
                 {
                     model:Comments,
-                    include:[{model: User}]
+                    as: 'comments', 
+                    include:[{model: User, as : 'user'}]
                 }
             ],
         })
         res.status(200).json(allPostCommments)
 
     }
-    catch(error){res.status(400).json(error)}
+    catch(error){res.status(400).json(error.message)}
 }
 
 export const findAllTvshowPosts = async (req,res,next) =>{
@@ -233,3 +234,4 @@ export const findAllFollowersPosts = async (req, res, next ) =>{
 }
 
 LikestoUserandPostRelationship()
+setupPostToCommentRelationship()

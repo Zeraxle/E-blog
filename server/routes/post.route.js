@@ -29,8 +29,8 @@ postRouter.route('/:userid/:postid')
 postRouter.route('/postuser/:postId')
     .get(findPostUser)
 
-postRouter.route('/postcomments/:postId')
+postRouter.route('/postcomments/:postid')
     .get(findAllCommmentsForPost)
 
-postRouter.route('/postLikers/:postId')
+postRouter.route('/postLikers/:postid')
     .get(findAllUserWholikedPost)

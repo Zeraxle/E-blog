@@ -24,7 +24,13 @@ export const Comments = sequelize.define("comments", {
     Comment:{
         type: DataTypes.STRING,
         allowNull : false,
+        validate:{
+            len:{
+            args: [3,255],
+            msg: 'Comments must be more than 3 characters and less than 255'
+        }
     },
+}
 
 },
 {timestamps: true}

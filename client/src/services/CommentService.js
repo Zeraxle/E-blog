@@ -19,6 +19,7 @@ export const findAllComments = async () => {
 }
 
 export const createComment = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await COMMENT_INSTANCE.post(`/`, data)
         return res.data

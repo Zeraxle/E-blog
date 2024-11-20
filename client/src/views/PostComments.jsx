@@ -6,6 +6,7 @@ import { getProfile } from "../services/AuthService"
 import { useAuth } from "../config/AuthContext"
 import { createComment } from "../services/CommentService"
 import Cookies from 'js-cookie';
+import {formatDistanceToNow} from 'date-fns'
 
 
 export const PostComments = () =>{
@@ -29,7 +30,7 @@ export const PostComments = () =>{
         findAllCommmentsForPost(postId)
             .then((res) =>{
                 setRetrivedComments(res.comments)
-                console.log(res)
+
 
         })
             .catch(error => console.log(error))
@@ -56,7 +57,7 @@ export const PostComments = () =>{
     
     const validateComment = (name, value) =>{
         const validations = {
-            Comment : value => value.length >+ 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
+            Comment : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
         }
         setCommentErrors ((prev ) => ({...prev, [name]: validations[name](value), }))
     }
@@ -93,6 +94,8 @@ export const PostComments = () =>{
                 postid : null,
                 userid : null
             })
+            const updatedComments = await findAllCommmentsForPost(postId)
+            setRetrivedComments(updatedComments.comments || [])
             navigate(`/AllPosts/post/${postId}/comments`)
     
         }
@@ -104,7 +107,7 @@ export const PostComments = () =>{
     }
     return(
         <>
-        <h1>Hii</h1>
+        <h1>{post.name}</h1>
         <table>
             <thead>
                 <tr>
@@ -123,7 +126,6 @@ export const PostComments = () =>{
                     <td>{post?.rating}</td>
                     <td>{post?.category}</td>
                     <td> <Link to = {`/display/user/${post?.user?.id}`}>{post?.user?.username}</Link></td>
-                    <td> {post?.user?.lastName}</td>
                 </tr>
             </tbody>
         </table>
@@ -131,25 +133,49 @@ export const PostComments = () =>{
             <thead>
                 <tr>
                     <th>Post Comment</th>
+                    <th>Posted By</th>
+                    <th>Posted At</th>
+                    <th>Actions</th>
                 </tr>
                     </thead>
                 <tbody>
                     {retrivedComments && retrivedComments.length > 0 ? (
 
-                    retrivedComments.map((comment =>(
-                    
+                    retrivedComments.map((comment) =>(
+
+
                         <tr key={comment.id}>
                             <td>{comment.Comment}</td>
+                            <td><Link to={`/display/user/${comment.user.id}`}>{comment.user.username}</Link></td>
+                            <td>{formatDistanceToNow(new Date(comment.createdAt), {
+                                addSuffix : true,
+                            })}</td>
+            
+                            {user.id === comment.user.id? (
+                            <>
+                            <td>
+                            <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
+                            <Link> Delete</Link>
+                            </td>
+                            </>
+                            ): (
+                        <p>its not me</p>
+
+                            )}
+
 
                         </tr>
 
 
-
-                    )))
-
+                    ))
 
 
-                        ):(
+
+                    )
+
+
+
+                        :(
                             <tr>
                                 <td>No comments Available </td>
                             </tr>

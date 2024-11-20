@@ -27,10 +27,19 @@ export const createComment = async (data) => {
 }
 
 export const updateComment = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await COMMENT_INSTANCE.put(`/${data.id}`, data)
         return res.data
     } catch(error){throw error}
+}
+
+export const findOneComment = async (id) =>{
+    // eslint-disable-next-line no-useless-catch
+    try{
+        const res = await COMMENT_INSTANCE.get(`/${id}`)
+        return res.data
+    }catch(error){throw error}
 }
 
 export const destroyComment = async (id) => {

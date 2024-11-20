@@ -23,6 +23,7 @@ import { useAuth } from './config/AuthContext.jsx'
 import { EditUserPage } from './views/EditUserPage.jsx'
 import { LikeProvider } from './views/LikeContext.jsx'
 import { PostComments } from './views/PostComments.jsx'
+import { EditComment } from './views/EditComment.jsx'
 function App() {
   const [user, setUser] = useState({})
   const [loggedInUser, setLoggedInUser] = useState([])
@@ -56,6 +57,7 @@ function App() {
           <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost/></ProtectedRoute>}/>
           <Route path= {'/edit/user/:id'} element = {<ProtectedRoute> <EditUserPage user = {user} setUser = {setUser}/> </ProtectedRoute>}/>
           <Route path={'/AllPosts/post/:postId/comments'} element = {<ProtectedRoute> <PostComments/></ProtectedRoute>}/>
+          <Route path={'/edit/comment/:id'} element ={<ProtectedRoute><EditComment/></ProtectedRoute>}/>
         </Routes> 
     </>
   )

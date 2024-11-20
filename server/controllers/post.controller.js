@@ -103,7 +103,7 @@ export const findPostUser = async(req,res,next) =>{
 export const findAllCommmentsForPost = async(req,res,next) =>{
     try{
         const {postid} = req.params
-        const allPostCommments =  await Post.findAll({
+        const allPostCommments =  await Post.findOne({
             where:{
                 id : postid
             },

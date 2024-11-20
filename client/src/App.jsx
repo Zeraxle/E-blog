@@ -33,7 +33,7 @@ function App() {
   const {authState, setAuthState} = useAuth()
   const [updateUserInfo, setUpdateUserInfo] = useState({})
   const [followRelationship, setFollowRelationship] = useState(false)
-  
+  const [post, setPost] = useState({})
   
     return (
       <>
@@ -56,8 +56,8 @@ function App() {
           <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser  followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
           <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost/></ProtectedRoute>}/>
           <Route path= {'/edit/user/:id'} element = {<ProtectedRoute> <EditUserPage user = {user} setUser = {setUser}/> </ProtectedRoute>}/>
-          <Route path={'/AllPosts/post/:postId/comments'} element = {<ProtectedRoute> <PostComments/></ProtectedRoute>}/>
-          <Route path={'/edit/comment/:id'} element ={<ProtectedRoute><EditComment/></ProtectedRoute>}/>
+          <Route path={'/AllPosts/post/:postId/comments'} element = {<ProtectedRoute> <PostComments post = {post} setPost = {setPost}/></ProtectedRoute>}/>
+          <Route path={'/edit/comment/:id'} element ={<ProtectedRoute><EditComment post = {post} /></ProtectedRoute>}/>
         </Routes> 
     </>
   )

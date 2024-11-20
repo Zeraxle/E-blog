@@ -4,15 +4,16 @@ import { useParams , Link, useNavigate} from "react-router-dom"
 import { findAllCommmentsForPost, findPostById } from "../services/PostService"
 import { getProfile } from "../services/AuthService"
 import { useAuth } from "../config/AuthContext"
-import { createComment } from "../services/CommentService"
+import { createComment, destroyComment } from "../services/CommentService"
 import Cookies from 'js-cookie';
 import {formatDistanceToNow} from 'date-fns'
 
 
-export const PostComments = () =>{
+export const PostComments = (props) =>{
     const navigate = useNavigate()
     const { authState, setAuthState } = useAuth();
-    const [post, setPost] = useState({})
+    const {setPost, post} = props
+
     const {postId} = useParams()
     const [retrivedComments, setRetrivedComments] = useState([])
     const [user, setUser] = useState({});
@@ -80,6 +81,14 @@ export const PostComments = () =>{
         return true
     }
 
+    const deleteComment = (e, commentid) =>{
+        e.preventDefault()
+        console.log(commentid)
+        destroyComment(commentid)
+        navigate(`/AllPosts/post/${post.id}/comments`)
+        
+
+    }
     const submitComment =  async e =>{
         e.preventDefault()
         if (!readyToSubmit()){
@@ -155,11 +164,11 @@ export const PostComments = () =>{
                             <>
                             <td>
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
-                            <Link> Delete</Link>
+                            <Link onClick={(e => deleteComment(e, comment.id))}>  Delete</Link>
                             </td>
                             </>
                             ): (
-                        <p>its not me</p>
+                        <td>  </td>
 
                             )}
 

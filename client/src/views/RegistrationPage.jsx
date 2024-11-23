@@ -30,7 +30,7 @@ export const RegistrationPage = () => {
         const validations = {
             firstName : value => value.length >= 2 && value.length <= 30? true : 'First Name must be 2-30 characters',
             lastName : value => value.length >= 2 && value.length <= 30? true : 'Last Name must be 2-30 characters',
-            username : value => value.length >= 2 && value.length <= 30? true : 'Username must be 2-3 characters',
+            username : value => value.length >= 5 && value.length <= 30? true : 'Username must be 2-3 characters',
             email : value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)? true : 'Email must be valid',
             password : value => value.length >= 8 && value.length <= 30? true : 'Password must be 8-30 characters',
             confirmPassword : (value) => {

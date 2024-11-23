@@ -1,4 +1,4 @@
-import Post from "../models/post.model.js"
+import Post, { setupUserPostRealationship } from "../models/post.model.js"
 // import setupRelationships from "./setupRealationships.js"
 import User from "../models/user.model.js"
 import Follow from "../models/follow.model.js"
@@ -13,7 +13,12 @@ import { getToken } from "../services/token.service.js"
 export const findPostById = async (req, res, next) => {
     try {
         const {id} = req.params
-        const foundPost = await Post.findByPk(id)
+        const foundPost = await Post.findByPk(id,{
+            include:[{
+                model:User,
+                as: 'user'
+            }]
+        })
         res.status(200).json(foundPost)
     } catch(error) {res.status(400).json(error)}
 }
@@ -37,7 +42,6 @@ export const createPost = async (req, res, next) => {
     
     const authHeader = req.headers.authorization
     const sessionId = authHeader.split(' ')[1]
-    console.log("----------------hi---------------")
     const token = await getToken(sessionId)
     
     try {
@@ -96,22 +100,23 @@ export const findPostUser = async(req,res,next) =>{
 
 export const findAllCommmentsForPost = async(req,res,next) =>{
     try{
-        const {postId} = req.params
-        const allPostCommments =  await Post.findAll({
+        const {postid} = req.params
+        const allPostCommments =  await Post.findOne({
             where:{
-                id : postId
+                id : postid
             },
             include:[
                 {
                     model:Comments,
-                    include:[{model: User}]
+                    as: 'comments', 
+                    include:[{model: User, as : 'user'}]
                 }
             ],
         })
         res.status(200).json(allPostCommments)
 
     }
-    catch(error){res.status(400).json(error)}
+    catch(error){res.status(400).json(error.message)}
 }
 
 export const findAllTvshowPosts = async (req,res,next) =>{
@@ -119,7 +124,7 @@ export const findAllTvshowPosts = async (req,res,next) =>{
         console.log("gotttittt")
         const allTvShowPosts = await Post.findAll({
             where : 
-            {category : 'Tv-show'},
+            {category : 'Tvshow'},
             include :[
                 {
                     model : User,
@@ -227,3 +232,4 @@ export const findAllFollowersPosts = async (req, res, next ) =>{
 }
 
 LikestoUserandPostRelationship()
+setupPostToCommentRelationship()

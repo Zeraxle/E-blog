@@ -13,7 +13,7 @@ export const Like = sequelize.define('likes', {
     postId : {
         type : DataTypes.BIGINT,
         allowNull : false,
-    }
+    },
 },
     {timestamps : true},
 

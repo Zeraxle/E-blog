@@ -9,11 +9,12 @@ export const createFollow = async (req, res, next) => {
 
 export const destroyFollow = async (req, res, next) => {
     try {
-        const {id, followedId} = req.params
+        const {id : followerId, followedId : followedUserId} = req.params
         const destroyedFollow = await Follow.destroy({
             where : {
-                followerId : id,
-                followedUserId : followedId
+                followerId,
+                followedUserId
+                
             }
         })
         res.status(200).json(destroyedFollow)

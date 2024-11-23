@@ -19,7 +19,7 @@ export const login = async (req, res) => {
 
 export const getProfile = async (req, res) => {
     try {
-        
+
         
         const userId = req.user.userId
         const user = await User.findByPk(userId)

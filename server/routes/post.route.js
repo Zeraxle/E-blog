@@ -32,5 +32,5 @@ postRouter.route('/postUser/:postId')
 postRouter.route('/postComments/:postId')
     .get(findAllCommmentsForPost)
 
-postRouter.route('/postLikers/:postId')
+postRouter.route('/postLikers/:postid')
     .get(findAllUserWholikedPost)

@@ -20,6 +20,8 @@ export const findCommentsByPost = async (postId) => {
 }
 
 export const createComment = async (content, postId) => {
+export const createComment = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const token = Cookies.get('sessionId') 
         const res = await COMMENT_INSTANCE.post(`/create/${postId}`, {content}, {
@@ -29,15 +31,27 @@ export const createComment = async (content, postId) => {
     } catch(error){throw error}
 }
 
-export const updateComment = async (data) => {
+export const updateComment = async (id, data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
+        const res = await COMMENT_INSTANCE.put(`/${id}`, data)
         const res = await COMMENT_INSTANCE.put(`/${data.id}`, {data})
         return res.data
     } catch(error){throw error}
 }
 
+export const findOneComment = async (id) =>{
+    // eslint-disable-next-line no-useless-catch
+    try{
+        const res = await COMMENT_INSTANCE.get(`/${id}`)
+        return res.data
+    }catch(error){throw error}
+}
+
 export const destroyComment = async (id) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await COMMENT_INSTANCE.delete(`/${id}`)
+        const res = await COMMENT_INSTANCE.delete(`/delete/${id}`)
+        return res.data
     } catch(error){throw error}
 }

@@ -12,5 +12,5 @@ commentRouter.route('/create/:postId')
     .get(findOneComment)
 
 
-commentRouter.route('/:userId/:postId')
+commentRouter.route('/delete/:id')
     .delete(DeleteComment)

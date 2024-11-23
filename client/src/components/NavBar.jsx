@@ -22,7 +22,7 @@ export const NavBar = ({setFilteredPosts, user}) => {
         setSearchInfo(e.target.value)
     }
 
-    console.log(user.id)
+    // console.log(user.id)
 
     const handleSearchSubmit = (e) =>{
         e.preventDefault()

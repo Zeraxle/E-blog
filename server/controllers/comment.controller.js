@@ -1,15 +1,25 @@
 import Comments,{ setupPostToCommentRelationship } from "../models/comment.model.js";
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
+import { getToken } from "../services/token.service.js";
+import jwt from 'jsonwebtoken'
 
 
 export const CreateComment = async(req,res,next) =>{
+    
+    const postId = req.params.postId
+    const {content} = req.body
+    const sessionId = req.headers.authorization.split(' ')[1]
+    const token = await getToken(sessionId)
+    
     try{
-        const newComment =  await Comments.create(req.body)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const userId = decoded.userId
+        const newComment =  await Comments.create({content, userId, postId, parentId})
         res.status(200).json(newComment)
 
     }
-    catch(error){res.status(400).json(error)}
+    catch(error){res.status(400).json({message: `Comment Controller, ${error}`})}
 }
 
 export const DeleteComment = async(req,res,next) =>{
@@ -57,5 +67,7 @@ export const findOneComment = async(req,res,next) =>{
     }
     catch(error){res.status(400).json(error)}
 }
+
+
 
 

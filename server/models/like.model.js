@@ -5,12 +5,12 @@ import { sequelize } from '../config/sequelize.config.js'
 
 export const Like = sequelize.define('likes', {
 
-    userid : {
+    userId : {
         type : DataTypes.BIGINT,
         allowNull : false,
     },
 
-    postid : {
+    postId : {
         type : DataTypes.BIGINT,
         allowNull : false,
     }
@@ -23,15 +23,15 @@ export const LikestoUserandPostRelationship = () =>{
 
     User.belongsToMany(Post, {
         through: Like,      // Use Like as the join table
-        foreignKey: 'userid',
-        otherKey: 'postid',
+        foreignKey: 'userId',
+        otherKey: 'postId',
         as: 'likedPosts'    // Alias for posts a user has liked
     });
 
     Post.belongsToMany(User, {
         through: Like,      // Use Like as the join table
-        foreignKey: 'postid',
-        otherKey: 'userid',
+        foreignKey: 'postId',
+        otherKey: 'userId',
         as: 'likers'        // Alias for users who have liked the post
     });
     

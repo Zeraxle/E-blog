@@ -84,16 +84,16 @@ export const createPost = async (data) => {
         throw error}
 }
 
-// export const updatePost = async (data) => {
-//     try {
-//         const res = await POST_INSTANCE.put(`/${data.id}`, data)
-//         return res.data
-//     } catch(error){throw error}
-// }
+export const updatePost = async (data) => {
+    try {
+        const res = await POST_INSTANCE.put(`/${data.id}`, data)
+        return res.data
+    } catch(error){throw error}
+}
 
-// export const destroyPost = async (id) => {
-//     try {
-//         const res = await POST_INSTANCE.delete(`/${id}`)
-//         return res.data
-//     } catch(error){throw error}
-// }
+export const destroyPost = async (id) => {
+    try {
+        const res = await POST_INSTANCE.delete(`/${id}`)
+        return res.data
+    } catch(error){throw error}
+}

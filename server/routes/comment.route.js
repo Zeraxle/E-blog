@@ -4,12 +4,13 @@ import { CreateComment, UpdateComment, DeleteComment, findOneComment} from "../c
 
 export const commentRouter = Router()
 
-commentRouter.route('/')
+commentRouter.route('/create/:postId')
     .post(CreateComment)
-commentRouter.route('/:id')
+
+    commentRouter.route('/:id')
     .put(UpdateComment)
     .get(findOneComment)
 
 
-commentRouter.route('/:userid/:postid')
+commentRouter.route('/:userId/:postId')
     .delete(DeleteComment)

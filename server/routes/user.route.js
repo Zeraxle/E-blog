@@ -15,15 +15,15 @@ userRouter.route('/:id')
 // userRouter.route('/logout')
 //     .delete(logoutUser)
 
-userRouter.route('/UserPost/:userid')
+userRouter.route('/UserPost/:userId')
     .get(findAllPostsByUser)
 
 userRouter.route('/UserLikedPosts/:userId')
     .get(findAllLikedPostByUser)
 
-userRouter.route('/followsUser/:userid')
+userRouter.route('/followsUser/:userId')
     .get(findWhoFollowsUser)
 
-userRouter.route('/UserFollows/:userid')
+userRouter.route('/UserFollows/:userId')
     .get(findWhoUserFollows)
 

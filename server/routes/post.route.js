@@ -23,13 +23,13 @@ postRouter.route('/:id')
     .get(findPostById)
     .put(updatePost)
 
-postRouter.route('/:userid/:postid')
+postRouter.route('/:userId/:postId')
     .delete(destroyPost)
 
-postRouter.route('/postuser/:postId')
+postRouter.route('/postUser/:postId')
     .get(findPostUser)
 
-postRouter.route('/postcomments/:postId')
+postRouter.route('/postComments/:postId')
     .get(findAllCommmentsForPost)
 
 postRouter.route('/postLikers/:postId')

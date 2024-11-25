@@ -12,7 +12,6 @@ export const AllPosts = (props) => {
     const { loggedInUser} = props;
     const { authState, setAuthState } = useAuth();
     const [user, setUser] = useState({});
-    const { postLiked, setPostLiked } = useLikes();
     const [allPosts, setAllPosts] = useState([]);
 
     const navigate = useNavigate();
@@ -80,9 +79,7 @@ export const AllPosts = (props) => {
     }
     return (
         <div id="root">
-
             <div>
-
                 <div>
                     {allPosts.map((post) => (
                         <div key={post.id} className="post-container">

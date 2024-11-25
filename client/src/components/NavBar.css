@@ -1,38 +1,93 @@
-img{
+/* General Styles */
+img {
     height: 45px;
-    
+    cursor: pointer;
 }
 
-input{
-    width: 400px;
-    height: 30px;
-    border: 4px;
+input {
+    width: 300px;
+    height: 35px;
+    border: 1px solid #ccc;
     border-radius: 6px;
+    padding: 5px;
     background-color: white;
 }
 
-.TopNavBar{
+.TopNavBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #121212;
+    z-index: 1000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
 }
-.TopNavBar h1{
+
+.TopNavBar h1 {
     color: #FF4500;
+    margin: 0;
+    font-size: 24px;
+    flex-shrink: 0; /* Prevent h1 from shrinking */
 }
 
-.TopNavBar :hover{
-    color: #FF4500;
+.TopNavBar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1; /* Push form to take up available space */
+    margin: 0 20px; /* Add spacing around the form */
 }
 
-h1{
-    margin-right: 20px;
+.TopNavBar input {
+    width: 100%; /* Input stretches within the form */
+    max-width: 400px; /* Optional: Limit maximum width */
 }
 
-.SideNavBar{
-    text-align: left; /* Aligns text to the left */
-    padding: 10px;
+.TopNavBar button {
+    height: 35px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #FF4500;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.TopNavBar button:hover {
+    background-color: #e03d00;
+}
+
+.TopNavBar img {
+    height: 35px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.TopNavBar img:hover {
+    transform: scale(1.1);
+}
+
+.TopNavBar a {
+    text-decoration: none;
+}
+
+/* Side Navigation Bar */
+.SideNavBar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 200px;
+    height: calc(100vh - 60px);
+    background-color: #121212;
+    padding: 20px 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
 }
 
 .SideNavBar p {
@@ -40,16 +95,28 @@ h1{
     color: black;
     height: 50px;
     width: 150px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     border-radius: 6px;
-    display: flex; /* Enable Flexbox */
-    align-items: center; /* Vertically center the text */
-    justify-content: center; /* Horizontally center the text */
-    text-align: center; /* Center text alignment */
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-
-.SideNavBar p:hover{
+.SideNavBar p:hover {
     background-color: #FF4500;
+    color: white;
+}
+
+/* Main Content Area */
+#root {
+    margin-left: 220px;
+    margin-top: 70px;
+    padding: 20px;
+    background-color: #121212;
+    color: rgba(255, 255, 255, 0.87);
+    min-height: calc(100vh - 70px);
 }

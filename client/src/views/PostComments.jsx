@@ -85,6 +85,8 @@ export const PostComments = (props) =>{
         e.preventDefault()
         console.log(commentid)
         destroyComment(commentid)
+        const newComments = retrivedComments.filter(comment => comment.id !== commentid)
+        setRetrivedComments(newComments)
         navigate(`/AllPosts/post/${post.id}/comments`)
         
 

@@ -15,7 +15,7 @@ export const CreateComment = async(req,res,next) =>{
     try{
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const userId = decoded.userId
-        const newComment =  await Comments.create({content, userId, postId, parentId})
+        const newComment =  await Comments.create({content, userId, postId})
         res.status(200).json(newComment)
 
     }

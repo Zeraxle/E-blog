@@ -70,7 +70,7 @@ export const setupPostToCommentRelationship =() =>{
         onUpdate : "CASCADE"
     })
 
-    Comments.hasMany(Comment, {
+    Comments.hasMany(Comments, {
         foreignKey: 'parentId',
         as: 'replies'
     })

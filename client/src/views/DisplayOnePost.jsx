@@ -10,7 +10,9 @@ import Cookies from 'js-cookie'
 
 export const DisplayOnePost = () => {
 
-    const { postId } = useParams()
+    
+    
+    const {id} = useParams()
     const {authState, setAuthState} = useAuth()
     const [displayedPost, setDisplayedPost] = useState({})
     const [comments, setComments] = useState()
@@ -27,11 +29,14 @@ export const DisplayOnePost = () => {
         }, []);
 
     useEffect(() => {
-        findPostById(postId)
+        findPostById(id)
+            
             .then(post => setDisplayedPost(post))
             .catch(error => console.log(`Post useEffect Error, ${error}`))
 
-    }, [postId])
+    }, [id])
+
+    
 
     
     // useEffect(() => {
@@ -65,8 +70,7 @@ export const DisplayOnePost = () => {
                         <td>{displayedPost.description}</td>
                         <td>{displayedPost.rating}</td>
                         <td>{displayedPost.category}</td>
-                        <td><Link to={`/display/user/${displayedPost.user?.id}`}>{displayedPost.user?.username}</Link></td>
-                        {/* <td>{displayedPost.user.username}</td> */}
+                        <td><Link to={`/display/user/${displayedPost.user?.id}`}>{displayedPost.user?.username}</Link></td> 
                     </tr>
                 </tbody>
             </table>
@@ -74,7 +78,7 @@ export const DisplayOnePost = () => {
                 <button className="icon" onClick={toggleComments}>
                     {showComments? 'Hide Comments': 'Show Comments'}💬
                 </button>
-                {showComments && <Comments postId={postId}/>}
+                {showComments && <Comments postId={id}/>}
                 <button className="icon">❤️</button>
             </div>
         </>

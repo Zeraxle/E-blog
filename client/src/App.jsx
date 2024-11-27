@@ -21,10 +21,9 @@ import { DisplayOneUser } from './views/DisplayOneUser.jsx'
 import { DisplayOnePost } from './views/DisplayOnePost.jsx'
 import { useAuth } from './config/AuthContext.jsx'
 import { EditUserPage } from './views/EditUserPage.jsx'
-import { LikeProvider } from './views/LikeContext.jsx'
 import { PostComments } from './views/PostComments.jsx'
 import { EditComment } from './views/EditComment.jsx'
-import { useLikes } from './views/LikeContext.jsx'
+import { useLikes} from './views/LikeContext.jsx'
 function App() {
   const [user, setUser] = useState({})
   const [loggedInUser, setLoggedInUser] = useState([])
@@ -35,11 +34,12 @@ function App() {
   const [updateUserInfo, setUpdateUserInfo] = useState({})
   const [followRelationship, setFollowRelationship] = useState(false)
   const [post, setPost] = useState({})
-
-  // const { postLiked, setPostLiked } = useLikes();
+  const { postLiked, setPostLiked } = useLikes() || { postLiked: [], setPostLiked: () => {} };
+  const [urlPath, setUrlPath] = useState({
+    path : ''
+  })
     return (
       <>
-      <LikeProvider>
           {showNavBar && <NavBar  user = {user} setFilteredPosts={setFilteredPosts}/>}
           <Routes>
             <Route path={'/'} element={<WelcomePage/>}/>
@@ -51,18 +51,17 @@ function App() {
             <Route path={'/post/create'} element={<ProtectedRoute><CreatePost loggedInUser={loggedInUser}/></ProtectedRoute>}/>
             <Route path={'/user/favorites'} element={<ProtectedRoute><FavoritesPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
             <Route path={'/user/notifications'} element={<ProtectedRoute><NotificationPage loggedInUser={loggedInUser}/></ProtectedRoute>}/>
-            <Route path={'/AllPosts'} element = {<ProtectedRoute><AllPosts loggedInUser = {loggedInUser} /></ProtectedRoute>}/>
-            <Route  path={'/Movies'} element = {<ProtectedRoute> <MoviePosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
-            <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser}/></ProtectedRoute>}/>
-            <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}></AnimePosts></ProtectedRoute>}/>
-            <Route path={'/:id/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser} user = {user} setUser = {setUser} authState = {authState} setAuthState = {setAuthState}/></ProtectedRoute>}/>
+            <Route path={'/AllPosts'} element = {<ProtectedRoute><AllPosts loggedInUser = {loggedInUser} postLiked = {postLiked} setPostLiked = {setPostLiked}  setUrlPath = {setUrlPath}/></ProtectedRoute>}/>
+            <Route  path={'/Movies'} element = {<ProtectedRoute> <MoviePosts loggedInUser = {loggedInUser} postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath} /></ProtectedRoute>}/>
+            <Route path={'/TvShows'} element = {<ProtectedRoute> <TvShowPosts loggedInUser = {loggedInUser} postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath}  /></ProtectedRoute>}/>
+            <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}  postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath}   ></AnimePosts></ProtectedRoute>}/>
+            <Route path={'/:id/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser} user = {user} setUser = {setUser} authState = {authState} setAuthState = {setAuthState} postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath}  /></ProtectedRoute>}/>
             <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser  followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
             <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost/></ProtectedRoute>}/>
             <Route path= {'/edit/user/:id'} element = {<ProtectedRoute> <EditUserPage user = {user} setUser = {setUser}/> </ProtectedRoute>}/>
-            <Route path={'/AllPosts/post/:postId/comments'} element = {<ProtectedRoute> <PostComments post = {post} setPost = {setPost}/></ProtectedRoute>}/>
+            <Route path={'/:category/post/:postId/comments'} element = {<ProtectedRoute> <PostComments post = {post} setPost = {setPost} urlPath = {urlPath}/></ProtectedRoute>}/>
             <Route path={'/edit/comment/:id'} element ={<ProtectedRoute><EditComment post = {post} /></ProtectedRoute>}/>
           </Routes> 
-        </LikeProvider>
     </>
   )
 }

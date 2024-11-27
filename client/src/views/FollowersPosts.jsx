@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 
 export const FollowersPosts = (props) =>{
     const [followerPosts, setFollowersPosts] = useState([])
-    const {loggedInUser, user,setUser, setAuthState, authState} = props
+    const {loggedInUser, user,setUser, setAuthState, authState , postLiked, setPostLiked, setUrlPath} = props
     // const {authState, setAuthState} = useAuth()
     // const [user, setUser] = useState({})
 
@@ -20,7 +20,7 @@ export const FollowersPosts = (props) =>{
                 setUser(res)
                 setAuthState({user: res.id, token: sessionId })})
             .catch(error => console.log(error))
-        }, []);
+        }, [postLiked]);
 
     useEffect(() =>{
         findAllFollowersPosts(user.id)
@@ -41,48 +41,49 @@ export const FollowersPosts = (props) =>{
             console.log(followerPosts)
             }, [])
 
-    return(
-        <>
-            <h1>Followers Posts</h1>
-            <button onClick={logoutUser}>Logout</button>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        <td>Description</td>
-                        <td>Category</td>
-                        <td>Rating</td>
-                        <td>Posted By</td>
-                    </tr>
-                </thead>
-                <tbody>
-                        {followerPosts.map((post =>{
-                            return(
-                                <tr key={post.id}>
-                                    <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
-                                    <td>{post.description}</td>
-                                    <td>{post.category}</td>
-                                    <td>{post.rating}</td>
-                                    <td><Link to = {`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
-                                </tr>
-                            )
-                        }))}
-                </tbody>
-            </table>
-        </>
-    )
-}
+        const goToComments = () =>{
 
+        }
 
-// <Route path = "/:id/details" element = {<DisplayOne deleteById = {deleteById}
-// const {id} = useParams()
+        const createPostDislike = () =>{
 
-//     const Navigate = useNavigate()
-//     useEffect(() =>{
-//         findPatientById(id)
-//         .then((res) => setPatientInfo(res))
-//         // console.log(res)
-//         .catch(error => console.log(error))
+        }
 
+        const createPostLike = () =>{
         
-//     },[])
+        }
+
+            return (
+                <div id="root">
+                    <div>
+                        <div>
+                                {followerPosts.map((post) => (
+                                                <div key={post.id} className="post-container">
+                                                    <h2>{post.name}</h2>
+                                                    <p className="post-content">{post.description}</p>
+                                                    <p className="post-category">Category: {post.category}</p>
+                                                    <p className="post-rating">Rating: {post.rating}/5</p>
+                                                    <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
+                                                    <div className="post-actions">
+                                                        <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
+                                                            {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
+                        
+                        
+                                                        
+                                                        {postLiked [post.id]? (
+                                                            <button onClick={(e) => createPostDislike(e, post.id)} className="icon">💔</button>
+                                                            
+                                                        ): (
+                                                            <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button>
+                                                            
+                                                                
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                <button onClick={logoutUser} className="logout-button">Logout</button>
+                            </div>
+                    </div>
+                );
+            };

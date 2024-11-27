@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { CreateComment, UpdateComment, DeleteComment, findOneComment} from "../controllers/comment.controller.js";
+import { createComment, updateComment, deleteComment, findOneComment} from "../controllers/comment.controller.js";
 
 
 export const commentRouter = Router()
 
 commentRouter.route('/create/:postId')
-    .post(CreateComment)
+    .post(createComment)
 
     commentRouter.route('/:id')
-    .put(UpdateComment)
+    .put(updateComment)
     .get(findOneComment)
 
 
 commentRouter.route('/delete/:id')
-    .delete(DeleteComment)
+    .delete(deleteComment)

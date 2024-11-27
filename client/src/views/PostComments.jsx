@@ -13,18 +13,18 @@ export const PostComments = (props) =>{
     const navigate = useNavigate()
     const { authState, setAuthState } = useAuth();
     const {setPost, post} = props
-
+    const [showReplies, setShowReplies] = useState(false)
     const {postId} = useParams()
     const [retrievedComments, setRetrievedComments] = useState([])
     const [user, setUser] = useState({});
-    const [postComments, setPostComments] = useState({
-        content : '',
-        postId : null,
-        userId : null
-    })
-    const [commentErrors, setCommentErrors] = useState({
-        content : ''
-    })
+    const [postComments, setPostComments] = useState(
+        ''
+        // postId : null,
+        // userId : null
+    )
+    const [commentErrors, setCommentErrors] = useState(
+        ''
+    )
     
 
     useEffect(() =>{
@@ -35,7 +35,7 @@ export const PostComments = (props) =>{
 
         })
             .catch(error => console.log(error))
-    }, [postId])
+    }, [postComments])
     useEffect(() => {
         const sessionId = Cookies.get('sessionId');
         getProfile()
@@ -57,15 +57,14 @@ export const PostComments = (props) =>{
 
     
     const validateComment = (name, value) =>{
-        
+    
         const validations = {
-            
             content : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
         }
         setCommentErrors ((prev ) => ({...prev, [name]: validations[name](value), }))
     }
+
     const ChangeHandler = (e) =>{
-    console.log(e.target)
         const {name, value} = e.target
         validateComment(name, value)
         setPostComments((prev) => ({...prev, [name] : value}))
@@ -101,15 +100,15 @@ export const PostComments = (props) =>{
             return false
         }
         try{
-            await createComment(postComments)
+            await createComment(postComments, postId)
             console.log("Comment submitted successfully!");
-            setPostComments({
-                content : '',
-                postId : null,
-                userId : null
-            })
+            setPostComments(
+                ''
+                // postId : null,
+                // userId : null
+            )
             const updatedComments = await findAllCommmentsForPost(postId)
-            setRetrievedComments(updatedComments.comment || [])
+            setRetrievedComments(updatedComments.comment)
             navigate(`/AllPosts/post/${postId}/comments`)
     
         }
@@ -117,6 +116,9 @@ export const PostComments = (props) =>{
                 console.log(error)
             }
 
+        const toggleShowReplies = () => {
+            set
+        }
 
     }
     return(
@@ -170,6 +172,7 @@ export const PostComments = (props) =>{
                             <td>
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
                             <Link onClick={(e => deleteComment(e, comment.id))}>  Delete</Link>
+                            <button onClick={showReplies}>Replies</button>
                             </td>
                             </>
                             ): (

@@ -35,6 +35,7 @@ function App() {
   const [updateUserInfo, setUpdateUserInfo] = useState({})
   const [followRelationship, setFollowRelationship] = useState(false)
   const [post, setPost] = useState({})
+
   // const { postLiked, setPostLiked } = useLikes();
     return (
       <>

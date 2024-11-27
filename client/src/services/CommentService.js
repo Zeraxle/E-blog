@@ -20,7 +20,6 @@ export const findCommentsByPost = async (postId) => {
 }
 
 export const createComment = async (content, postId) => {
-
     try {
         const token = Cookies.get('sessionId') 
         const res = await COMMENT_INSTANCE.post(`/create/${postId}`, {content}, {
@@ -30,9 +29,9 @@ export const createComment = async (content, postId) => {
     } catch(error){throw error}
 }
 
-export const updateComment = async (id, data) => {
+export const updateComment = async (id, content) => {
     try {
-        const res = await COMMENT_INSTANCE.put(`/${data.id}`, {data})
+        const res = await COMMENT_INSTANCE.put(`/${id}`, {content})
         return res.data
     } catch(error){throw error}
 }

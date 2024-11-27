@@ -1,20 +1,15 @@
 import { useState, useEffect,  } from "react"
-import { useParams, Link, Navigate, useNavigate } from "react-router-dom"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import { findOneComment, updateComment } from "../services/CommentService"
 export const EditComment = (props) =>{
     const {post} = props
     const {id} = useParams()
     const navigate  = useNavigate()
-    const [comment, setComment] = useState({
-    })
-    const [error, setErrors] = useState({
-        Comment : ''
-    })
-    const [updatedComment, setUpdatedComment] = useState({
-        Comment : ""
-    })
+    const [comment, setComment] = useState({})
+    const [error, setErrors] = useState('')
+    const [updatedComment, setUpdatedComment] = useState('')
     
-    console.log(id)
+    
     useEffect(()=>{
         findOneComment(id)
         .then(res =>{
@@ -22,26 +17,28 @@ export const EditComment = (props) =>{
             
         })
         .catch(error => console.log(error))
-    }, [id])
+    }, [updateComment])
 
-    useEffect(() =>{
-        if (comment.Comment){
-            setUpdatedComment({Comment : comment.Comment})
-        }
-    }, [comment])
+    console.log(post)
+    // useEffect(() =>{
+    //     if (comment.content){
+    //         setUpdatedComment(comment.content)
+    //     }
+    // }, [comment])
     
     
     const validateComment = (name, value) =>{
         const validation = {
-            Comment : (value )=> value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 characters and less than 255'
+            content : value  => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 characters and less than 255'
         }
         setErrors((prev) => ({...prev, [name] : validation[name] (value)}))
     }
     
     const handleInputChange = (e) =>{
         const {name, value} = e.target
-        setUpdatedComment((prev) => ({...prev, [name] : value}))
         validateComment(name, value)
+        setUpdatedComment(value)
+        
 }
 
     const readyToSubmit = () =>{
@@ -53,7 +50,7 @@ export const EditComment = (props) =>{
         return true
     }
 
-    const submitComment =  async e=>{
+    const submitComment =  async e => {
         e.preventDefault()
         if (!readyToSubmit()){
             alert('Please fill out form correctly ')
@@ -74,16 +71,16 @@ export const EditComment = (props) =>{
             <label>
                 edit Comment 
                 <input
-                    name="Comment"
+                    name="content"
                     type="text"
-                    value={updatedComment.Comment || ''}
+                    value={updatedComment}
                     onChange={handleInputChange}>
                 </input>
             </label>
             <button onClick={submitComment}>Submit </button>
         </form>
 
-        <p>{comment.Comment}</p>
+        <p>{comment.content}</p>
         </>
     )
 }

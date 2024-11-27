@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../config/AuthContext.jsx';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { logout, getProfile } from '../services/AuthService.js';
 import { findAllPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
@@ -9,9 +9,12 @@ import { useLikes } from './LikeContext.jsx';
 import './AllPosts.css'; // Import the CSS file
 
 export const AllPosts = (props) => {
-    const { loggedInUser} = props;
+    const { loggedInUser, postLiked, setPostLiked, setUrlPath} = props;
     const { authState, setAuthState } = useAuth();
     const [user, setUser] = useState({});
+
+    const {category} = useParams()
+    // const { postLiked, setPostLiked } = useLikes();
     const [allPosts, setAllPosts] = useState([]);
 
     const navigate = useNavigate();
@@ -75,7 +78,10 @@ export const AllPosts = (props) => {
     }
 
     const goToComments = async(e,postid) =>{
-        navigate(`post/${postid}/comments`)
+        const category = 'AllPosts'
+        console.log(category)
+        setUrlPath((prev) => ({...prev, path : category}))
+        navigate(`/${category}/post/${postid}/comments`)
     }
     return (
         <div id="root">
@@ -91,16 +97,10 @@ export const AllPosts = (props) => {
                             <div className="post-actions">
                                 <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
                                     {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
-
-
-                                
                                 {postLiked [post.id]? (
                                     <button onClick={(e) => createPostDislike(e, post.id)} className="icon">💔</button>
-                                    
                                 ): (
                                     <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button>
-                                    
-                                        
                                 )}
                             </div>
                         </div>

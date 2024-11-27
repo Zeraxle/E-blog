@@ -12,8 +12,10 @@ import {formatDistanceToNow} from 'date-fns'
 export const PostComments = (props) =>{
     const navigate = useNavigate()
     const { authState, setAuthState } = useAuth();
-    const {setPost, post} = props
+    const {setPost, post, urlPath} = props
 
+
+    const category = urlPath.path
     const {postId} = useParams()
     const [retrivedComments, setRetrivedComments] = useState([])
     const [user, setUser] = useState({});
@@ -31,11 +33,10 @@ export const PostComments = (props) =>{
         findAllCommmentsForPost(postId)
             .then((res) =>{
                 setRetrivedComments(res.comments)
-
-
         })
             .catch(error => console.log(error))
     }, [postId])
+
     useEffect(() => {
         const sessionId = Cookies.get('sessionId');
         getProfile()
@@ -107,14 +108,12 @@ export const PostComments = (props) =>{
             })
             const updatedComments = await findAllCommmentsForPost(postId)
             setRetrivedComments(updatedComments.comments || [])
-            navigate(`/AllPosts/post/${postId}/comments`)
-    
+            console.log('dont try this at home!!!')
+            navigate(`/${category}/post/${postId}/comments`)
         }
             catch(error){
                 console.log(error)
             }
-
-
     }
     return(
         <>

@@ -8,16 +8,24 @@ import jwt from 'jsonwebtoken'
 export const createComment = async(req,res,next) =>{
     
     const postId = req.params.postId
-    console.log(postId)
-    const {content} = req.body.content
-    console.log(content)
+    const {content, parentId} = req.body.content
     const sessionId = req.headers.authorization.split(' ')[1]
     const token = await getToken(sessionId)
     
     try{
+        if(parentId){
+            const parentComment = await Comments.findByPk(parentId)
+            if(!parentComment){
+                return res.status(404).json({message: 'Parent comment not found'})
+            }
+        }
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const userId = decoded.userId
-        const newComment =  await Comments.create({content, userId, postId})
+        const newComment =  await Comments.create({
+            content, 
+            userId, 
+            postId, 
+            parentId: parentId || null})
         res.status(200).json(newComment)
 
     }
@@ -43,8 +51,7 @@ export const updateComment = async(req,res,next) =>{
 
     const {content} = req.body
     const request = req.body
-    console.log(content)
-    console.log('111111111', request)
+    
     
     try{
         const {id} = req.params

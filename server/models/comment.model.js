@@ -23,7 +23,10 @@ export const Comments = sequelize.define("comments", {
 
     parentId: {
         type: DataTypes.BIGINT,
-        allowNull: true
+        allowNull: true,
+        validate : {
+            isInt : true
+        }
     },
 
     content:{
@@ -73,6 +76,11 @@ export const setupPostToCommentRelationship =() =>{
     Comments.hasMany(Comments, {
         foreignKey: 'parentId',
         as: 'replies'
+    })
+
+    Comments.belongsTo(Comments, {
+        foreignKey: 'parentId',
+        as: 'parent'
     })
 
 }

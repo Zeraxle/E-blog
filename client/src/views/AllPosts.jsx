@@ -16,7 +16,7 @@ export const AllPosts = (props) => {
     const {category} = useParams()
     // const { postLiked, setPostLiked } = useLikes();
     const [allPosts, setAllPosts] = useState([]);
-    const {postLiked, setPostLiked} = useLikes()
+    
 
     const navigate = useNavigate();
 
@@ -48,10 +48,10 @@ export const AllPosts = (props) => {
         e.preventDefault()
         console.log(postId)
         console.log(user.id)
-        const userid = user.id
+        const userId = user.id
 
         try{
-            createLike({userid, postId})
+            createLike({userId, postId})
             // console.log(postLiked)
             
                 setPostLiked((prev) => ({ ...prev,[postId]: true}))
@@ -66,9 +66,9 @@ export const AllPosts = (props) => {
     const createPostDislike = async(e, postId) =>{
         e.preventDefault()
 
-        const userid = user.id
+        const userId = user.id
         try{
-            destroyLike(userid,postId)
+            destroyLike(userId,postId)
             
                 setPostLiked((prev) => ({ ...prev, [postId] : false}))
             
@@ -78,13 +78,13 @@ export const AllPosts = (props) => {
         }
     }
 
-    const goToComments = async(e,postid) =>{
+    const goToComments = async(e,postId) =>{
         const category = 'AllPosts'
         console.log(category)
         setUrlPath((prev) => ({...prev, path : category}))
-        navigate(`/${category}/post/${postid}/comments`)
-    const goToComments = async(e, postId) =>{
-        navigate(`post/${postId}/comments`)
+        navigate(`/${category}/post/${postId}/comments`)
+    // const goToComments = async(e, postId) =>{
+    //     navigate(`post/${postId}/comments`)
     }
     return (
         <div id="root">

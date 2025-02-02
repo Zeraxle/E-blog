@@ -48,11 +48,11 @@ export const TvShowPosts = (props) =>{
 
     const createPostDislike = async(e, postId) =>{
         e.preventDefault()
-        const userid = user.id
-        const postid = postId
+        const userId = user.id
+        // const postId = postId
         try{
-            destroyLike(userid, postid)
-            setPostLiked((prev) => ({...prev, [postid] : false }))
+            destroyLike(userId, postId)
+            setPostLiked((prev) => ({...prev, postId : false }))
         }catch(error){
             console.log(error)
         }
@@ -60,12 +60,12 @@ export const TvShowPosts = (props) =>{
 
     const createPostLike = async(e, postId) =>{
         e.preventDefault()
-        const userid = user.id
-        const postid = postId
+        const userId = user.id
+        // const postId = postId
 
         try {
-            createLike({userid,postid})
-            setPostLiked((prev) => ({...prev, [postid] : true}))
+            createLike({userId,postId})
+            setPostLiked((prev) => ({...prev, [postId] : true}))
         }
         catch(error) {
             console.log(error)
@@ -103,42 +103,4 @@ export const TvShowPosts = (props) =>{
             </div>
         );
     };
-            }, [])
-
-        useEffect(() => {
-            console.log(allTvShows)
-        }, [])
-
-
-    return(
-        <>
-        <h1>Tv Show Posts</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        <td>Description</td>
-                        <td>Category</td>
-                        <td>Rating</td>
-                        <td>Posted By</td>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {allTvShows.map((show =>{
-                        return(
-                            <tr key={show.id}>
-                                <td><Link to={`/display/post/${show.id}`}>{show.name}</Link></td>
-                                <td>{show.description}</td>
-                                <td>{show.category}</td>
-                                <td>{show.rating}</td>
-                                <td><Link to = {`/display/user/${show.user.id}`}>{show.user.username}</Link></td>
-                            </tr>
-                        )
-                    }))}
-                </tbody>
-            </table>
-        <button onClick={logoutUser}>Logout</button>
-        </>
-    )
-}
+            

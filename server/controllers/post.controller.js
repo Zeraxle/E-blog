@@ -109,7 +109,14 @@ export const findAllCommmentsForPost = async(req,res,next) =>{
                 {
                     model:Comments,
                     as: 'comments', 
-                    include:[{model: User, as : 'user'}]
+                    include:[{
+                        model: User, 
+                        as : 'user'}],
+                    include: {
+                        model: Comments,
+                        as : 'replies'
+                    },
+                    order: [['createdAt', 'ASC']]
                 }
             ],
         })

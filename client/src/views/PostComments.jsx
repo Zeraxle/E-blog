@@ -12,17 +12,13 @@ import {formatDistanceToNow} from 'date-fns'
 export const PostComments = (props) =>{
     const navigate = useNavigate()
     const { authState, setAuthState } = useAuth();
-<<<<<<< HEAD
-    const {setPost, post} = props
-    const [showReplies, setShowReplies] = useState(false)
-=======
     const {setPost, post, urlPath} = props
 
 
     const category = urlPath.path
->>>>>>> 9b227821eb865996f50f5262786a2de40b9dbf1b
     const {postId} = useParams()
     const [retrievedComments, setRetrievedComments] = useState([])
+    const [showReplies, setShowReplies] = useState(false)
     const [user, setUser] = useState({});
     const [postComments, setPostComments] = useState(
         ''
@@ -37,20 +33,11 @@ export const PostComments = (props) =>{
     useEffect(() =>{
         findAllCommmentsForPost(postId)
             .then((res) =>{
-<<<<<<< HEAD
                 setRetrievedComments(res.comments)
-
-
-        })
-            .catch(error => console.log(error))
-    }, [postComments])
-=======
-                setRetrivedComments(res.comments)
         })
             .catch(error => console.log(error))
     }, [postId])
 
->>>>>>> 9b227821eb865996f50f5262786a2de40b9dbf1b
     useEffect(() => {
         const sessionId = Cookies.get('sessionId');
         getProfile()
@@ -123,27 +110,13 @@ export const PostComments = (props) =>{
                 // userId : null
             )
             const updatedComments = await findAllCommmentsForPost(postId)
-<<<<<<< HEAD
-            setRetrievedComments(updatedComments.comment)
-            navigate(`/AllPosts/post/${postId}/comments`)
-    
-=======
-            setRetrivedComments(updatedComments.comments || [])
+            setRetrievedComments(updatedComments.comments || [])
             console.log('dont try this at home!!!')
             navigate(`/${category}/post/${postId}/comments`)
->>>>>>> 9b227821eb865996f50f5262786a2de40b9dbf1b
         }
             catch(error){
                 console.log(error)
             }
-<<<<<<< HEAD
-
-        const toggleShowReplies = () => {
-            set
-        }
-
-=======
->>>>>>> 9b227821eb865996f50f5262786a2de40b9dbf1b
     }
     return(
         <>
@@ -183,7 +156,7 @@ export const PostComments = (props) =>{
 
                     retrievedComments.map((comment) =>(
 
-
+                        
                         <tr key={comment.id}>
                             <td>{comment.content}</td>
                             <td><Link to={`/display/user/${comment.user.id}`}>{comment.user.username}</Link></td>
@@ -196,11 +169,12 @@ export const PostComments = (props) =>{
                             <td>
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
                             <Link onClick={(e => deleteComment(e, comment.id))}>  Delete</Link>
-                            <button onClick={showReplies}>Replies</button>
+                            
+                            {/* <button onClick={showReplies}>Replies</button> */}
                             </td>
                             </>
                             ): (
-                        <td>  </td>
+                        <td> <Link >Reply</Link> </td>
 
                             )}
 
@@ -209,13 +183,7 @@ export const PostComments = (props) =>{
 
 
                     ))
-
-
-
                     )
-
-
-
                         :(
                             <tr>
                                 <td>No comments Available </td>
@@ -232,7 +200,7 @@ export const PostComments = (props) =>{
                         name="content"
                         type="text"
                         placeholder="Enter A comment"
-                        value={postComments.content}
+                        value={postComments}
                         onChange={ChangeHandler}
                         />
                     {commentErrors?.content && <p>{commentErrors.content}</p>}

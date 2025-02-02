@@ -9,8 +9,14 @@ export const registerUser = async (userData) => {
     try {
         const response = await AUTH_INSTANCE.post('/register', userData)
         return response.data
-    } catch (error) {console.log('Error:', error)}
-}
+    } catch (error) {
+        if (error.response) {
+            throw error.response; // Throw response object for the caller to handle
+        } else {
+            throw new Error('Network Error'); // Catch-all for other errors
+        }
+    }
+};
 
 export const loginUser = async (userData) => {
     try {

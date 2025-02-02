@@ -7,10 +7,10 @@ import Cookies from 'js-cookie'
 
 export const NotificationPage = (props) => {
 
-    const {loggedInUser} = props
+    const {loggedInUser, followNotification} = props
     const {logout, authState, setAuthState } = useAuth()
     const [user, setUser] = useState({})
-
+    // console.log(user.id)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -27,9 +27,30 @@ export const NotificationPage = (props) => {
                 .then(navigate('/'))
                 .catch(error => console.log(error))
         }
+        // const logoutUser = () => {
+        //     logout()
+        //         .then(() => navigate('/'))
+        //         .catch(error => console.log(error));
+        // };
+    
 
     return(<>
         <h1>Notifications</h1>
+        {/* <table>
+            <thead>
+                <tr>
+                    <td></td>
+                </tr>
+            </thead>
+        </table> */}
+
+        {followNotification.map((notification) =>(
+            <div key={notification.followedUser}>
+                {notification.followedUser === user.id? 
+                <p>Hiii</p> :
+                <p>Noo</p>}
+            </div>
+        ))}
         <button onClick={logoutUser}>Logout</button>
     </>)
 }

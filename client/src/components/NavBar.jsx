@@ -61,9 +61,9 @@ export const NavBar = ({setFilteredPosts, user}) => {
                 <img src={CreateBtn} alt='CreateBtn'></img>
             </Link> 
 
-            <Link to={'/user/notifications'}>
+            {/* <Link to={'/user/notifications'}>
                 <img src={NotificationBtn} alt='Notifications-Icon'></img>
-            </Link>
+            </Link> */}
 
             <Link to = {'/user/profile'}>
                 <img src={ProfilePicBtn} alt='ProfileBtn'></img>

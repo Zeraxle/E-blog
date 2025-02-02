@@ -3,6 +3,7 @@ import { useAuth } from '../config/AuthContext.jsx';
 import {Link, useNavigate} from 'react-router-dom'
 import {logout, getProfile} from '../services/AuthService.js'
 import { findAllFollowersPosts } from '../services/PostService.js';
+import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie'
 
 export const FollowersPosts = (props) =>{
@@ -14,20 +15,44 @@ export const FollowersPosts = (props) =>{
     const navigate = useNavigate()
 
     useEffect(() => {
-        const sessionId = Cookies.get('sessionId')
-        getProfile()
-            .then(res => {
-                setUser(res)
-                setAuthState({user: res.id, token: sessionId })})
-            .catch(error => console.log(error))
         }, [postLiked]);
 
+        // useEffect(() => {
+        //     const fetchUserData = async () => {
+        //         try {
+        //             const sessionId = Cookies.get('sessionId');
+        //             const userProfile = await getProfile();
+        //             setUser(userProfile);
+        //             setAuthState({ user: userProfile.id, token: sessionId });
+    
+        //             // Fetch follower posts only after user is set
+        //             const posts = await findAllFollowersPosts(userProfile.id);
+        //             setFollowersPosts(posts);
+        //         } catch (error) {
+        //             console.error('Error fetching user or follower posts:', error);
+        //         }
+        //     };
+    
+        //     fetchUserData();
+        // }, []);
+
     useEffect(() =>{
-        findAllFollowersPosts(user.id)
-            .then(res =>{
-                setFollowersPosts(res)
-            })
-            .catch(error => console.log(error))
+        const fetchUserData = async () =>{
+
+            try{
+                const sessionId = Cookies.get('sessionId')
+                const userProfile = await getProfile()
+                setUser(userProfile)
+                setAuthState({user: userProfile.id, token: sessionId })
+                    
+                const posts = await findAllFollowersPosts(userProfile.id)
+                setFollowersPosts(posts)
+            } 
+            catch(error) {
+                console.log(error)
+            }
+        }
+        fetchUserData()
         }, [])
 
         const logoutUser = () => {
@@ -41,15 +66,46 @@ export const FollowersPosts = (props) =>{
             console.log(followerPosts)
             }, [])
 
-        const goToComments = () =>{
+        const goToComments = (e, postId) =>{
+            e.preventDefault()
+            const category = 'FollowersPosts'
+            setUrlPath((prev) => ({...prev, path : category}))
+            navigate(`/${category}/post/${postId}/comments`)
 
         }
 
-        const createPostDislike = () =>{
+        const createPostDislike = async(e, postId) =>{
+            e.preventDefault()
+            const userid = user.id
+            const postid = postId
+            try{
+                destroyLike(userid, postid)
+                .then(res =>{
+                    console.log('Succesful like creation', res)
+                })
+                setPostLiked((prev) => ({...prev, [postid] : false}))
+            }
+                catch(error){
+                    console.log(error)
+                }
 
         }
 
-        const createPostLike = () =>{
+        const createPostLike =  async(e, postId) =>{
+            e.preventDefault()
+            const userid = user.id
+            const postid = postId
+
+            try{
+                createLike({userid, postid})
+                .then(res =>{
+                    console.log('Successful like creation', res)
+                })
+                setPostLiked((prev) => ({...prev, [postid] : true}))
+            }
+            catch(error){
+                console.log(error)
+            }
         
         }
 

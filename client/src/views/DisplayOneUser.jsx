@@ -9,7 +9,7 @@ import { destroyFollow } from "../services/FollowService"
 import { updateUser } from "../services/UserService"
 
 export const DisplayOneUser = (props) =>{
-    const { user, setAuthState, setUser, setUpdateUserInfo} = props
+    const { user, setAuthState, setUser, setUpdateUserInfo, setFollowNotification} = props
     const {id} = useParams ()
     const [displayedUserId, setDisplayedUserID] = useState({})
     const [usersPosts, setUsersPosts] = useState ([])
@@ -17,6 +17,8 @@ export const DisplayOneUser = (props) =>{
     const [userFollowers, setUserFollowers] = useState([])
     const [loggedInUserPage, setLoggedInUserPage] = useState(false)
     const [followRelationship, setFollowRelationship] = useState(false)
+
+    // const [followNotification, setFollowNotification] = useState([])
     const navigate = useNavigate()
 
     // console.log(loggedInUser)
@@ -91,6 +93,7 @@ export const DisplayOneUser = (props) =>{
         const followUser = () =>{
             const followerId = user.id
             const followedUserId = id
+            setFollowNotification(prev => [...prev, {followedUser : followedUserId, follower : followerId }])
             createFollow({followerId,followedUserId })
             .then (res =>{
                     setFollowRelationship(true)

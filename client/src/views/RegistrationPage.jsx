@@ -25,50 +25,103 @@ export const RegistrationPage = () => {
     })
 
     const navigate = useNavigate()
-
     const validateUser = (name, value) => {
         const validations = {
-            firstName : value => value.length >= 2 && value.length <= 30? true : 'First Name must be 2-30 characters',
-            lastName : value => value.length >= 2 && value.length <= 30? true : 'Last Name must be 2-30 characters',
-            username : value => value.length >= 5 && value.length <= 30? true : 'Username must be 2-3 characters',
-            email : value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)? true : 'Email must be valid',
-            password : value => value.length >= 8 && value.length <= 30? true : 'Password must be 8-30 characters',
-            confirmPassword : (value) => {
-                if(name == "confirmPassword"){return formData.password === value? true : 'Passwords must match'}
-                if(name == "password"){return formData.confirmPassword === value? true : 'Passwords must match'}
-            }
-        } 
-        if (name == "password") {setErrors(prev => ( {...prev, confirmPassword : validations["confirmPassword"](value)} ) )}
-        setErrors(prev => ({...prev, [name] : validations[name](value)}))
-    }
-
+            firstName: (value) => (value.length >= 2 && value.length <= 30 ? true : 'First Name must be 2-30 characters'),
+            lastName: (value) => (value.length >= 2 && value.length <= 30 ? true : 'Last Name must be 2-30 characters'),
+            username: (value) => (value.length >= 5 && value.length <= 30 ? true : 'Username must be 5-30 characters'),
+            email: (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? true : 'Email must be valid'),
+            password: (value) => (value.length >= 8 && value.length <= 30 ? true : 'Password must be 8-30 characters'),
+            confirmPassword: (value) => (value === formData.password ? true : 'Passwords must match'),
+        };
+        return validations[name](value);
+    };
+    
     const readyToSubmit = () => {
-        for (let key in errors){
-            if(errors[key] !== true){
-                return false
+        let isValid = true;
+        const newErrors = { ...errors }; // Start with current errors
+        
+        // Validate all fields
+        Object.keys(formData).forEach((key) => {
+            const validationResult = validateUser(key, formData[key]);
+            if (!formData[key].trim()) {
+                newErrors[key] = 'This field is required.';
+                isValid = false;
+            } else if (validationResult !== true) {
+                newErrors[key] = validationResult;
+                isValid = false;
+            } else {
+                newErrors[key] = ''; // Clear any previous errors
             }
-        }
-        return true
-    }
+        });
+        
+        setErrors(newErrors); // Update the state with new errors
+        return isValid;
+    };
+    
 
     const changeHandler = (e) => {
-        const {name, value} = e.target
-        setFormData({...formData, [name] : value})
-        validateUser(name, value)
-    }
+        const { name, value } = e.target;
+        const validationResult = validateUser(name, value);
+    
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [name]: validationResult === true ? '' : validationResult }));
+    };
+    
 
-    const submitHandler = async e => {
-        e.preventDefault()
-        if(!readyToSubmit){
-            alert('Please fill out the form correctly')
-            return
+    const submitHandler = async (e) => {
+        e.preventDefault();
+    
+        // First, validate the form fields
+        if (!readyToSubmit()) {
+            alert('Please fill out the form correctly');
+            return; // Prevent form submission
         }
+    
+        // Check if username or email has errors before attempting registration
+        if (errors.username || errors.email) {
+            alert('Please correct the errors before submitting the form.');
+            return; // Prevent form submission
+        }
+    
         try {
-            const res = await registerUser(formData)
-            setAuthState({user: res.user.id, token: res.sessionId } )
-            navigate('/user/profile')
-        } catch (error) {console.log('Error during registration', error)}
-    }
+            const payload = { ...formData };
+            delete payload.confirmPassword; // Exclude unnecessary fields
+    
+            const res = await registerUser(payload);
+    
+            if (!res || !res.user || !res.sessionId) {
+                throw new Error('Invalid response from server.');
+            }
+    
+            // Set authState and navigate after successful registration
+            setAuthState({ user: res.user.id, token: res.sessionId });
+            navigate('/user/profile');
+        } catch (error) {
+            console.error('Error during registration:', error);
+    
+            // Check if error contains a message indicating user already exists
+            if (error?.data?.message) {
+                const message = error.data.message.toLowerCase();
+    
+                // If the message indicates username or email already exists, show alert and set errors
+                if (message.includes('user already exists')) {
+                    alert('The username or email is already taken. Please choose another one.');
+                    setErrors((prev) => ({
+                        ...prev,
+                        username: 'Username or email already taken.',
+                        email: 'Email already in use.'
+                    }));
+                } else {
+                    alert('Registration failed: ' + message);
+                }
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        }
+    };
+    
+    
 
     return(<>
         <h1>E-Blog</h1>
@@ -133,8 +186,8 @@ export const RegistrationPage = () => {
                 />
                 {errors?.confirmPassword && <p>{errors.confirmPassword}</p>}
             </label>
-            <button onClick={submitHandler}>Register</button>
+            <disabled>
+            <button onClick={submitHandler}>Register</button></disabled>
         </form>
-
     </>)
 }

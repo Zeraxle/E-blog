@@ -55,6 +55,7 @@ export const EditUserPage = (props) =>{
         }
 
         const updateUserData = (e) =>{
+            e.preventDefault()
             const {name, value} = e.target 
             setUpdatedUserInfo({...updatedUserInfo, [name]: value})
             validateUser(name, value)

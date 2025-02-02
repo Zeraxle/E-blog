@@ -96,15 +96,17 @@ export const findAllCommmentsForPost = async (postid) =>{
 }
 
 export const updatePost = async (data) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const res = await POST_INSTANCE.put(`/${data.id}`, data)
         return res.data
     } catch(error){throw error}
 }
 
-export const destroyPost = async (id) => {
+export const destroyPost = async (userid,postid) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await POST_INSTANCE.delete(`/${id}`)
+        const res = await POST_INSTANCE.delete(`/${userid}/${postid}`)
         return res.data
     } catch(error){throw error}
 }

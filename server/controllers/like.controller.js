@@ -12,11 +12,11 @@ export const createLike = async (req, res, next) => {
 
 export const destroyLike = async (req, res, next) => {
     try {
-        const {userid,postid} = req.params
+        const {userId, postId} = req.params
         const destroyedLike = await Like.destroy({
             where : {
-                userid : userid,
-                postid : postid
+                userId : userId,
+                postId : postId
             }
         })
         res.status(200).json(destroyedLike)

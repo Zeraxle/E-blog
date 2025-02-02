@@ -93,9 +93,9 @@ export const destroyUser = (req, res, next) => {
 
 export const findAllPostsByUser = async(req,res,next) =>{
     try{
-        const {userid} = req.params
+        const {userId} = req.params
         const findAllUsersPosts = await Post.findAll({
-            where: {userid : userid},
+            where: {userId : userId},
             // include :[
             //     {
             //         model : Post
@@ -112,10 +112,10 @@ export const findAllLikedPostByUser = async (req,res,next) =>{
 
         const findUser = await Like.findAll({
             where :{
-                userid : userId
+                userId : userId
             }
         })
-        const postInfo = findUser.map(Like => Like.postid)
+        const postInfo = findUser.map(Like => Like.postId)
         const AllUsersLikePost = await Post.findAll({
             where:{
                 id : postInfo
@@ -129,10 +129,10 @@ export const findAllLikedPostByUser = async (req,res,next) =>{
 
 export const findWhoFollowsUser = async (req,res,next) =>{
     try{
-        const {userid} = req.params
+        const {userId} = req.params
         const usersFollowersId = await Follow.findAll({
             where:{
-                followedUserId : userid
+                followedUserId : userId
             }
         })
         const userFollowersInfo = usersFollowersId.map(followers => followers.followerId)
@@ -151,10 +151,10 @@ export const findWhoFollowsUser = async (req,res,next) =>{
 
 export const findWhoUserFollows =  async (req, res, next) =>{
     try{
-        const {userid} = req.params
+        const {userId} = req.params
         const foundUser = await  Follow.findAll({
             where: {
-                followerId : userid
+                followerId : userId
             }
         })
         const userFollowersId = foundUser.map (following => following.followedUserId)

@@ -17,22 +17,23 @@ export const PostComments = (props) =>{
 
     const category = urlPath.path
     const {postId} = useParams()
-    const [retrivedComments, setRetrivedComments] = useState([])
+    const [retrievedComments, setRetrievedComments] = useState([])
+    const [showReplies, setShowReplies] = useState(false)
     const [user, setUser] = useState({});
-    const [postComments, setPostComments] = useState({
-        Comment : '',
-        postid : null,
-        userid : null
-    })
-    const [commentErrors, setCommentErrors] = useState({
-        Comment : ''
-    })
-    // const {postid} = useParams()
+    const [postComments, setPostComments] = useState(
+        ''
+        // postId : null,
+        // userId : null
+    )
+    const [commentErrors, setCommentErrors] = useState(
+        ''
+    )
+    
 
     useEffect(() =>{
         findAllCommmentsForPost(postId)
             .then((res) =>{
-                setRetrivedComments(res.comments)
+                setRetrievedComments(res.comments)
         })
             .catch(error => console.log(error))
     }, [postId])
@@ -58,19 +59,21 @@ export const PostComments = (props) =>{
 
     
     const validateComment = (name, value) =>{
+    
         const validations = {
-            Comment : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
+            content : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
         }
         setCommentErrors ((prev ) => ({...prev, [name]: validations[name](value), }))
     }
+
     const ChangeHandler = (e) =>{
         const {name, value} = e.target
         validateComment(name, value)
-        setPostComments((prev) => ({...prev, 
-                        [name] : value,
-                        postid : postId,
-                        userid: user.id
-                    }))
+        setPostComments((prev) => ({...prev, [name] : value}))
+                        // [name] : value,
+                        // postId : postId,
+                        // userId: user.id
+                    // }))
         
     }
     const readyToSubmit = () =>{
@@ -82,12 +85,12 @@ export const PostComments = (props) =>{
         return true
     }
 
-    const deleteComment = (e, commentid) =>{
+    const deleteComment = (e, commentId) =>{
         e.preventDefault()
-        console.log(commentid)
-        destroyComment(commentid)
-        const newComments = retrivedComments.filter(comment => comment.id !== commentid)
-        setRetrivedComments(newComments)
+        console.log(commentId)
+        destroyComment(commentId)
+        const newComments = retrievedComments.filter(comment => comment.id !== commentId)
+        setRetrievedComments(newComments)
         navigate(`/AllPosts/post/${post.id}/comments`)
         
 
@@ -99,15 +102,15 @@ export const PostComments = (props) =>{
             return false
         }
         try{
-            await createComment(postComments)
+            await createComment(postComments, postId)
             console.log("Comment submitted successfully!");
-            setPostComments({
-                Comment : '',
-                postid : null,
-                userid : null
-            })
+            setPostComments(
+                ''
+                // postId : null,
+                // userId : null
+            )
             const updatedComments = await findAllCommmentsForPost(postId)
-            setRetrivedComments(updatedComments.comments || [])
+            setRetrievedComments(updatedComments.comments || [])
             console.log('dont try this at home!!!')
             navigate(`/${category}/post/${postId}/comments`)
         }
@@ -149,13 +152,13 @@ export const PostComments = (props) =>{
                 </tr>
                     </thead>
                 <tbody>
-                    {retrivedComments && retrivedComments.length > 0 ? (
+                    {retrievedComments && retrievedComments.length > 0 ? (
 
-                    retrivedComments.map((comment) =>(
+                    retrievedComments.map((comment) =>(
 
-
+                        
                         <tr key={comment.id}>
-                            <td>{comment.Comment}</td>
+                            <td>{comment.content}</td>
                             <td><Link to={`/display/user/${comment.user.id}`}>{comment.user.username}</Link></td>
                             <td>{formatDistanceToNow(new Date(comment.createdAt), {
                                 addSuffix : true,
@@ -166,10 +169,12 @@ export const PostComments = (props) =>{
                             <td>
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
                             <Link onClick={(e => deleteComment(e, comment.id))}>  Delete</Link>
+                            
+                            {/* <button onClick={showReplies}>Replies</button> */}
                             </td>
                             </>
                             ): (
-                        <td>  </td>
+                        <td> <Link >Reply</Link> </td>
 
                             )}
 
@@ -178,13 +183,7 @@ export const PostComments = (props) =>{
 
 
                     ))
-
-
-
                     )
-
-
-
                         :(
                             <tr>
                                 <td>No comments Available </td>
@@ -198,13 +197,13 @@ export const PostComments = (props) =>{
         <form >
                     <label>
                         <input
-                        name="Comment"
+                        name="content"
                         type="text"
                         placeholder="Enter A comment"
-                        value={postComments.Comment || ""}
+                        value={postComments}
                         onChange={ChangeHandler}
                         />
-                    {commentErrors?.Comment && <p>{commentErrors.Comment}</p>}
+                    {commentErrors?.content && <p>{commentErrors.content}</p>}
                     </label>
                     <button onClick={submitComment}>Submit</button>
                 </form>

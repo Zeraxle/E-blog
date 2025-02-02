@@ -47,12 +47,10 @@ export const createPost = async (req, res, next) => {
     try {
         const {name, category, rating, description} = req.body
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const userid = decoded.userId
-        console.log("----------------hi---------------")
-        console.log(userid)
-        const newPost = await Post.create({name, category, rating, description, userid})
+        const userId = decoded.userId
+        const newPost = await Post.create({name, category, rating, description, userId})
         res.status(200).json(newPost)
-    } catch(error) {res.status(400).json('Controller failed', error)}
+    } catch(error) {res.status(400).json(`Controller failed ${error}`)}
 }
 
 export const updatePost = async (req, res, next) => {
@@ -74,11 +72,11 @@ export const updatePost = async (req, res, next) => {
 
 export const destroyPost = async (req, res, next) => {
     try {
-        const {userid, postid} = req.params
+        const {userId, postId} = req.params
         const destroyedPost = await Post.destroy({
             where : {
-                userid : userid,
-                id : postid
+                userId : userId,
+                id : postId
             }
         })
         res.status(200).json(destroyedPost)
@@ -102,16 +100,23 @@ export const findPostUser = async(req,res,next) =>{
 
 export const findAllCommmentsForPost = async(req,res,next) =>{
     try{
-        const {postid} = req.params
+        const {postId} = req.params
         const allPostCommments =  await Post.findOne({
             where:{
-                id : postid
+                id : postId
             },
             include:[
                 {
                     model:Comments,
                     as: 'comments', 
-                    include:[{model: User, as : 'user'}]
+                    include:[{
+                        model: User, 
+                        as : 'user'}],
+                    include: {
+                        model: Comments,
+                        as : 'replies'
+                    },
+                    order: [['createdAt', 'ASC']]
                 }
             ],
         })
@@ -186,11 +191,11 @@ export const findAllUserWholikedPost = async (req,res,next) =>{
     
 
             where :{
-                postid : postId
+                postId : postId
             }
         }
         )   
-        const userIds = findPostInfo.map(Like => Like.userid)
+        const userIds = findPostInfo.map(Like => Like.userId)
         const UserWhoLikedPost = await User.findAll({
             where: {
                 id : userIds
@@ -216,7 +221,7 @@ export const findAllFollowersPosts = async (req, res, next ) =>{
 
         const postsByFollowers = await Post.findAll({
             where:{
-                userid : usersFollowersId
+                userId : usersFollowersId
             },
             include :[
                 {

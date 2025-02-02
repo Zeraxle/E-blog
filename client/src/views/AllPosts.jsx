@@ -16,6 +16,7 @@ export const AllPosts = (props) => {
     const {category} = useParams()
     // const { postLiked, setPostLiked } = useLikes();
     const [allPosts, setAllPosts] = useState([]);
+    
 
     const navigate = useNavigate();
 
@@ -43,17 +44,17 @@ export const AllPosts = (props) => {
             .catch(error => console.log(error));
     }, [postLiked]);
 
-    const createPostLike = async(e, postid) =>{
+    const createPostLike = async(e, postId) =>{
         e.preventDefault()
-        console.log(postid)
+        console.log(postId)
         console.log(user.id)
-        const userid = user.id
+        const userId = user.id
 
         try{
-            createLike({userid, postid})
+            createLike({userId, postId})
             // console.log(postLiked)
             
-                setPostLiked((prev) => ({ ...prev,[postid]: true}))
+                setPostLiked((prev) => ({ ...prev,[postId]: true}))
                 
             
             // console.log(postLiked)
@@ -62,14 +63,14 @@ export const AllPosts = (props) => {
         }
     }
 
-    const createPostDislike = async(e, postid) =>{
+    const createPostDislike = async(e, postId) =>{
         e.preventDefault()
 
-        const userid = user.id
+        const userId = user.id
         try{
-            destroyLike(userid,postid)
+            destroyLike(userId,postId)
             
-                setPostLiked((prev) => ({ ...prev, [postid] : false}))
+                setPostLiked((prev) => ({ ...prev, [postId] : false}))
             
             // console.log(postLiked)
         }catch(error){
@@ -77,11 +78,13 @@ export const AllPosts = (props) => {
         }
     }
 
-    const goToComments = async(e,postid) =>{
+    const goToComments = async(e,postId) =>{
         const category = 'AllPosts'
         console.log(category)
         setUrlPath((prev) => ({...prev, path : category}))
-        navigate(`/${category}/post/${postid}/comments`)
+        navigate(`/${category}/post/${postId}/comments`)
+    // const goToComments = async(e, postId) =>{
+    //     navigate(`post/${postId}/comments`)
     }
     return (
         <div id="root">

@@ -11,17 +11,25 @@ export const Comments = sequelize.define("comments", {
         primaryKey : true
 
     },
-    userid:{
+    userId:{
         type: DataTypes.BIGINT,
         allowNull : false,
     },
 
-    postid:{
+    postId:{
         type: DataTypes.BIGINT,
         allowNull : false,
     },
 
-    Comment:{
+    parentId: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+        validate : {
+            isInt : true
+        }
+    },
+
+    content:{
         type: DataTypes.STRING,
         allowNull : false,
         validate:{
@@ -38,39 +46,49 @@ export const Comments = sequelize.define("comments", {
 )
 export const setupPostToCommentRelationship =() =>{
     Post.hasMany(Comments,{
-        foreignKey : "postid",
+        foreignKey : "postId",
         as: 'comments',
         onDelete : "CASCADE",
         onUpdate : "CASCADE"
     })
 
     Comments.belongsTo(Post,{
-        foreignKey: "postid",
+        foreignKey: "postId",
         as : 'post',
         onDelete: "CASCADE",
         onUpdate : "CASCADE"
     })
 
     User.hasMany(Comments,{
-        foreignKey : "userid",
+        foreignKey : "userId",
         as: 'userComments',
         onDelete : "CASCADE",
         onUpdate : "CASCADE"
     })
 
     Comments.belongsTo(User,{
-        foreignKey: "userid",
+        foreignKey: "userId",
         as: 'user',
         onDelete: "CASCADE",
         onUpdate : "CASCADE"
+    })
+
+    Comments.hasMany(Comments, {
+        foreignKey: 'parentId',
+        as: 'replies'
+    })
+
+    Comments.belongsTo(Comments, {
+        foreignKey: 'parentId',
+        as: 'parent'
     })
 
 }
 
 
 
+
+export default Comments
 // Comments.sync({alter:true})
 // .then(console.log("comments table created"))
 // .catch(error => console.log(`comment table failed: ${error}`))
-
-export default Comments

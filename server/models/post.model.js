@@ -11,7 +11,7 @@ const Post = sequelize.define('posts', {
         autoIncrement : true
     },
 
-    userid : {
+    userId : {
         type : DataTypes.BIGINT,
         allowNull : false,
     },
@@ -76,14 +76,14 @@ const Post = sequelize.define('posts', {
 export const setupUserPostRealationship = () => {
 
     User.hasMany(Post, {
-        foreignKey: 'userid',
+        foreignKey: 'userId',
         as: 'posts',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
 
     Post.belongsTo(User, {
-        foreignKey: 'userid',
+        foreignKey: 'userId',
         as: 'user',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -92,9 +92,9 @@ export const setupUserPostRealationship = () => {
 }
 
 
-Post.sync({alter : true})
-    .then(console.log('Post table created'))
-    .catch(error => console.log(`Post table failed : ${error}`))
-
 
 export default Post
+
+// Post.sync({alter : true})
+//     .then(console.log('Post table created'))
+//     .catch(error => console.log(`Post table failed : ${error}`))

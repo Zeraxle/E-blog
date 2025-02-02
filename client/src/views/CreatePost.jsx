@@ -25,7 +25,7 @@ export const CreatePost = () => {
         description : ''
     })
 
-    const categories = ['Movie', 'TVShow', 'Anime']
+    const categories = ['Movie', 'TV Show', 'Anime']
     const ratings = [1, 2, 3, 4, 5]
 
     useEffect(() => {
@@ -75,8 +75,7 @@ export const CreatePost = () => {
                 return false
             }
             try {
-                const res = await createPost(formData)
-                console.log(res)
+                await createPost(formData)
                 navigate('/user/profile')
             } catch (error) {
                 console.error(error)

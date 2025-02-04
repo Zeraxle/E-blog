@@ -1,0 +1,72 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #121212;
+}
+
+.post-container {
+    width: 90%;
+    max-width: 600px;  /* Limits max width for consistency */
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.post-container:hover {
+    transform: translateY(-5px);
+}
+
+.post-content {
+    font-size: 16px;
+    color: #121212;
+    margin-bottom: 10px;
+}
+
+.post-category, .post-rating, .post-username {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.icon {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.logout-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #cc0000;
+}
+
+.post-title{
+    color: #000000;
+
+}

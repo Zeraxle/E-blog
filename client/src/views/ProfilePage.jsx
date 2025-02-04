@@ -7,7 +7,7 @@ import { destroyPost } from '../services/PostService.js';
 import Cookies from 'js-cookie';
 
 // Import CSS module
-import './ProfilePage.css';
+import '../assets/css/ProfilePage.css';
 
 export const ProfilePage = (props) => {
     const { user, setUser } = props;
@@ -81,11 +81,11 @@ export const ProfilePage = (props) => {
     };
 
     return (
-        <div className={container}>
-            <h1 className={header}>{user.username ? user.username : "Profile"}</h1>
+        <div className='container'>
+            <h1 className='header'>{user.username ? user.username : "Profile"}</h1>
             <Link to={'/home'}>Home Page</Link>
 
-            <div className={btn-group}>
+            <div className='btn-group'>
                 <button onClick={logoutUser}>Logout</button>
                 <button onClick={editProfilePage}>Edit Profile</button>
                 <button onClick={() => setViewLikedPosts(true)}>Liked Posts</button>
@@ -94,7 +94,7 @@ export const ProfilePage = (props) => {
                 <button onClick={() => setShowFollowers(true)}>Following</button>
             </div>
 
-            <div className={userInfo}>
+            <div className='userInfo'>
                 <p>First Name: {user.firstName}</p>
                 <p>Last Name: {user.lastName}</p>
                 <p>Email: {user.email}</p>
@@ -116,7 +116,7 @@ export const ProfilePage = (props) => {
                         ))}
                     </tbody>
                 </table>
-            ) : <p className={noData}>No Posts Available</p>}
+            ) : <p className='noData'>No Posts Available</p>}
 
             {viewLikedPost && likedPosts.length > 0 ? (
                 <table>
@@ -131,7 +131,7 @@ export const ProfilePage = (props) => {
                         ))}
                     </tbody>
                 </table>
-            ) : <p className={noData}>No Liked Posts</p>}
+            ) : <p className='noData'>No Liked Posts</p>}
         </div>
     );
 };

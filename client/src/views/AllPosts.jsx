@@ -6,8 +6,8 @@ import { findAllPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie';
 import { useLikes } from './LikeContext.jsx';
+import '../assets/css/AllPosts.css'
 
-import './AllPosts.css'; // Import the CSS file
 
 export const AllPosts = (props) => {
     const { loggedInUser, postLiked, setPostLiked, setUrlPath} = props;

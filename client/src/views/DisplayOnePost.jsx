@@ -66,10 +66,10 @@ export const DisplayOnePost = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{displayedPost.name}</td>
-                        <td>{displayedPost.description}</td>
-                        <td>{displayedPost.rating}</td>
-                        <td>{displayedPost.category}</td>
+                        <td className="post-title">{displayedPost.name}</td>
+                        <td className="post-content">{displayedPost.description}</td>
+                        <td className="post-content">{displayedPost.rating}</td>
+                        <td className="post-category">{displayedPost.category}</td>
                         <td><Link to={`/display/user/${displayedPost.user?.id}`}>{displayedPost.user?.username}</Link></td> 
                     </tr>
                 </tbody>

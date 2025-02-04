@@ -8,6 +8,7 @@ import { createFollow } from "../services/FollowService"
 import { destroyFollow } from "../services/FollowService"
 import { updateUser } from "../services/UserService"
 
+
 export const DisplayOneUser = (props) =>{
     const { user, setAuthState, setUser, setUpdateUserInfo, setFollowNotification} = props
     const {id} = useParams ()

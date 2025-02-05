@@ -71,15 +71,15 @@ export const MoviePosts = (props) =>{
         const createPostLike = async (e, postId) =>{
             e.preventDefault()
             console.log(user.id)
-            const userid = user.id
-            const postid = postId
+            const userId = user.id
+        
 
             try {
-                createLike({userid,postid})
+                createLike({userId,postId})
                 .then(res =>{
                     console.log('Successful like creation ', res)
                 })
-                setPostLiked((prev) => ({...prev, [postid] : true }))
+                setPostLiked((prev) => ({...prev, [postId] : true }))
     
             }
             catch(error){

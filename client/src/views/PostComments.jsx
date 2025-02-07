@@ -30,13 +30,13 @@ export const PostComments = (props) =>{
     )
     
 
-    useEffect(() => {
-        findComment(1)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => console.log(err))
-    }, [])
+    // useEffect(() => {
+    //     findComment(1)
+    //         .then((res) => {
+    //             console.log(res)
+    //         })
+    //         .catch((err) => console.log(err))
+    // }, [])
 
     useEffect(() =>{
         findAllCommmentsForPost(postId)

@@ -73,14 +73,15 @@ export const LoginPage = () => {
             console.log("Response from loginUser:", res); // 🔍 Debugging
     
             if (!res || !res.user || !res.sessionId) {
-                console.error("Invalid API response structure:", res);
-                throw new Error('Invalid response from server.');
+                // console.error("Invalid API response structure:", res);
+                // throw new Error('Invalid response from server.');
             }
     
             setAuthState({ user: res.user.id, token: res.sessionId });
-            navigate('/home');
+            navigate('/user/profile');
         } catch (error) {
-            console.error('Error during login:', error);
+            
+            // console.error('Error during login:', error);
             const errorMessage = error.response?.data?.message || error.message || 'Login failed';
             setErrors((prev) => ({ ...prev, global: errorMessage }));
         }

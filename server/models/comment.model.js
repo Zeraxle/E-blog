@@ -21,13 +21,6 @@ export const Comments = sequelize.define("comments", {
         allowNull : false,
     },
 
-    // parentId: {
-    //     type: DataTypes.BIGINT,
-    //     allowNull: true,
-    //     validate : {
-    //         isInt : true
-    //     }
-    // },
 
     content:{
         type: DataTypes.STRING,
@@ -73,15 +66,6 @@ export const setupPostToCommentRelationship =() =>{
         onUpdate : "CASCADE"
     })
 
-    // Comments.hasMany(Comments, {
-    //     foreignKey: 'parentId',
-    //     as: 'replies'
-    // })
-
-    // Comments.belongsTo(Comments, {
-    //     foreignKey: 'parentId',
-    //     as: 'parent'
-    // })
 
 }
 

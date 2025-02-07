@@ -83,8 +83,7 @@ export const ProfilePage = (props) => {
     return (
         <div className="profile-container">
             <h1 className="profile-title">{user.username ? user.username : "Profile"}</h1>
-            <Link to={'/home'} className="home-link">Home Page</Link>
-
+            
             <div className="button-group">
                 <button className="profile-btn" onClick={logoutUser}>Logout</button>
                 <button className="profile-btn" onClick={editProfilePage}>Edit Profile</button>

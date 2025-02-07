@@ -5,7 +5,6 @@ import { NavBar } from './components/NavBar'
 import { WelcomePage } from './views/WelcomePage'
 import { RegistrationPage } from './views/RegistrationPage'
 import { LoginPage } from './views/LoginPage'
-import { HomePage } from './views/HomePage'
 import { SearchPage } from './views/SearchPage'
 import { ProfilePage } from './views/ProfilePage'
 import { CreatePost } from './views/CreatePost'
@@ -47,7 +46,6 @@ function App() {
             <Route path={'/'} element={<WelcomePage/>}/>
             <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
             <Route path={'/login'} element={<LoginPage setLoggedInUser={setLoggedInUser}/>}/>
-            <Route path={'/home'} element={<ProtectedRoute> <HomePage user = {user} setUser = {setUser}/> </ProtectedRoute> }/>
             <Route path={'/search'} element={<ProtectedRoute><SearchPage loggedInUser={loggedInUser} filteredPosts={filteredPosts} /></ProtectedRoute>}/>
             <Route path={'/user/profile'} element={<ProtectedRoute><ProfilePage loggedInUser={loggedInUser} updateUserInfo = {updateUserInfo} setUpdateUserInfo = {setUpdateUserInfo} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
             <Route path={'/post/create'} element={<ProtectedRoute><CreatePost loggedInUser={loggedInUser}/></ProtectedRoute>}/>

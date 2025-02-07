@@ -40,7 +40,8 @@ export const AllPosts = (props) => {
     useEffect(() => {
         findAllPosts()
             .then(posts => {
-                setAllPosts(posts);
+                console.log(posts)
+                // setAllPosts(posts);
             })
             .catch(error => console.log(error));
     }, [postLiked]);

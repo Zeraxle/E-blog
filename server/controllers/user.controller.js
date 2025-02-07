@@ -3,7 +3,7 @@ import Post from '../models/post.model.js'
 import Like from '../models/like.model.js'
 import Follow, {userAndFollowerRelationship} from '../models/follow.model.js'
 import { setupUserPostRealationship } from '../models/post.model.js'
-import { model } from 'mongoose'
+
 
 
 export const findUserById = async (req, res, next) => {

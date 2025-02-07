@@ -5,8 +5,8 @@ import {logout, getProfile} from '../services/AuthService.js'
 import { findAllMoviePosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie'
-// import '../assets/css/AllPosts.css'
-
+import './MoviesPost.css'
+import './AllPosts.css';
 export const MoviePosts = (props) =>{
     const {loggedInUser, postLiked, setPostLiked, setUrlPath  } = props
     const {authState, setAuthState} = useAuth()
@@ -71,15 +71,15 @@ export const MoviePosts = (props) =>{
         const createPostLike = async (e, postId) =>{
             e.preventDefault()
             console.log(user.id)
-            const userid = user.id
-            const postid = postId
+            const userId = user.id
+        
 
             try {
-                createLike({userid,postid})
+                createLike({userId,postId})
                 .then(res =>{
                     console.log('Successful like creation ', res)
                 })
-                setPostLiked((prev) => ({...prev, [postid] : true }))
+                setPostLiked((prev) => ({...prev, [postId] : true }))
     
             }
             catch(error){
@@ -94,7 +94,7 @@ export const MoviePosts = (props) =>{
                     <div>
                         {allMovies.map((post) => (
                             <div key={post.id} className="post-container">
-                                <h2 className='post-title'>{post.name}</h2>
+                                <h2 className="post-title">{post.name}</h2>
                                 <p className="post-content">{post.description}</p>
                                 <p className="post-category">Category: {post.category}</p>
                                 <p className="post-rating">Rating: {post.rating}/5</p>

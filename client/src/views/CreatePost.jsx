@@ -4,8 +4,7 @@ import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import { createPost } from "../services/PostService.js"
 import Cookies from 'js-cookie'
-import '../assets/css/CreatePost.css'
-
+import './CreatePost.css'
 
 export const CreatePost = () => {
 

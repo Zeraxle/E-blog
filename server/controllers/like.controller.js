@@ -2,10 +2,10 @@ import { Like } from "../models/like.model.js";
 
 export const createLike = async (req, res, next) => {
     try {
-        const {userid, postid} = req.body
+        const {userId, postId} = req.body
         const newLike = await Like.create({
-            userid: userid, 
-            postid : postid})
+            userId: userId, 
+            postId : postId})
         res.status(200).json(newLike)
     } catch(error) {res.status(400).json(error)}
 }

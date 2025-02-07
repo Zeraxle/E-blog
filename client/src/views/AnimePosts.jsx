@@ -60,12 +60,15 @@ export const AnimePosts =  (props) =>{
 
         const createPostLike = async(e, postId) =>{
             e.preventDefault()
-            const userid = user.id
-            const postid = postId
+            const userId = user.id
+            // const postId = postId
 
             try{
-                createLike({userid, postid})
-                setPostLiked((prev) => ({...prev, [postid] : true}))
+                createLike({userId, postId})
+                .then(res =>{
+                    console.log('Successful like creation ', res)
+                })
+                setPostLiked((prev) => ({...prev, [postId] : true}))
 
             }catch(error){
                 console.log(error)

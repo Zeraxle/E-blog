@@ -166,8 +166,8 @@ export const PostComments = (props) =>{
 
                         
                         <tr key={comment.id}>
-                            <td>{comment.content}</td>
-                            {/* <td><Link to={`/display/user/${comment.userId}`}>{comment.user.username}</Link></td> */}
+                            <td>{comment.Comment}</td>
+                            <td><Link to={`/display/user/${comment.user.id}`}>{comment.user.username}</Link></td>
                             <td>{formatDistanceToNow(new Date(comment.createdAt), {
                                 addSuffix : true,
                             })}</td>

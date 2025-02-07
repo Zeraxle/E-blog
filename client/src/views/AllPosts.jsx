@@ -52,11 +52,13 @@ export const AllPosts = (props) => {
         const userId = user.id
 
         try{
-            createLike({userId, postId})
+            console.log(userId)
+            console.log('yesss')
+            await createLike({userId, postId})
             // console.log(postLiked)
             
-                setPostLiked((prev) => ({ ...prev,[postId]: true}))
-                
+            setPostLiked((prev) => ({ ...prev,[postId]: true}))
+            
             
             // console.log(postLiked)
         }catch (error){
@@ -84,6 +86,7 @@ export const AllPosts = (props) => {
         console.log(category)
         setUrlPath((prev) => ({...prev, path : category}))
         navigate(`/${category}/post/${postId}/comments`)
+
     // const goToComments = async(e, postId) =>{
     //     navigate(`post/${postId}/comments`)
     }

@@ -48,28 +48,37 @@ export const TvShowPosts = (props) =>{
 
     const createPostDislike = async(e, postId) =>{
         e.preventDefault()
-        const userId = user.id
-        // const postId = postId
+        const userid = user.id
+        const postid = postId
         try{
-            destroyLike(userId, postId)
-            setPostLiked((prev) => ({...prev, postId : false }))
-        }catch(error){
-            console.log(error)
+            destroyLike(userid, postid)
+            .then(res =>{
+                console.log('Succesful like creation', res)
+            })
+            setPostLiked((prev) => ({...prev, [postid] : false}))
         }
+            catch(error){
+                console.log(error)
+            }
+
     }
 
-    const createPostLike = async(e, postId) =>{
+    const createPostLike =  async(e, postId) =>{
         e.preventDefault()
         const userId = user.id
         // const postId = postId
 
-        try {
-            createLike({userId,postId})
+        try{
+            createLike({userId, postId})
+            .then(res =>{
+                console.log('Successful like creation', res)
+            })
             setPostLiked((prev) => ({...prev, [postId] : true}))
         }
-        catch(error) {
+        catch(error){
             console.log(error)
         }
+    
     }
 
     return (

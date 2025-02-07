@@ -4,7 +4,7 @@ import { useParams , Link, useNavigate} from "react-router-dom"
 import { findAllCommmentsForPost, findPostById } from "../services/PostService"
 import { getProfile } from "../services/AuthService"
 import { useAuth } from "../config/AuthContext"
-import { createComment, destroyComment } from "../services/CommentService"
+import { createComment, destroyComment, findComment } from "../services/CommentService"
 import Cookies from 'js-cookie';
 import {formatDistanceToNow} from 'date-fns'
 
@@ -29,6 +29,14 @@ export const PostComments = (props) =>{
         ''
     )
     
+
+    useEffect(() => {
+        findComment(1)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => console.log(err))
+    }, [])
 
     useEffect(() =>{
         findAllCommmentsForPost(postId)
@@ -84,7 +92,7 @@ export const PostComments = (props) =>{
         }
         return true
     }
-
+    console.log()
     const deleteComment = (e, commentId) =>{
         e.preventDefault()
         console.log(commentId)
@@ -159,12 +167,12 @@ export const PostComments = (props) =>{
                         
                         <tr key={comment.id}>
                             <td>{comment.content}</td>
-                            <td><Link to={`/display/user/${comment.user.id}`}>{comment.user.username}</Link></td>
+                            {/* <td><Link to={`/display/user/${comment.userId}`}>{comment.user.username}</Link></td> */}
                             <td>{formatDistanceToNow(new Date(comment.createdAt), {
                                 addSuffix : true,
                             })}</td>
             
-                            {user.id === comment.user.id? (
+                            {user.id === comment.userId? (
                             <>
                             <td>
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../config/AuthContext.jsx';
 import { loginUser } from '../services/AuthService.js';
+import '../App.css'
 
 export const LoginPage = () => {
     const { setAuthState } = useAuth();
@@ -90,7 +91,7 @@ export const LoginPage = () => {
     return (
         <>
             <h1>E-Blog</h1>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className='login-form'>
                 {errors.global && <p className="error">{errors.global}</p>} {/* Global errors */}
                 <label>
                     Email:

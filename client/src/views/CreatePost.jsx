@@ -4,6 +4,7 @@ import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import { createPost } from "../services/PostService.js"
 import Cookies from 'js-cookie'
+import '../assets/css/CreatePost.css'
 
 
 export const CreatePost = () => {
@@ -83,61 +84,71 @@ export const CreatePost = () => {
         }
 
     return(<>
-        <h1>Create a Post</h1>
-        <form>
-            <label>
-                Name: 
-                <input 
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={changeHandler}
-                    required
-                />
-                {errors?.name && <p>{errors.name}</p>}
-            </label>
-            <label>
-                Category: 
-                <select 
-                    name="category"
-                    value={formData.category}
-                    onChange={changeHandler}
-                    required
-                >
-                    <option value="">Select a category</option>
-                    {categories.map(category => (
-                        <option key={category} value={category}>{category}</option>
-                    ))}
-                </select>
-                {errors?.category && <p>{errors.category}</p>}
-            </label>
-            <label>
-                Rating: 
-                <select 
-                    name="rating"
-                    value={formData.rating}
-                    onChange={changeHandler}
-                    required
-                >
-                    <option value="">Select a Rating</option>
-                {ratings.map(rating => (
-                    <option key={rating} value={rating}>{rating}</option>
-                ))}
-                </select>
-                {errors?.rating && <p>{errors.rating}</p>}
-            </label>
-            <label>
-                Description: 
-                <textarea 
-                    name="description" 
-                    id="description"
-                    value={formData.description}
-                    onChange={changeHandler}
-                    required
-                />
-                {errors?.description && <p>{errors.description}</p>}
-            </label>
-            <button onClick={submitHandler}>Create Post!</button>
-        </form>
+        <div>
+            <h1 className="form-title">Create a Post</h1>
+            <form className="post-form">
+                <label className="form-label">
+                    Name: 
+                    <input 
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={changeHandler}
+                        required
+                        className="form-input"
+                    />
+                    {errors?.name && <p className="error-text">{errors.name}</p>}
+                </label>
+
+                <label className="form-label">
+                    Category: 
+                    <select 
+                        name="category"
+                        value={formData.category}
+                        onChange={changeHandler}
+                        required
+                        className="form-select"
+                    >
+                        <option value="">Select a category</option>
+                        {categories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                        ))}
+                    </select>
+                    {errors?.category && <p className="error-text">{errors.category}</p>}
+                </label>
+
+                <label className="form-label">
+                    Rating: 
+                    <select 
+                        name="rating"
+                        value={formData.rating}
+                        onChange={changeHandler}
+                        required
+                        className="form-select"
+                    >
+                        <option value="">Select a Rating</option>
+                        {ratings.map(rating => (
+                            <option key={rating} value={rating}>{rating}</option>
+                        ))}
+                    </select>
+                    {errors?.rating && <p className="error-text">{errors.rating}</p>}
+                </label>
+
+                <label className="form-label">
+                    Description: 
+                    <textarea 
+                        name="description" 
+                        id="description"
+                        value={formData.description}
+                        onChange={changeHandler}
+                        required
+                        className="form-textarea"
+                    />
+                    {errors?.description && <p className="error-text">{errors.description}</p>}
+                </label>
+
+                <button className="submit-btn" onClick={submitHandler}>Create Post!</button>
+            </form>
+        </div>
     </>)
 }

@@ -34,7 +34,7 @@ export const Comments = sequelize.define("comments", {
         allowNull : false,
         validate:{
             len:{
-            args: [3,255],
+            args: [3, 255],
             msg: 'Comments must be more than 3 characters and less than 255'
         }
     },

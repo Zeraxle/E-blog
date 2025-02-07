@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {registerUser} from '../services/AuthService.js'
+import '../App.css'
 
 export const RegistrationPage = () => {
 
@@ -125,7 +126,7 @@ export const RegistrationPage = () => {
 
     return(<>
         <h1>E-Blog</h1>
-        <form>
+        <form className='registration-form'>
             <label>
                 First Name:
                 <input 

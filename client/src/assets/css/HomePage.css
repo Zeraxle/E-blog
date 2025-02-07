@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Homepage Title */
+.homepage-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 20px;
+}
+
+/* Username Display */
+.username-display {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* Logout Button */
+.logout-btn {
+    display: block;
+    width: 150px;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.logout-btn:active {
+    transform: scale(0.95);
+}
+
+/* Profile Link */
+.profile-link {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.profile-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Responsive Design */

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../config/AuthContext.jsx';
 import { loginUser } from '../services/AuthService.js';
+import '../App.css'
 
 export const LoginPage = () => {
     const { setAuthState } = useAuth();
@@ -72,14 +73,15 @@ export const LoginPage = () => {
             console.log("Response from loginUser:", res); // 🔍 Debugging
     
             if (!res || !res.user || !res.sessionId) {
-                console.error("Invalid API response structure:", res);
-                throw new Error('Invalid response from server.');
+                // console.error("Invalid API response structure:", res);
+                // throw new Error('Invalid response from server.');
             }
     
             setAuthState({ user: res.user.id, token: res.sessionId });
-            navigate('/home');
+            navigate('/user/profile');
         } catch (error) {
-            console.error('Error during login:', error);
+            
+            // console.error('Error during login:', error);
             const errorMessage = error.response?.data?.message || error.message || 'Login failed';
             setErrors((prev) => ({ ...prev, global: errorMessage }));
         }
@@ -90,7 +92,7 @@ export const LoginPage = () => {
     return (
         <>
             <h1>E-Blog</h1>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} className='login-form'>
                 {errors.global && <p className="error">{errors.global}</p>} {/* Global errors */}
                 <label>
                     Email:

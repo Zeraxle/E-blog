@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { findPostById } from "../services/PostService"
 import { useEffect, useState } from "react"
 import { updatePost } from "../services/PostService"
+import '../assets/css/EditPost.css'
 
 
 export const EditPost  = () =>{
@@ -96,62 +97,68 @@ export const EditPost  = () =>{
     }
 
     return<>
-    <form >
-        <label>
-            Name: 
-            <input
-            type="text"
-            name="name"
-            value={postInfo.name}
-            onChange={updatePostInfo}
-            required
-            />
-            {errors?.name && <p>{errors.name}</p>}
-        </label>
-            <label>
+        <form className="post-form">
+            <label className="form-label">
+                Name: 
+                <input 
+                    type="text" 
+                    name="name" 
+                    value={postInfo.name} 
+                    onChange={updatePostInfo} 
+                    required 
+                    className="form-input"
+                />
+                {errors?.name && <p className="error-text">{errors.name}</p>}
+            </label>
+
+            <label className="form-label">
                 Rating: 
                 <select 
-                    name="rating"
-                    value={postInfo.rating}
-                    onChange={updatePostInfo}
-                    required
+                    name="rating" 
+                    value={postInfo.rating} 
+                    onChange={updatePostInfo} 
+                    required 
+                    className="form-select"
                 >
                     <option value="">Select a Rating</option>
-                {ratings.map(rating => (
-                    <option key={rating} value={rating}>{rating}</option>
-                ))}
+                    {ratings.map(rating => (
+                        <option key={rating} value={rating}>{rating}</option>
+                    ))}
                 </select>
-            {errors?.rating && <p>{errors.rating}</p>}
+                {errors?.rating && <p className="error-text">{errors.rating}</p>}
             </label>
-            <label>
+
+            <label className="form-label">
                 Category: 
                 <select 
-                    name="category"
-                    value={postInfo.category}
-                    onChange={updatePostInfo}
-                    required
+                    name="category" 
+                    value={postInfo.category} 
+                    onChange={updatePostInfo} 
+                    required 
+                    className="form-select"
                 >
                     <option value="">Select a category</option>
                     {categories.map(category => (
                         <option key={category} value={category}>{category}</option>
                     ))}
                 </select>
-                {errors?.category && <p>{errors.category}</p>}
+                {errors?.category && <p className="error-text">{errors.category}</p>}
             </label>
-        <label>
-            Description: 
-            <input
-            type="text"
-            name="description"
-            value={postInfo.description}
-            onChange={updatePostInfo}
-            required
-            >
-            </input>
-            {errors?.description && <p>{errors.description}</p>}
-        </label>
-        <button onClick={submitHandler}>Submit</button>
-    
-    </form>
+
+            <label className="form-label">
+                Description: 
+                <input 
+                    type="text" 
+                    name="description" 
+                    value={postInfo.description} 
+                    onChange={updatePostInfo} 
+                    required 
+                    className="form-input"
+                />
+                {errors?.description && <p className="error-text">{errors.description}</p>}
+            </label>
+
+            <button className="submit-btn" onClick={submitHandler}>Submit</button>
+        </form>
     </>
 }

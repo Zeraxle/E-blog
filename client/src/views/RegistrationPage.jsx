@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {registerUser} from '../services/AuthService.js'
+import '../App.css'
 
 export const RegistrationPage = () => {
 
@@ -98,7 +99,7 @@ export const RegistrationPage = () => {
             setAuthState({ user: res.user.id, token: res.sessionId });
             navigate('/user/profile');
         } catch (error) {
-            console.error('Error during registration:', error);
+            // console.error('Error during registration:', error);
     
             // Check if error contains a message indicating user already exists
             if (error?.data?.message) {
@@ -125,7 +126,7 @@ export const RegistrationPage = () => {
 
     return(<>
         <h1>E-Blog</h1>
-        <form>
+        <form className='registration-form'>
             <label>
                 First Name:
                 <input 
@@ -186,8 +187,7 @@ export const RegistrationPage = () => {
                 />
                 {errors?.confirmPassword && <p>{errors.confirmPassword}</p>}
             </label>
-            <disabled>
-            <button onClick={submitHandler}>Register</button></disabled>
+            <button onClick={submitHandler}>Register</button>
         </form>
     </>)
 }

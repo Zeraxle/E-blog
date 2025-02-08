@@ -81,27 +81,26 @@ export const ProfilePage = (props) => {
     };
 
     return (
-        <div className='container'>
-            <h1 className='header'>{user.username ? user.username : "Profile"}</h1>
-            <Link to={'/home'}>Home Page</Link>
-
-            <div className='btn-group'>
-                <button onClick={logoutUser}>Logout</button>
-                <button onClick={editProfilePage}>Edit Profile</button>
-                <button onClick={() => setViewLikedPosts(true)}>Liked Posts</button>
-                <button onClick={() => setDisplayPost(true)}>Posts</button>
-                <button onClick={() => setShowFollowing(true)}>Followers</button>
-                <button onClick={() => setShowFollowers(true)}>Following</button>
+        <div className="profile-container">
+            <h1 className="profile-title">{user.username ? user.username : "Profile"}</h1>
+            
+            <div className="button-group">
+                <button className="profile-btn" onClick={logoutUser}>Logout</button>
+                <button className="profile-btn" onClick={editProfilePage}>Edit Profile</button>
+                <button className="profile-btn" onClick={() => setViewLikedPosts(true)}>Liked Posts</button>
+                <button className="profile-btn" onClick={() => setDisplayPost(true)}>Posts</button>
+                <button className="profile-btn" onClick={() => setShowFollowing(true)}>Followers</button>
+                <button className="profile-btn" onClick={() => setShowFollowers(true)}>Following</button>
             </div>
 
-            <div className='userInfo'>
-                <p>First Name: {user.firstName}</p>
-                <p>Last Name: {user.lastName}</p>
-                <p>Email: {user.email}</p>
+            <div className="profile-info">
+                <p><strong>First Name:</strong> {user.firstName}</p>
+                <p><strong>Last Name:</strong> {user.lastName}</p>
+                <p><strong>Email:</strong> {user.email}</p>
             </div>
 
             {displayPost && userPostInfo.length > 0 ? (
-                <table>
+                <table className="profile-table">
                     <tbody>
                         {userPostInfo.map(post => (
                             <tr key={post.id}>
@@ -109,17 +108,17 @@ export const ProfilePage = (props) => {
                                 <td>Category: {post.category}</td>
                                 <td>Rating: {post.rating}</td>
                                 <td>
-                                    <Link to={`/edit/post/${post.id}`}><button>Edit</button></Link>
-                                    <button onClick={(e) => deletePost(e, post.id)}>Delete</button>
+                                    <Link to={`/edit/post/${post.id}`}><button className="edit-btn">Edit</button></Link>
+                                    <button className="delete-btn" onClick={(e) => deletePost(e, post.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-            ) : <p className='noData'>No Posts Available</p>}
+            ) : <p className="no-posts">No Posts Available</p>}
 
             {viewLikedPost && likedPosts.length > 0 ? (
-                <table>
+                <table className="profile-table">
                     <tbody>
                         {likedPosts.map(post => (
                             <tr key={post.id}>
@@ -131,7 +130,8 @@ export const ProfilePage = (props) => {
                         ))}
                     </tbody>
                 </table>
-            ) : <p className='noData'>No Liked Posts</p>}
+            ) : <p className="no-posts">No Liked Posts</p>}
         </div>
+
     );
 };

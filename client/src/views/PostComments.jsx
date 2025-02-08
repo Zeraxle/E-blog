@@ -69,7 +69,7 @@ export const PostComments = (props) =>{
     const validateComment = (name, value) =>{
     
         const validations = {
-            content : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
+            Comment : value => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 Characters and less than 255'
         }
         setCommentErrors ((prev ) => ({...prev, [name]: validations[name](value), }))
     }
@@ -78,9 +78,9 @@ export const PostComments = (props) =>{
         const {name, value} = e.target
         validateComment(name, value)
         setPostComments((prev) => ({...prev, [name] : value}))
-                        // [name] : value,
-                        // postId : postId,
-                        // userId: user.id
+                    //     [name] : value,
+                    //     postId : postId,
+                    //     userId: user.id
                     // }))
         
     }
@@ -92,7 +92,7 @@ export const PostComments = (props) =>{
         }
         return true
     }
-    console.log()
+
     const deleteComment = (e, commentId) =>{
         e.preventDefault()
         console.log(commentId)
@@ -112,11 +112,11 @@ export const PostComments = (props) =>{
         try{
             await createComment(postComments, postId)
             console.log("Comment submitted successfully!");
-            setPostComments(
-                ''
-                // postId : null,
-                // userId : null
-            )
+            // setPostComments(
+            //     ''
+            //     // postId : null,
+            //     // userId : null
+            // )
             const updatedComments = await findAllCommmentsForPost(postId)
             setRetrievedComments(updatedComments.comments || [])
             console.log('dont try this at home!!!')
@@ -205,13 +205,13 @@ export const PostComments = (props) =>{
         <form >
                     <label>
                         <input
-                        name="content"
+                        name="Comment"
                         type="text"
                         placeholder="Enter A comment"
                         value={postComments}
                         onChange={ChangeHandler}
                         />
-                    {commentErrors?.content && <p>{commentErrors.content}</p>}
+                    {commentErrors?.Comment && <p>{commentErrors.Comment}</p>}
                     </label>
                     <button onClick={submitComment}>Submit</button>
                 </form>

@@ -19,10 +19,11 @@ export const findCommentsByPost = async (postId) => {
     } catch(error){throw error}
 }
 
-export const createComment = async (content, postId) => {
+export const createComment = async (Comment, postId) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const token = Cookies.get('sessionId') 
-        const res = await COMMENT_INSTANCE.post(`/create/${postId}`, {content}, {
+        const res = await COMMENT_INSTANCE.post(`/create/${postId}`, {Comment}, {
             headers: {Authorization : `Bearer ${token}`}
         })
         return res.data

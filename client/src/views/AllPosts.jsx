@@ -41,7 +41,7 @@ export const AllPosts = (props) => {
         findAllPosts()
             .then(posts => {
                 console.log(posts)
-                // setAllPosts(posts);
+                setAllPosts(posts);
             })
             .catch(error => console.log(error));
     }, [postLiked]);

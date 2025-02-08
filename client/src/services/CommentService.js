@@ -19,20 +19,18 @@ export const findCommentsByPost = async (postId) => {
     } catch(error){throw error}
 }
 
-export const createComment = async (Comment, postId) => {
+export const createComment = async (postComments) => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const token = Cookies.get('sessionId') 
-        const res = await COMMENT_INSTANCE.post(`/create/${postId}`, {Comment}, {
-            headers: {Authorization : `Bearer ${token}`}
-        })
+        const res = await COMMENT_INSTANCE.post(`/create/${postComments.postId}`, postComments)
         return res.data
     } catch(error){throw error}
 }
 
-export const updateComment = async (id, content) => {
+export const updateComment = async (id, Comment) => {
+    // eslint-disable-next-line no-useless-catch
     try {
-        const res = await COMMENT_INSTANCE.put(`/${id}`, {content})
+        const res = await COMMENT_INSTANCE.put(`/${id}`, {Comment})
         return res.data
     } catch(error){throw error}
 }

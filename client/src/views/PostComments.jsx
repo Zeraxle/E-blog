@@ -13,21 +13,22 @@ export const PostComments = (props) =>{
     const navigate = useNavigate()
     const { authState, setAuthState } = useAuth();
     const {setPost, post, urlPath} = props
-
-
+    
+    
     const category = urlPath.path
     const {postId} = useParams()
     const [retrievedComments, setRetrievedComments] = useState([])
     const [showReplies, setShowReplies] = useState(false)
     const [user, setUser] = useState({});
-    const [postComments, setPostComments] = useState(
-        ''
-        // postId : null,
-        // userId : null
+    const [postComments, setPostComments] = useState({
+        Comment : '',
+        userId : null,
+        postId : null
+
+    }
     )
-    const [commentErrors, setCommentErrors] = useState(
-        ''
-    )
+    const [commentErrors, setCommentErrors] = useState({
+        Comment : '' })
     
 
     // useEffect(() => {
@@ -77,12 +78,11 @@ export const PostComments = (props) =>{
     const ChangeHandler = (e) =>{
         const {name, value} = e.target
         validateComment(name, value)
-        setPostComments((prev) => ({...prev, [name] : value}))
-                    //     [name] : value,
-                    //     postId : postId,
-                    //     userId: user.id
-                    // }))
-        
+        setPostComments((prev) => 
+            ({...prev, [name] : value,
+                userId : user.id,
+                postId : postId
+            }))
     }
     const readyToSubmit = () =>{
         for (let key in commentErrors){
@@ -110,13 +110,13 @@ export const PostComments = (props) =>{
             return false
         }
         try{
-            await createComment(postComments, postId)
+            await createComment(postComments)
             console.log("Comment submitted successfully!");
-            // setPostComments(
-            //     ''
-            //     // postId : null,
-            //     // userId : null
-            // )
+            setPostComments({
+                Comment : '',
+                postId : null,
+                userId : null
+            })
             const updatedComments = await findAllCommmentsForPost(postId)
             setRetrievedComments(updatedComments.comments || [])
             console.log('dont try this at home!!!')
@@ -128,7 +128,7 @@ export const PostComments = (props) =>{
     }
     return(
         <>
-        <h1>{post.name}</h1>
+        {/* <h1>{post.name}</h1> */}
         <table>
             <thead>
                 <tr>
@@ -208,7 +208,7 @@ export const PostComments = (props) =>{
                         name="Comment"
                         type="text"
                         placeholder="Enter A comment"
-                        value={postComments}
+                        value={postComments.Comment}
                         onChange={ChangeHandler}
                         />
                     {commentErrors?.Comment && <p>{commentErrors.Comment}</p>}

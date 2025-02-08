@@ -6,8 +6,12 @@ export const EditComment = (props) =>{
     const {id} = useParams()
     const navigate  = useNavigate()
     const [comment, setComment] = useState({})
-    const [error, setErrors] = useState('')
-    const [updatedComment, setUpdatedComment] = useState('')
+    const [error, setErrors] = useState({
+        Comment : ""
+    })
+    const [updatedComment, setUpdatedComment] = useState({
+        Comment : "",
+    })
     
     
     useEffect(()=>{
@@ -29,7 +33,7 @@ export const EditComment = (props) =>{
     
     const validateComment = (name, value) =>{
         const validation = {
-            content : value  => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 characters and less than 255'
+            Comment : value  => value.length >= 3 && value.length <= 255? true : 'Comment must be more than 3 characters and less than 255'
         }
         setErrors((prev) => ({...prev, [name] : validation[name] (value)}))
     }
@@ -71,9 +75,9 @@ export const EditComment = (props) =>{
             <label>
                 edit Comment 
                 <input
-                    name="content"
+                    name="Comment"
                     type="text"
-                    value={updatedComment}
+                    value={updatedComment.Comment}
                     onChange={handleInputChange}>
                 </input>
             </label>

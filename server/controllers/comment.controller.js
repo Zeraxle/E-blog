@@ -6,26 +6,9 @@ import jwt from 'jsonwebtoken'
 
 
 export const createComment = async(req,res,next) =>{
-    
-    const postId = req.params.postId
-    const {content, parentId} = req.body.content
-    const sessionId = req.headers.authorization.split(' ')[1]
-    const token = await getToken(sessionId)
-    
+    const {Comment, userId, postId} = req.body
     try{
-        if(parentId){
-            const parentComment = await Comments.findByPk(parentId)
-            if(!parentComment){
-                return res.status(404).json({message: 'Parent comment not found'})
-            }
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const userId = decoded.userId
-        const newComment =  await Comments.create({
-            content, 
-            userId, 
-            postId, 
-            parentId: parentId || null})
+        const newComment =  await Comments.create({Comment,userId,postId })
         res.status(200).json(newComment)
 
     }
@@ -49,8 +32,7 @@ export const deleteComment = async(req,res,next) =>{
 
 export const updateComment = async(req,res,next) =>{
 
-    const {content} = req.body
-    const request = req.body
+    const {Comment} = req.body
     
     
     try{
@@ -60,7 +42,7 @@ export const updateComment = async(req,res,next) =>{
         if(!foundComment){
             return(res.status(404).json({message : `Comment not found`}))
         }
-        foundComment.content = content
+        foundComment.Comment = Comment
         console.log(foundComment.content)
 
         await foundComment.save()

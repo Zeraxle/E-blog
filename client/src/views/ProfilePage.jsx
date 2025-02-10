@@ -73,6 +73,13 @@ export const ProfilePage = (props) => {
             .catch(error => console.log(error));
     };
 
+    const showUserInfo = () => {
+        setShowFollowers(false)
+        setShowFollowing(false)
+        setViewLikedPosts(false)
+        setDisplayPost(false)
+    }
+
     const deletePost = (e, postId) => {
         e.preventDefault();
         destroyPost(user.id, postId)
@@ -87,17 +94,19 @@ export const ProfilePage = (props) => {
             <div className="button-group">
                 <button className="profile-btn" onClick={logoutUser}>Logout</button>
                 <button className="profile-btn" onClick={editProfilePage}>Edit Profile</button>
+                <button className="profile-btn" onClick={showUserInfo}>User Info</button>
                 <button className="profile-btn" onClick={() => setViewLikedPosts(true)}>Liked Posts</button>
                 <button className="profile-btn" onClick={() => setDisplayPost(true)}>Posts</button>
                 <button className="profile-btn" onClick={() => setShowFollowing(true)}>Followers</button>
                 <button className="profile-btn" onClick={() => setShowFollowers(true)}>Following</button>
             </div>
-
+        { !viewLikedPost && !displayPost && !showFollowers && !showFollowing && (
             <div className="profile-info">
                 <p><strong>First Name:</strong> {user.firstName}</p>
                 <p><strong>Last Name:</strong> {user.lastName}</p>
                 <p><strong>Email:</strong> {user.email}</p>
             </div>
+        )}
 
             {displayPost && userPostInfo.length > 0 ? (
                 <table className="profile-table">

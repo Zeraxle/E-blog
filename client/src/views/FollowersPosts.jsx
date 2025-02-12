@@ -5,6 +5,7 @@ import {logout, getProfile} from '../services/AuthService.js'
 import { findAllFollowersPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie'
+import './FollowersPost.css'
 
 export const FollowersPosts = (props) =>{
     const [followerPosts, setFollowersPosts] = useState([])
@@ -115,7 +116,7 @@ export const FollowersPosts = (props) =>{
                         <div>
                                 {followerPosts.map((post) => (
                                                 <div key={post.id} className="post-container">
-                                                    <h2>{post.name}</h2>
+                                                    <h2 className='post-title'>{post.name}</h2>
                                                     <p className="post-content">{post.description}</p>
                                                     <p className="post-category">Category: {post.category}</p>
                                                     <p className="post-rating">Rating: {post.rating}/5</p>

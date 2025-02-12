@@ -5,7 +5,7 @@ import {logout, getProfile} from '../services/AuthService.js'
 import { findAllTvshowPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie'
-
+import './TvShowsPost.css'
 export const TvShowPosts = (props) =>{
     const [allTvShows, setAllTvShows] = useState([])
     const {loggedInUser, postLiked, setPostLiked, setUrlPath} = props
@@ -87,7 +87,7 @@ export const TvShowPosts = (props) =>{
                         <div>
                             {allTvShows.map((post) => (
                                 <div key={post.id} className="post-container">
-                                    <h2>{post.name}</h2>
+                                    <h2 className='post-title'>{post.name}</h2>
                                     <p className="post-content">{post.description}</p>
                                     <p className="post-category">Category: {post.category}</p>
                                     <p className="post-rating">Rating: {post.rating}/5</p>

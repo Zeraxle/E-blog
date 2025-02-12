@@ -140,6 +140,30 @@ export const ProfilePage = (props) => {
                     </tbody>
                 </table>
             ) : <p className="no-posts">No Liked Posts</p>}
+            
+            {showFollowers && userFollowers.length > 0 ? (
+                <table className="profile-table">
+                    <tbody>
+                        {userFollowers.map(post => (
+                            <tr key={post.id}>
+                                <td>{post.username} is following you.</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : <p className="no-posts">No Followers</p>}
+
+            {showFollowing && userFollowing.length > 0 ? (
+                <table className="profile-table">
+                    <tbody>
+                        {userFollowing.map(post => (
+                            <tr key={post.id}>
+                                <td>You are following {post.username}.</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : <p className="no-posts">Not Following Anyone</p>}
         </div>
 
     );

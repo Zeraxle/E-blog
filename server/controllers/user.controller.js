@@ -142,7 +142,6 @@ export const findWhoFollowsUser = async (req,res,next) =>{
                 id : userFollowersInfo
             }
         })
-        // console.log(userFollowersId)
         res.status(200).json(AllUsersFollowers)
 
     }

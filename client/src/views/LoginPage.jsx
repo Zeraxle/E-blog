@@ -66,15 +66,15 @@ export const LoginPage = () => {
             alert('Invalid Input');
             return false;
         } 
-        setErrors((prev) => ({ ...prev, global: '' })); // Reset global errors
+        setErrors(prev => ({ ...prev, global: '' })); // Reset global errors
     
         try {
             const res = await loginUser(formData);
-            console.log("Response from loginUser:", res); // 🔍 Debugging
+            // console.log("Response from loginUser:", res); // 🔍 Debugging
     
             if (!res || !res.user || !res.sessionId) {
                 // console.error("Invalid API response structure:", res);
-                // throw new Error('Invalid response from server.');
+                throw new Error('Invalid response from server.');
             }
     
             setAuthState({ user: res.user.id, token: res.sessionId });

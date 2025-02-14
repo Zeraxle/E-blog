@@ -9,13 +9,44 @@ export const register = async (req, res) => {
     } catch(error){res.status(400).json({message : error.message})}
 }
 
+// export const login = async (req, res) => {
+//     try {
+//         const { user, sessionId} = await loginUser(req.body.email, req.body.password)
+//         res.cookie('sessionId', sessionId)
+//         res.status(200).json({user, sessionId})
+//     } catch (error) {res.status(400).json({message : error.message})}
+// }
 export const login = async (req, res) => {
     try {
-        const { user, sessionId} = await loginUser(req.body.email, req.body.password)
+        const { email, password } = req.body;
+
+        // Find user by email
+        const foundUser = await User.findOne({ where: { email } });
+
+        if (!foundUser) {
+            throw new Error("Invalid email or password");
+        }
+
+        // Validate password against hashed version
+        const isPasswordValid = await foundUser.authenticate(password); 
+        if (!isPasswordValid) {
+            throw new Error("Invalid email or password");
+        }
+
+
+
+        // Set session cookie
         res.cookie('sessionId', sessionId)
-        res.status(200).json({user, sessionId})
-    } catch (error) {res.status(400).json({message : error.message})}
-}
+
+        // Send response with found user (no need to call loginUser again)
+        res.status(200).json({ user: foundUser, sessionId });
+
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+
 
 export const getProfile = async (req, res) => {
     try {

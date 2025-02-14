@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom"
 import { findCommentsByPost } from "../services/CommentService.js"
 import { Comments } from "./Comments"
 import { getProfile} from "../services/AuthService.js"
+import { destroyLike, createLike } from "../services/LikeService.js"
 import { useAuth } from "../config/AuthContext.jsx"
 import Cookies from 'js-cookie'
 
@@ -17,9 +18,18 @@ export const DisplayOnePost = (props) => {
     const [displayedPost, setDisplayedPost] = useState({})
     const [comments, setComments] = useState()
     const [showComments, setShowComments] = useState(false)
-    
+    const [user, setUser] = useState({});
 
-    
+    useEffect(() => {
+            const sessionId = Cookies.get('sessionId');
+            getProfile()
+                .then(res => {
+                    setUser(res);
+                    setAuthState({ user: res.id, token: sessionId });
+                })
+                .catch(error => console.log(error));
+        }, [postLiked]);
+
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
         getProfile()
@@ -68,7 +78,6 @@ export const DisplayOnePost = (props) => {
     
             try{
                 console.log(userId)
-                console.log('yesss')
                 await createLike({userId, postId})
                 // console.log(postLiked)
                 

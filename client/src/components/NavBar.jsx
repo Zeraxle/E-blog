@@ -40,11 +40,14 @@ export const NavBar = ({setFilteredPosts, user}) => {
 
     }
 
+    const goTohomePage = () =>{
+        navigate(`/AllPosts`)
+    }
 
 
     return(<>
     <div className='TopNavBar'>
-            <h1>E-Blog</h1>
+            <h1 onClick={goTohomePage}>E-Blog</h1>
             <form onSubmit={handleSearchSubmit}>
             <input type="text" 
             placeholder='Search'
@@ -53,7 +56,7 @@ export const NavBar = ({setFilteredPosts, user}) => {
             <button type='submit'>Search</button>
             </form>
 
-            <Link to={'/home'}>
+            <Link to={'/AllPosts'}>
                 <img src={home} alt='home.png'/>
             </Link>
 

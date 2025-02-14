@@ -120,3 +120,13 @@ input {
     color: rgba(255, 255, 255, 0.87);
     min-height: calc(100vh - 70px);
 }
+
+h1 {
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+h1:hover {
+    color: #ff4500; /* Change to your preferred hover color */
+    text-decoration: underline;
+}

@@ -19,6 +19,7 @@ export const registerUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await AUTH_INSTANCE.post('/login', userData)
         return response.data

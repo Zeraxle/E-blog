@@ -19,12 +19,19 @@ export const registerUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
-    // eslint-disable-next-line no-useless-catch
+    const originalConsoleError = console.error; // Store original console.error
+
     try {
-        const response = await AUTH_INSTANCE.post('/login', userData)
-        return response.data
-    } catch (error) { throw error}
-}
+        console.error = () => {}; // Disable error logging
+        const response = await AUTH_INSTANCE.post('/login', userData);
+        return response.data;
+    } catch (error) {
+        return { error: error.response?.data?.message || 'Login failed. Please try again.' };
+    } finally {
+        console.error = originalConsoleError; // Restore original console.error
+    }
+};
+
 
 export const getProfile = async () => {
     try {

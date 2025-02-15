@@ -6,6 +6,11 @@
     background-color: #141414;
 }
 
+.post-box {
+    width: 450px;
+    margin-right: 125px
+}
+
 .post-container {
     width: 100%;
     max-width: 1000px;  /* Add this line to match AllPosts */

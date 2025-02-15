@@ -73,7 +73,7 @@ export const LoginPage = () => {
         setErrors(prev => ({ ...prev, global: '' })); // Reset global errors
     
         const res = await loginUser(formData);
-        console.log("Login response:", res); // Debugging output
+        // console.log("Login response:", res); // Debugging output
     
         if (res.error) {
             setErrors(prev => ({ ...prev, global: res.error }));

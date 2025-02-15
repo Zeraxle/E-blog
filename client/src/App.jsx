@@ -39,6 +39,8 @@ function App() {
   const [urlPath, setUrlPath] = useState({
     path : ''
   })
+
+  
     return (
       <>
           {showNavBar && <NavBar  user = {user} setFilteredPosts={setFilteredPosts}/>}

@@ -10,10 +10,11 @@ export const registerUser = async (userData) => {
         const response = await AUTH_INSTANCE.post('/register', userData)
         return response.data
     } catch (error) {
-        if (error.response) {
-            throw error.response; // Throw response object for the caller to handle
-        } else {
-            throw new Error('Network Error'); // Catch-all for other errors
+        if(error.response){
+            if (error.response.status === 400 || error.response.status === 401){
+                return null
+            }
+            console.error('Unexpected Error', error)
         }
     }
 };
@@ -22,7 +23,14 @@ export const loginUser = async (userData) => {
     try {
         const response = await AUTH_INSTANCE.post('/login', userData)
         return response.data
-    } catch (error) { throw error}
+    } catch (error) { 
+        if(error.response){
+            if (error.response.status === "400" || error.response.status === "401"){
+                return
+            }
+            console.error('Unexpected error', error)
+        }
+    }
 }
 
 export const getProfile = async () => {

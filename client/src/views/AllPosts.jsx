@@ -94,7 +94,7 @@ export const AllPosts = (props) => {
     return (
         <div id="root">
             <div>
-                <div>
+                <div className='post-box'>
                     {allPosts.map((post) => (
                         <div key={post.id} className="post-container">
                             <h2 className="post-title">{post.name}</h2>

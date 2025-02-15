@@ -20,18 +20,19 @@ export const registerUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+    const originalConsoleError = console.error; // Store original console.error
+
     try {
-        const response = await AUTH_INSTANCE.post('/login', userData)
-        return response.data
-    } catch (error) { 
-        if(error.response){
-            if (error.response.status === "400" || error.response.status === "401"){
-                return
-            }
-            console.error('Unexpected error', error)
-        }
+        console.error = () => {}; // Disable error logging
+        const response = await AUTH_INSTANCE.post('/login', userData);
+        return response.data;
+    } catch (error) {
+        return { error: error.response?.data?.message || 'Login failed. Please try again.' };
+    } finally {
+        console.error = originalConsoleError; // Restore original console.error
     }
-}
+};
+
 
 export const getProfile = async () => {
     try {

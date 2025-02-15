@@ -4,7 +4,7 @@ import { useAuth } from "../config/AuthContext.jsx"
 import {logout, getProfile} from '../services/AuthService.js'
 import Cookies from 'js-cookie'
 import '../assets/css/SearchPage.css'
-
+import './SearchPage.css'
 
 export const SearchPage = ({filteredPosts}) => {
 
@@ -28,34 +28,38 @@ export const SearchPage = ({filteredPosts}) => {
                 .catch(error => console.log(error))
         }
 
-        // NEED TO ADD LOGIC FOR WHEN UNKNOWN POST IS SEARCHED FOR 
-        // NEED TO LINK COMMENTS BACK TO POSTS 
-    return(<>
-        <button onClick={logoutUser}>Logout</button>
-        <table>
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Category</td>
-                    <td>Rating</td>
-                    <td>Posted By</td>
-                </tr>
-            </thead>
-            <tbody>
-            {filteredPosts && filteredPosts.map((post) =>(
-                <tr key={post.id}>
-                <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
-                <td>{post.description}</td>
-                <td>{post.category}</td>
-                <td>{post.rating}</td>
-                <td> <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
-                </tr>
-                
-            ))}
-
-        </tbody>
-        </table>
-
-    </>)
-}
+        return (
+            <>
+                <div className="search-Table">
+                <button onClick={logoutUser}>Logout</button>
+                {filteredPosts && filteredPosts.length > 0 ? (
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Description</td>
+                                <td>Category</td>
+                                <td>Rating</td>
+                                <td>Posted By</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredPosts.map(post => (
+                                <tr key={post.id}>
+                                    <td><Link to={`/display/post/${post.id}`}>{post.name}</Link></td>
+                                    <td>{post.description}</td>
+                                    <td>{post.category}</td>
+                                    <td>{post.rating}</td>
+                                    <td><Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No results found. Try refining your search.</p>
+                )}
+                </div>
+            </>
+        );
+    };
+    

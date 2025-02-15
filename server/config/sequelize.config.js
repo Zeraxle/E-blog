@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 export const sequelize = new Sequelize (
     'eblogdb', 
     'root',
-    'root',
+    'Samosho10',
 
     {
         host : "127.0.0.1",

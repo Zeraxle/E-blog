@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../config/AuthContext.jsx';
 import { loginUser } from '../services/AuthService.js';
+import { useState } from 'react';
 import '../App.css'
 
 export const LoginPage = () => {
     const { setAuthState } = useAuth();
     const navigate = useNavigate();
+``
 
     const [formData, setFormData] = useState({
         email: '',
@@ -58,6 +59,8 @@ export const LoginPage = () => {
     
         return isValid;
     };
+
+
     
 
     const submitHandler = async (e) => {
@@ -66,26 +69,27 @@ export const LoginPage = () => {
             alert('Invalid Input');
             return false;
         } 
-        setErrors((prev) => ({ ...prev, global: '' })); // Reset global errors
     
-        try {
-            const res = await loginUser(formData);
-            console.log("Response from loginUser:", res); // 🔍 Debugging
+        setErrors(prev => ({ ...prev, global: '' })); // Reset global errors
     
-            if (!res || !res.user || !res.sessionId) {
-                // console.error("Invalid API response structure:", res);
-                // throw new Error('Invalid response from server.');
-            }
+        const res = await loginUser(formData);
+        console.log("Login response:", res); // Debugging output
     
-            setAuthState({ user: res.user.id, token: res.sessionId });
-            navigate('/user/profile');
-        } catch (error) {
-            
-            // console.error('Error during login:', error);
-            const errorMessage = error.response?.data?.message || error.message || 'Login failed';
-            setErrors((prev) => ({ ...prev, global: errorMessage }));
+        if (res.error) {
+            setErrors(prev => ({ ...prev, global: res.error }));
+            return;
         }
+    
+        if (!res.user || !res.sessionId) {
+            setErrors(prev => ({ ...prev, global: 'Invalid response from server.' }));
+            return;
+        }
+    
+        setAuthState({ user: res.user.id, token: res.sessionId });
+        navigate('/user/profile');
     };
+    
+    
     
     
     
@@ -100,7 +104,7 @@ export const LoginPage = () => {
                         type="text"
                         name="email"
                         value={formData.email}
-                        onChange={changeHandler}
+                        onChange={changeHandler }
                     />
                     {errors.email && <p className="error">{errors.email}</p>}
                 </label>
@@ -110,7 +114,7 @@ export const LoginPage = () => {
                         type="password"
                         name="password"
                         value={formData.password}
-                        onChange={changeHandler}
+                        onChange={changeHandler }
                     />
                     {errors.password && <p className="error">{errors.password}</p>}
                 </label>
@@ -119,66 +123,3 @@ export const LoginPage = () => {
         </>
     );
 };
-// import {useState, useEffect} from 'react'
-// import { useNavigate } from 'react-router-dom'
-// import { useAuth } from '../config/AuthContext.jsx'
-// import { loginUser, getProfile } from '../services/AuthService.js'
-
-
-
-// export const LoginPage = (props) => {
-
-    
-//     const { authState, setAuthState } = useAuth()
-    
-//     const [formData, setFormData] = useState({
-//         email : '',
-//         password : ''
-//     })
-
-//     const [errors, setErrors] = useState({
-//         email : '',
-//         password : ''
-//     })
-
-//     const navigate = useNavigate()
-
-//     const changeHandler = (e) => {
-//         const {name, value} = e.target
-//         setFormData({...formData, [name] : value})
-//     }
-
-//     const submitHandler = async (e) => {
-//         e.preventDefault()
-//         try {
-//             const res = await loginUser(formData)
-//             setAuthState({user: res.user.id, token: res.sessionId})
-//             navigate('/home')
-//         } catch (error) { console.error('Error during login', error)}
-//     }
-
-//     return(<>
-//         <h1>E-Blog</h1>
-//         <form onSubmit={submitHandler}>
-//             <label >
-//                 Email: 
-//                 <input 
-//                     type="text" 
-//                     name="email" 
-//                     value={formData.email}
-//                     onChange={changeHandler} 
-//                 />
-//             </label>
-//             <label>
-//                 Password:
-//                 <input 
-//                     type="text"
-//                     name="password"
-//                     value={formData.password} 
-//                     onChange={changeHandler}
-//                 />
-//             </label>
-//             <button onClick={submitHandler}>Login</button>
-//         </form>
-//     </>)
-// }

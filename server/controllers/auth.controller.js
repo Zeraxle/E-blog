@@ -4,11 +4,20 @@ import User from "../models/user.model.js";
 import bcrypt from 'bcrypt';
 export const register = async (req, res) => {
     try {
-        const {user, sessionId} = await registerUser(req.body)
-        res.cookie('sessionId', sessionId)
-        res.status(201).json({user, sessionId})
-    } catch(error){res.status(400).json({message : error.message})}
-}
+        const { user, sessionId } = await registerUser(req.body);
+        res.cookie('sessionId', sessionId);
+        res.status(201).json({ user, sessionId });
+    } catch (error) {
+        console.error('Registration error:', error.message);  // Log the error in the backend to track it
+        if (error.message && error.message.toLowerCase().includes('user already exists')) {
+            res.status(400).json({ message: 'User already exists' });
+        } else {
+            res.status(500).json({ message: 'Server error. Please try again later.' });
+        }
+    }
+};
+
+
 
 export const login = async (req, res) => {
     try {

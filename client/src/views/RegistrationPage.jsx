@@ -69,56 +69,47 @@ export const RegistrationPage = () => {
         setErrors((prev) => ({ ...prev, [name]: validationResult === true ? '' : validationResult }));
     };
     
-
     const submitHandler = async (e) => {
         e.preventDefault();
     
-        // First, validate the form fields
         if (!readyToSubmit()) {
-            alert('Please fill out the form correctly');
-            return; // Prevent form submission
-        }
-    
-        // Check if username or email has errors before attempting registration
-        if (errors.username || errors.email) {
-            alert('Please correct the errors before submitting the form.');
-            return; // Prevent form submission
+            alert('Please fill out the form correctly.');
+            return;
         }
     
         try {
             const payload = { ...formData };
-            delete payload.confirmPassword; // Exclude unnecessary fields
+            delete payload.confirmPassword;
     
             const res = await registerUser(payload);
     
-            if (!res || !res.user || !res.sessionId) {
+            // If response contains an error message, handle the specific error
+            if (res?.message) {
+                if (res.message.toLowerCase().includes('user already exists')) {
+                    alert('This email or username is already in use. Please use a different one.');
+                    setErrors((prev) => ({
+                        ...prev,
+                        email: 'Email already in use.',
+                        username: 'Username already taken.',
+                    }));
+                    return;  // Prevent form submission
+                }
+    
+                alert('Registration failed: ' + res.message);
+                return;  // Prevent form submission
+            }
+    
+            // Successful registration
+            if (res?.user && res?.sessionId) {
+                setAuthState({ user: res.user.id, token: res.sessionId });
+                navigate('/user/profile');
+            } else {
                 throw new Error('Invalid response from server.');
             }
     
-            // Set authState and navigate after successful registration
-            setAuthState({ user: res.user.id, token: res.sessionId });
-            navigate('/user/profile');
         } catch (error) {
-            // console.error('Error during registration:', error);
-    
-            // Check if error contains a message indicating user already exists
-            if (error?.data?.message) {
-                const message = error.data.message.toLowerCase();
-    
-                // If the message indicates username or email already exists, show alert and set errors
-                if (message.includes('user already exists')) {
-                    alert('The username or email is already taken. Please choose another one.');
-                    setErrors((prev) => ({
-                        ...prev,
-                        username: 'Username or email already taken.',
-                        email: 'Email already in use.'
-                    }));
-                } else {
-                    alert('Registration failed: ' + message);
-                }
-            } else {
-                alert('Something went wrong. Please try again.');
-            }
+            console.error('Unexpected registration error:', error);
+            alert('Something went wrong. Please try again.');
         }
     };
     

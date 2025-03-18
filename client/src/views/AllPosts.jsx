@@ -6,7 +6,7 @@ import { findAllPosts } from '../services/PostService.js';
 import { createLike, destroyLike } from '../services/LikeService.js';
 import Cookies from 'js-cookie';
 import { useLikes } from './LikeContext.jsx';
-import '../assets/css/AllPosts.css'
+// import '../assets/css/AllPosts.css'
 
 
 export const AllPosts = (props) => {
@@ -15,7 +15,7 @@ export const AllPosts = (props) => {
     const [user, setUser] = useState({});
 
     const {category} = useParams()
-    // const { postLiked, setPostLiked } = useLikes();
+
     const [allPosts, setAllPosts] = useState([]);
     
 
@@ -38,30 +38,25 @@ export const AllPosts = (props) => {
     };
 
     useEffect(() => {
-        findAllPosts()
-            .then(posts => {
-                console.log(posts)
-                setAllPosts(posts);
-            })
-            .catch(error => console.log(error));
-    }, [postLiked]);
+    findAllPosts()
+        .then(posts => {
+
+            const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setAllPosts(sortedPosts);
+        })
+        .catch(error => console.log(error));
+}, [postLiked]);
 
     const createPostLike = async(e, postId) =>{
         e.preventDefault()
-        console.log(postId)
-        console.log(user.id)
         const userId = user.id
 
         try{
-            console.log(userId)
-            console.log('yesss')
             await createLike({userId, postId})
-            // console.log(postLiked)
             
             setPostLiked((prev) => ({ ...prev,[postId]: true}))
             
-            
-            // console.log(postLiked)
+ 
         }catch (error){
             console.log(error)
         }
@@ -76,7 +71,6 @@ export const AllPosts = (props) => {
             
                 setPostLiked((prev) => ({ ...prev, [postId] : false}))
             
-            // console.log(postLiked)
         }catch(error){
             console.log(error)
         }
@@ -84,16 +78,13 @@ export const AllPosts = (props) => {
 
     const goToComments = async(e,postId) =>{
         const category = 'AllPosts'
-        console.log(category)
         setUrlPath((prev) => ({...prev, path : category}))
         navigate(`/${category}/post/${postId}/comments`)
 
-    // const goToComments = async(e, postId) =>{
-    //     navigate(`post/${postId}/comments`)
     }
     return (
-        <div id="root">
-            <div>
+    
+            
                 <div className='post-box'>
                     {allPosts.map((post) => (
                         <div key={post.id} className="post-container">
@@ -104,7 +95,6 @@ export const AllPosts = (props) => {
                             <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
                             <div className="post-actions">
                                 <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
-                                    {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
                                 {postLiked [post.id]? (
                                     <button onClick={(e) => createPostDislike(e, post.id)} className="icon">💔</button>
                                 ): (
@@ -113,10 +103,9 @@ export const AllPosts = (props) => {
                             </div>
                         </div>
                     ))}
-                </div>
+            
                 
                 <button onClick={logoutUser} className="logout-button">Logout</button>
             </div>
-        </div>
     );
 };

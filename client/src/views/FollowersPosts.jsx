@@ -10,32 +10,12 @@ import './FollowersPost.css'
 export const FollowersPosts = (props) =>{
     const [followerPosts, setFollowersPosts] = useState([])
     const {loggedInUser, user,setUser, setAuthState, authState , postLiked, setPostLiked, setUrlPath} = props
-    // const {authState, setAuthState} = useAuth()
-    // const [user, setUser] = useState({})
+
 
     const navigate = useNavigate()
 
     useEffect(() => {
         }, [postLiked]);
-
-        // useEffect(() => {
-        //     const fetchUserData = async () => {
-        //         try {
-        //             const sessionId = Cookies.get('sessionId');
-        //             const userProfile = await getProfile();
-        //             setUser(userProfile);
-        //             setAuthState({ user: userProfile.id, token: sessionId });
-    
-        //             // Fetch follower posts only after user is set
-        //             const posts = await findAllFollowersPosts(userProfile.id);
-        //             setFollowersPosts(posts);
-        //         } catch (error) {
-        //             console.error('Error fetching user or follower posts:', error);
-        //         }
-        //     };
-    
-        //     fetchUserData();
-        // }, []);
 
     useEffect(() =>{
         const fetchUserData = async () =>{
@@ -45,9 +25,9 @@ export const FollowersPosts = (props) =>{
                 const userProfile = await getProfile()
                 setUser(userProfile)
                 setAuthState({user: userProfile.id, token: sessionId })
-                    
                 const posts = await findAllFollowersPosts(userProfile.id)
-                setFollowersPosts(posts)
+                const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setFollowersPosts(sortedPosts)
             } 
             catch(error) {
                 console.log(error)
@@ -64,7 +44,6 @@ export const FollowersPosts = (props) =>{
         
         useEffect(()=>{
 
-            console.log(followerPosts)
             }, [])
 
         const goToComments = (e, postId) =>{
@@ -95,7 +74,6 @@ export const FollowersPosts = (props) =>{
         const createPostLike =  async(e, postId) =>{
             e.preventDefault()
             const userId = user.id
-            // const postId = postId
 
             try{
                 createLike({userId, postId})
@@ -123,7 +101,6 @@ export const FollowersPosts = (props) =>{
                                                     <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
                                                     <div className="post-actions">
                                                         <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
-                                                            {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
                         
                         
                                                         

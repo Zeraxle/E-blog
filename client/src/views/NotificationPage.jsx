@@ -27,22 +27,9 @@ export const NotificationPage = (props) => {
                 .then(navigate('/'))
                 .catch(error => console.log(error))
         }
-        // const logoutUser = () => {
-        //     logout()
-        //         .then(() => navigate('/'))
-        //         .catch(error => console.log(error));
-        // };
-    
 
     return(<>
         <h1>Notifications</h1>
-        {/* <table>
-            <thead>
-                <tr>
-                    <td></td>
-                </tr>
-            </thead>
-        </table> */}
 
         {followNotification.map((notification) =>(
             <div key={notification.followedUser}>

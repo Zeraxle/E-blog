@@ -1,0 +1,11 @@
+
+.form-title {
+    text-align: center; 
+    display: block; 
+    width: 100%;
+    margin-top: 20px; 
+}
+
+.form-textarea{
+    background-color: #111111;
+}

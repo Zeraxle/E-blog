@@ -7,7 +7,7 @@ import { useAuth } from "../config/AuthContext"
 import { createComment, destroyComment, findComment } from "../services/CommentService"
 import Cookies from 'js-cookie';
 import {formatDistanceToNow} from 'date-fns'
-
+import "../views/PostComments.css"
 
 export const PostComments = (props) =>{
     const navigate = useNavigate()
@@ -30,14 +30,6 @@ export const PostComments = (props) =>{
     const [commentErrors, setCommentErrors] = useState({
         Comment : '' })
     
-
-    // useEffect(() => {
-    //     findComment(1)
-    //         .then((res) => {
-    //             console.log(res)
-    //         })
-    //         .catch((err) => console.log(err))
-    // }, [])
 
     useEffect(() =>{
         findAllCommmentsForPost(postId)
@@ -95,7 +87,6 @@ export const PostComments = (props) =>{
 
     const deleteComment = (e, commentId) =>{
         e.preventDefault()
-        console.log(commentId)
         destroyComment(commentId)
         const newComments = retrievedComments.filter(comment => comment.id !== commentId)
         setRetrievedComments(newComments)
@@ -111,7 +102,7 @@ export const PostComments = (props) =>{
         }
         try{
             await createComment(postComments)
-            console.log("Comment submitted successfully!");
+        
             setPostComments({
                 Comment : '',
                 postId : null,
@@ -119,7 +110,6 @@ export const PostComments = (props) =>{
             })
             const updatedComments = await findAllCommmentsForPost(postId)
             setRetrievedComments(updatedComments.comments || [])
-            console.log('dont try this at home!!!')
             navigate(`/${category}/post/${postId}/comments`)
         }
             catch(error){
@@ -128,7 +118,7 @@ export const PostComments = (props) =>{
     }
     return(
         <>
-        {/* <h1>{post.name}</h1> */}
+
         <table>
             <thead>
                 <tr>
@@ -178,13 +168,14 @@ export const PostComments = (props) =>{
                             <Link to={`/edit/comment/${comment.id}`}>Edit</Link>
                             <Link onClick={(e => deleteComment(e, comment.id))}>  Delete</Link>
                             
-                            {/* <button onClick={showReplies}>Replies</button> */}
                             </td>
                             </>
-                            ): (
-                        <td> <Link >Reply</Link> </td>
+                            ): 
+                            (
+                        <td>  </td>
 
-                            )}
+                            )
+                            }
 
 
                         </tr>

@@ -1,81 +1,88 @@
-#root {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    padding: 0 100px; /* Remove top padding */
-    background-color: #090909;
-    width: 80%;
-}
 
 .post-box {
-    width: 450px;
-    margin-right: 125px
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    margin-left: 40px; 
 }
 
 .post-container {
-    width: 100%;
-    max-width: 1000px;  /* Limits max width for consistency */
-    background:#ffffff;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 1400px; 
+    max-width: 1200px; 
+    background: #ffffff;
+    padding: 40px; 
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease-in-out;
+    text-align: center;
+    margin-left: 60px; 
+    height: 600px; 
 }
 
-.post-container:hover {
-    transform: translateY(-5px);
+
+.post-container .post-title {
+    font-size: 65px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007bff; 
 }
+
 
 .post-content {
-    font-size: 16px;
-    color: #121212;
-    margin-bottom: 10px;
+    font-size: 26px;
+    color: #000000;
+    max-width: 90%;
+    margin: 0 auto;
+    line-height: 1.6; 
 }
 
 .post-category, .post-rating, .post-username {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
+    font-size: 22px; 
+    color: #5a5a5a;
+    text-align: center; 
 }
+
 
 .post-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 28px; 
+    margin-top: 30px;
+    justify-content: center;
+    color: #cc0000;
 }
 
+
 .icon {
-    background: none;
-    border: none;
-    font-size: 20px;
+    font-size: 32px;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
 .icon:hover {
-    transform: scale(1.2);
-    color: #cc0000;
+    transform: scale(1.4);
+    color: #007bff;
 }
 
+
 .logout-button {
-    background-color: #ff4d4d;
+    background-color: #007bff;
     color: white;
-    padding: 10px 15px;
+    padding: 12px 20px; 
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-top: 20px;
-    margin-right: 70px;
-    font-size: 16px;
+    margin-top: 30px; 
+    font-size: 18px; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content; 
 }
 
 .logout-button:hover {
-    background-color: #cc0000;
-}
-
-.post-title{
-    color: #000000;
-
+    background-color: rgb(0, 85, 176) 
 }

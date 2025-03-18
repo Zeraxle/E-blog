@@ -44,6 +44,7 @@ function App() {
     return (
       <>
           {showNavBar && <NavBar  user = {user} setFilteredPosts={setFilteredPosts}/>}
+          <div className="content-container"> 
           <Routes>
             <Route path={'/'} element={<WelcomePage/>}/>
             <Route path={'/register'} element={<RegistrationPage setLoggedInUser={setLoggedInUser}/>}/>
@@ -59,13 +60,13 @@ function App() {
             <Route path={'/Anime'} element= {<ProtectedRoute><AnimePosts loggedInUser = {loggedInUser}  postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath}   ></AnimePosts></ProtectedRoute>}/>
             <Route path={'/:id/FollowersPosts'} element ={<ProtectedRoute><FollowersPosts loggedInUser = {loggedInUser} user = {user} setUser = {setUser} authState = {authState} setAuthState = {setAuthState} postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath}  /></ProtectedRoute>}/>
             <Route path={'/display/user/:id'} element = {<ProtectedRoute> <DisplayOneUser setFollowNotification = {setFollowNotification} followRelationship = {followRelationship} setFollowRelationship = {setFollowRelationship} loggedInUser = {loggedInUser} user = {user} setUser = {setUser} /></ProtectedRoute>}/>
-            <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost postLiked = {postLiked} setPostLiked = {setPostLiked}/></ProtectedRoute>}/>
+            <Route path = {'/display/post/:id'} element = {<ProtectedRoute> <DisplayOnePost postLiked = {postLiked} setPostLiked = {setPostLiked} setUrlPath = {setUrlPath} urlPath = {urlPath}/></ProtectedRoute>}/>
             <Route path= {'/edit/user/:id'} element = {<ProtectedRoute> <EditUserPage user = {user} setUser = {setUser}/> </ProtectedRoute>}/>
             <Route path={'/:category/post/:postId/comments'} element = {<ProtectedRoute> <PostComments post = {post} setPost = {setPost} urlPath = {urlPath}/></ProtectedRoute>}/>
             <Route path={'/edit/comment/:id'} element ={<ProtectedRoute><EditComment post = {post} /></ProtectedRoute>}/>
             <Route path={`/edit/post/:id`} element = {<ProtectedRoute><EditPost></EditPost></ProtectedRoute>}></Route>
-            
           </Routes> 
+          </div>
     </>
   )
 }

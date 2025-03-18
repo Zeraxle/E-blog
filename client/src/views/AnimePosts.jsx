@@ -30,10 +30,14 @@ export const AnimePosts =  (props) =>{
                 .catch(error => console.log(error))
         }
 
+
+    
+            
         useEffect(() =>{
             findAllAnimePosts()
-                .then(res =>{
-                    setAllAnimePosts(res)
+                .then(posts =>{
+                    const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    setAllAnimePosts(sortedPosts)
                 })
                 .catch(error => console.log(error))
             }, [])
@@ -61,7 +65,6 @@ export const AnimePosts =  (props) =>{
         const createPostLike = async(e, postId) =>{
             e.preventDefault()
             const userId = user.id
-            // const postId = postId
 
             try{
                 createLike({userId, postId})
@@ -88,7 +91,6 @@ export const AnimePosts =  (props) =>{
                                             <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
                                             <div className="post-actions">
                                                 <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
-                                                    {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
                 
                 
                                                 

@@ -12,17 +12,12 @@ import { findAllPosts } from '../services/PostService';
 
 export const NavBar = ({setFilteredPosts, user}) => {
     const navigate = useNavigate()
-    // const {loggedInUser} = props
 
     const [searchInfo,setSearchInfo] = useState('')
-    // const findPosts = (e) =>{
-    // }
-
     const handleSearchChange = (e) =>{
         setSearchInfo(e.target.value)
     }
 
-    // console.log(user.id)
 
     const handleSearchSubmit = (e) =>{
         e.preventDefault()
@@ -36,7 +31,7 @@ export const NavBar = ({setFilteredPosts, user}) => {
             .catch((error) =>{
                 console.log('fetching error', error)
             })
-        // navigate('/search')
+
 
     }
 
@@ -63,10 +58,6 @@ export const NavBar = ({setFilteredPosts, user}) => {
             <Link to = {'/post/create'}>
                 <img src={CreateBtn} alt='CreateBtn'></img>
             </Link> 
-
-            {/* <Link to={'/user/notifications'}>
-                <img src={NotificationBtn} alt='Notifications-Icon'></img>
-            </Link> */}
 
             <Link to = {'/user/profile'}>
                 <img src={ProfilePicBtn} alt='ProfileBtn'></img>

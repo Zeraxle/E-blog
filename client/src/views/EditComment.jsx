@@ -28,14 +28,6 @@ export const EditComment = (props) =>{
         .catch(error => console.log(error))
     }, [id])
     
-    console.log(post)
-    console.log(comment.Comment)
-    // useEffect(() =>{
-    //     if (comment.content){
-    //         setUpdatedComment(comment.content)
-    //     }
-    // }, [comment])
-    
     
     const validateComment = (name, value) =>{
         const validation = {
@@ -79,7 +71,7 @@ export const EditComment = (props) =>{
     return(
         <>
         <form className="edit-CommentForm">
-            <label>
+            <label className="title">
                 Edit Comment
                 <input
                     name="Comment"

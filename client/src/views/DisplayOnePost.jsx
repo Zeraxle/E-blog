@@ -8,11 +8,12 @@ import { getProfile} from "../services/AuthService.js"
 import { destroyLike, createLike } from "../services/LikeService.js"
 import { useAuth } from "../config/AuthContext.jsx"
 import Cookies from 'js-cookie'
-
+import { useNavigate } from "react-router-dom"
+import "../views/DisplayOnePost.css"
 export const DisplayOnePost = (props) => {
 
-    
-    const {postLiked, setPostLiked} = props
+    const navigate = useNavigate()
+    const {postLiked, setPostLiked, urlPath,setUrlPath } = props
     const {id} = useParams()
     const {authState, setAuthState} = useAuth()
     const [displayedPost, setDisplayedPost] = useState({})
@@ -47,14 +48,6 @@ export const DisplayOnePost = (props) => {
     }, [id])
 
     
-
-    
-    // useEffect(() => {
-    //     findCommentsByPost()
-    //     .then(res => setComments(res))
-    //     .catch(err => console.log('Comment useEffect error', err))
-    // }, []);
-    
     
     const toggleComments = () => {
         setShowComments(prev => !prev)
@@ -65,26 +58,21 @@ export const DisplayOnePost = (props) => {
         setUrlPath((prev) => ({...prev, path : category}))
         navigate(`/${category}/post/${postId}/comments`)
 
-    // const goToComments = async(e, postId) =>{
-    //     navigate(`post/${postId}/comments`)
+
     }
 
     
         const createPostLike = async(e, postId) =>{
             e.preventDefault()
-            console.log(postId)
-            console.log(user.id)
+
             const userId = user.id
     
             try{
                 console.log(userId)
                 await createLike({userId, postId})
-                // console.log(postLiked)
                 
                 setPostLiked((prev) => ({ ...prev,[postId]: true}))
-                
-                
-                // console.log(postLiked)
+
             }catch (error){
                 console.log(error)
             }
@@ -98,8 +86,7 @@ export const DisplayOnePost = (props) => {
                 destroyLike(userId,postId)
                 
                     setPostLiked((prev) => ({ ...prev, [postId] : false}))
-                
-                // console.log(postLiked)
+
             }catch(error){
                 console.log(error)
             }
@@ -117,8 +104,7 @@ export const DisplayOnePost = (props) => {
                         <td>Rating</td>
                         <td>Category</td>
                         <td>Posted By</td>
-                        <td>Comment</td>
-                        <td>Like Post</td>
+                        <td>Actions</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,11 +114,9 @@ export const DisplayOnePost = (props) => {
                         <td className="post-content">{displayedPost.rating}</td>
                         <td className="post-category">{displayedPost.category}</td>
                         <td><Link to={`/display/user/${displayedPost.user?.id}`}>{displayedPost.user?.username}</Link></td> 
-                        <td><Link to ={`/${displayedPost.category}/post/${displayedPost.id}/comments`}>Comment </Link></td>
                         <td>  
                             <div className="post-actions">
                                 <button onClick = {(e) => goToComments(e,displayedPost.id)}className="icon">💬</button>
-                                    {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
                                 {postLiked [displayedPost.id]? (
                                     <button onClick={(e) => createPostDislike(e, displayedPost.id)} className="icon">💔</button>
                                 ): (

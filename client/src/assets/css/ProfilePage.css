@@ -1,3 +1,6 @@
+
+
+
 .profile-container {
     max-width: 800px;
     margin: 30px auto;
@@ -8,14 +11,14 @@
     text-align: center;
 }
 
-/* Profile Title */
+
 .profile-title {
     font-size: 28px;
     font-weight: bold;
-    color: #333;
+    color: #007bff;
 }
 
-/* Home Link */
+
 .home-link {
     display: inline-block;
     font-size: 16px;
@@ -28,7 +31,7 @@
     text-decoration: underline;
 }
 
-/* Button Group */
+
 .button-group {
     margin: 20px 0;
 }
@@ -50,7 +53,7 @@
     background: #0056b3;
 }
 
-/* Profile Info */
+
 .profile-info {
     background: #03111e;
     padding: 15px;
@@ -63,7 +66,7 @@
     margin: 5px 0;
 }
 
-/* Tables */
+
 .profile-table {
     width: 100%;
     border-collapse: collapse;

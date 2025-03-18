@@ -3,7 +3,7 @@ import { useAuth } from '../config/AuthContext.jsx';
 import { loginUser } from '../services/AuthService.js';
 import { useState } from 'react';
 import '../App.css'
-
+import "../views/LoginPage.css"
 export const LoginPage = () => {
     const { setAuthState } = useAuth();
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const LoginPage = () => {
     const [errors, setErrors] = useState({
         email: '',
         password: '',
-        global: '' // To handle non-field-specific errors
+        global: '' 
     });
 
     const validateUserAttribute = (name, value) => {
@@ -42,8 +42,7 @@ export const LoginPage = () => {
 
     const readyToSubmit = () => {
         let isValid = true;
-    
-        // Validate all fields
+
         Object.keys(formData).forEach((key) => {
             validateUserAttribute(key, formData[key]);
             if (!formData[key].trim()) {
@@ -51,8 +50,7 @@ export const LoginPage = () => {
                 isValid = false;
             }
         });
-    
-        // Check for existing errors
+
         if (Object.values(errors).some((error) => error !== '')) {
             isValid = false;
         }
@@ -70,10 +68,8 @@ export const LoginPage = () => {
             return false;
         } 
     
-        setErrors(prev => ({ ...prev, global: '' })); // Reset global errors
-    
+        setErrors(prev => ({ ...prev, global: '' })); 
         const res = await loginUser(formData);
-        // console.log("Login response:", res); // Debugging output
     
         if (res.error) {
             setErrors(prev => ({ ...prev, global: res.error }));
@@ -86,7 +82,7 @@ export const LoginPage = () => {
         }
     
         setAuthState({ user: res.user.id, token: res.sessionId });
-        navigate('/user/profile');
+        navigate('/AllPosts');
     };
     
     
@@ -97,7 +93,7 @@ export const LoginPage = () => {
         <>
             <h1>E-Blog</h1>
             <form onSubmit={submitHandler} className='login-form'>
-                {errors.global && <p className="error">{errors.global}</p>} {/* Global errors */}
+                {errors.global && <p className="error">{errors.global}</p>}
                 <label>
                     Email:
                     <input
@@ -118,7 +114,7 @@ export const LoginPage = () => {
                     />
                     {errors.password && <p className="error">{errors.password}</p>}
                 </label>
-                <button type="submit">Login</button>
+                <button className = "btnSubmit"type="submit">Login</button>
             </form>
         </>
     );

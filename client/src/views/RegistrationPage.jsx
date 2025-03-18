@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {registerUser} from '../services/AuthService.js'
 import '../App.css'
+import "../views/RegistrationPage.css"
 
 export const RegistrationPage = () => {
 
@@ -40,9 +41,9 @@ export const RegistrationPage = () => {
     
     const readyToSubmit = () => {
         let isValid = true;
-        const newErrors = { ...errors }; // Start with current errors
+        const newErrors = { ...errors }; 
         
-        // Validate all fields
+
         Object.keys(formData).forEach((key) => {
             const validationResult = validateUser(key, formData[key]);
             if (!formData[key].trim()) {
@@ -52,11 +53,11 @@ export const RegistrationPage = () => {
                 newErrors[key] = validationResult;
                 isValid = false;
             } else {
-                newErrors[key] = ''; // Clear any previous errors
+                newErrors[key] = ''; 
             }
         });
         
-        setErrors(newErrors); // Update the state with new errors
+        setErrors(newErrors); 
         return isValid;
     };
     
@@ -83,7 +84,6 @@ export const RegistrationPage = () => {
     
             const res = await registerUser(payload);
     
-            // If response contains an error message, handle the specific error
             if (res?.message) {
                 if (res.message.toLowerCase().includes('user already exists')) {
                     alert('This email or username is already in use. Please use a different one.');
@@ -92,17 +92,16 @@ export const RegistrationPage = () => {
                         email: 'Email already in use.',
                         username: 'Username already taken.',
                     }));
-                    return;  // Prevent form submission
+                    return;  
                 }
     
                 alert('Registration failed: ' + res.message);
-                return;  // Prevent form submission
+                return;  
             }
     
-            // Successful registration
             if (res?.user && res?.sessionId) {
                 setAuthState({ user: res.user.id, token: res.sessionId });
-                navigate('/user/profile');
+                navigate('/AllPosts');
             } else {
                 throw new Error('Invalid response from server.');
             }

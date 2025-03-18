@@ -26,18 +26,20 @@ export const MoviePosts = (props) =>{
 
     useEffect(()=>{
         findAllMoviePosts()
-            .then(res =>{
-                setAllMovies(res)
-                console.log("hiii")
+            .then(
+                posts =>{
+                const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setAllMovies(sortedPosts)
+
             })
             
             .catch(error => console.log(error))
-
-
         },[])
 
+        
+
         useEffect(()=>{
-            console.log(allMovies)
+
             },[])
 
         const logoutUser = () => {
@@ -57,7 +59,7 @@ export const MoviePosts = (props) =>{
             e.preventDefault()
             const userid = user.id
             const postid = postId
-            console.log(userid)
+
 
             try{
                 destroyLike(userid,postid)
@@ -70,7 +72,7 @@ export const MoviePosts = (props) =>{
 
         const createPostLike = async (e, postId) =>{
             e.preventDefault()
-            console.log(user.id)
+
             const userId = user.id
         
 
@@ -101,7 +103,6 @@ export const MoviePosts = (props) =>{
                                 <p className="post-username">Posted by: <Link to={`/display/user/${post.user.id}`}>{post.user.username}</Link></p>
                                 <div className="post-actions">
                                     <button onClick = {(e) => goToComments(e,post.id)}className="icon">💬</button>
-                                        {/* <button onClick = {(e) => createPostLike(e,post.id)}className="icon">❤️</button> */}
     
     
                                     

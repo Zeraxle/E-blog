@@ -1,0 +1,52 @@
+
+table {
+    margin-left: 20px; 
+    width: 90%;
+}
+
+
+table th, table td {
+    text-align: center;
+    padding: 10px;
+}
+
+.ContentArea {
+    display: flex;
+    justify-content: center; 
+    width: 100%; 
+}
+
+.ContentArea form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+}
+
+.ContentArea form input[name="Comment"] {
+    width: 50%;
+    max-width: 300px;
+    padding: 8px;
+    margin: 10px auto; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center; 
+    display: block; 
+}
+
+
+
+button {
+    width: 150px;
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

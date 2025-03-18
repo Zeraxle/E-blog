@@ -31,7 +31,6 @@ export const SearchPage = ({filteredPosts}) => {
         return (
             <>
                 <div className="search-Table">
-                <button onClick={logoutUser}>Logout</button>
                 {filteredPosts && filteredPosts.length > 0 ? (
                     <table>
                         <thead>

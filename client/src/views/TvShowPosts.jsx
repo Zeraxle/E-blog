@@ -32,8 +32,11 @@ export const TvShowPosts = (props) =>{
     
     useEffect(()=>{
         findAllTvshowPosts()
-        .then(res=>{
-            setAllTvShows(res)
+        .then(
+            posts =>{
+            const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            setAllTvShows(sortedPosts)
         })
         .catch(error => console.log(error))
 
@@ -66,7 +69,6 @@ export const TvShowPosts = (props) =>{
     const createPostLike =  async(e, postId) =>{
         e.preventDefault()
         const userId = user.id
-        // const postId = postId
 
         try{
             createLike({userId, postId})

@@ -70,13 +70,13 @@ export const CreatePost = () => {
 
         const submitHandler = async e => {
             e.preventDefault()
-            if(!readyToSubmit){
+            if(!readyToSubmit()){
                 alert('Please fill out the form correctly')
                 return false
             }
             try {
                 await createPost(formData)
-                navigate('/user/profile')
+                navigate('/AllPosts')
             } catch (error) {
                 console.error(error)
                 console.log('Error during creation')}

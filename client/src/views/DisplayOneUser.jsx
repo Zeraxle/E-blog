@@ -19,10 +19,8 @@ export const DisplayOneUser = (props) =>{
     const [loggedInUserPage, setLoggedInUserPage] = useState(false)
     const [followRelationship, setFollowRelationship] = useState(false)
 
-    // const [followNotification, setFollowNotification] = useState([])
-    const navigate = useNavigate()
 
-    // console.log(loggedInUser)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const sessionId = Cookies.get('sessionId')
@@ -98,7 +96,6 @@ export const DisplayOneUser = (props) =>{
             createFollow({followerId,followedUserId })
             .then (res =>{
                     setFollowRelationship(true)
-                    console.log("Successful follower creation ", res)
                 })
                 .catch(error => console.log(error))
         }

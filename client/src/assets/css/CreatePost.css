@@ -1,3 +1,5 @@
+/* Create post csss */
+
 body {
     font-family: 'Arial', sans-serif;
     background:  #333;
@@ -88,4 +90,3 @@ body {
     transform: scale(0.95);
 }
 
-/* Responsive Design */
